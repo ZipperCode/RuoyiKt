@@ -36,7 +36,6 @@ export interface UserVO extends BaseEntity {
   sex: string;
   avatar: string;
   status: string;
-  delFlag: string;
   loginIp: string;
   loginDate: string;
   remark: string;

@@ -61,7 +61,7 @@ class SysRoleServiceImpl(
     private fun buildQueryWrapper(bo: SysRoleParam): Wrapper<SysRoleEntity> {
         val params = bo.params
         val wrapper = Wrappers.query<SysRoleEntity>()
-        wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
+        wrapper.eq("r.deleted", UserConstants.ROLE_NORMAL)
             .eq(ObjectUtil.isNotNull(bo.roleId), "r.role_id", bo.roleId)
             .like(StringUtils.isNotBlank(bo.roleName), "r.role_name", bo.roleName)
             .eq(StringUtils.isNotBlank(bo.status), "r.status", bo.status)

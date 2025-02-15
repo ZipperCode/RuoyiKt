@@ -23,7 +23,6 @@ export interface RoleVO extends BaseEntity {
   menuCheckStrictly: boolean;
   deptCheckStrictly: boolean;
   status: string;
-  delFlag: string;
   remark?: any;
   flag: boolean;
   menuIds?: Array<string | number>;

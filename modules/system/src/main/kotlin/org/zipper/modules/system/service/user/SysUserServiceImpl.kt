@@ -63,7 +63,7 @@ class SysUserServiceImpl(
     private fun buildQueryWrapper(user: SysUserParam): Wrapper<SysUserEntity> {
         val params = user.params
         val wrapper = Wrappers.query<SysUserEntity>()
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.deleted", UserConstants.USER_NORMAL)
             .eq(ObjectUtil.isNotNull(user.userId), "u.user_id", user.userId)
             .like(StringUtils.isNotBlank(user.userName), "u.user_name", user.userName)
             .eq(StringUtils.isNotBlank(user.status), "u.status", user.status)
@@ -94,7 +94,7 @@ class SysUserServiceImpl(
      */
     override fun selectAllocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         val wrapper = Wrappers.query<SysUserEntity>()
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.deleted", UserConstants.USER_NORMAL)
             .eq(ObjectUtil.isNotNull(user.roleId), "r.role_id", user.roleId)
             .like(StringUtils.isNotBlank(user.userName), "u.user_name", user.userName)
             .eq(StringUtils.isNotBlank(user.status), "u.status", user.status)
@@ -113,7 +113,7 @@ class SysUserServiceImpl(
     override fun selectUnallocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         val userIds = userRoleMapper.selectUserIdsByRoleId(user.roleId ?: 0)
         val wrapper = Wrappers.query<SysUserEntity>()
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.deleted", UserConstants.USER_NORMAL)
             .and { w: QueryWrapper<SysUserEntity?> -> w.ne("r.role_id", user.roleId).or().isNull("r.role_id") }
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
             .like(StringUtils.isNotBlank(user.userName), "u.user_name", user.userName)

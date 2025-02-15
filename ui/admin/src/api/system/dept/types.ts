@@ -21,7 +21,6 @@ export interface DeptVO extends BaseEntity {
   phone: string;
   email: string;
   status: string;
-  delFlag: string;
   ancestors: string;
   menuId: string | number;
 }
@@ -40,6 +39,5 @@ export interface DeptForm {
   phone?: string;
   email?: string;
   status?: string;
-  delFlag?: string;
   ancestors?: string;
 }
