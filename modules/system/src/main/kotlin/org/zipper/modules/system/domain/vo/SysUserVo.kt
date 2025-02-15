@@ -6,6 +6,7 @@ import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.common.sensitive.annotation.Sensitive
 import org.zipper.common.sensitive.core.SensitiveStrategy
 import org.zipper.modules.system.domain.entity.SysUserEntity
+import org.zipper.modules.system.domain.mixin.SysUserMixin
 import org.zipper.optional.translation.annotation.Translation
 import org.zipper.optional.translation.constant.TransConstant
 import java.io.Serializable
@@ -17,53 +18,48 @@ import java.util.*
  * @author Michelle.Chung
  */
 @AutoMapper(target = SysUserEntity::class)
-class SysUserVo : Serializable {
+class SysUserVo : SysUserMixin, Serializable {
     /**
      * 用户ID
      */
-    var userId: Long = 0
-
-    /**
-     * 租户ID
-     */
-    var tenantId: String? = null
+    override var userId: Long? = 0
 
     /**
      * 部门ID
      */
-    var deptId: Long? = null
+    override var deptId: Long? = null
 
     /**
      * 用户账号
      */
-    var userName: String? = null
+    override var userName: String? = null
 
     /**
      * 用户昵称
      */
-    var nickName: String? = null
+    override var nickName: String? = null
 
     /**
      * 用户类型（sys_user系统用户）
      */
-    var userType: String = ""
+    override var userType: String? = ""
 
     /**
      * 用户邮箱
      */
     @field:Sensitive(strategy = SensitiveStrategy.EMAIL)
-    var email: String? = null
+    override var email: String? = null
 
     /**
      * 手机号码
      */
     @field:Sensitive(strategy = SensitiveStrategy.PHONE)
-    var phonenumber: String? = null
+    override var phonenumber: String? = null
 
     /**
      * 用户性别（0男 1女 2未知）
      */
-    var sex: String? = null
+    override var sex: String? = null
 
     /**
      * 头像地址
@@ -76,12 +72,12 @@ class SysUserVo : Serializable {
      */
     @JsonIgnore
     @JsonProperty
-    var password: String? = null
+    override var password: String? = null
 
     /**
      * 帐号状态（0正常 1停用）
      */
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 最后登录IP
@@ -96,7 +92,7 @@ class SysUserVo : Serializable {
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 
     /**
      * 创建时间

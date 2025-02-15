@@ -12,8 +12,8 @@ import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.web.ext.validateRow
 import org.zipper.modules.system.domain.param.SysDeptParam
-import org.zipper.modules.system.domain.bo.SysRoleBo
-import org.zipper.modules.system.domain.bo.SysUserBo
+import org.zipper.modules.system.domain.param.SysRoleParam
+import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.entity.SysUserRoleEntity
 import org.zipper.modules.system.domain.vo.DeptTreeSelectVo
 import org.zipper.modules.system.domain.vo.SysRoleVo
@@ -41,7 +41,7 @@ class SysRoleController(
      */
     @SaCheckPermission("system:role:list")
     @GetMapping("/list")
-    fun list(role: SysRoleBo, pageQuery: PageQuery): TableDataInfo<SysRoleVo> {
+    fun list(role: SysRoleParam, pageQuery: PageQuery): TableDataInfo<SysRoleVo> {
         return roleService.selectPageRoleList(role, pageQuery)
     }
 
@@ -51,7 +51,7 @@ class SysRoleController(
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
-    fun export(role: SysRoleBo, response: HttpServletResponse) {
+    fun export(role: SysRoleParam, response: HttpServletResponse) {
         val list = roleService.selectRoleList(role)
         response.responseToExcel(list, "角色数据")
     }
@@ -76,7 +76,7 @@ class SysRoleController(
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody role: SysRoleBo) {
+    fun add(@Validated @RequestBody role: SysRoleParam) {
         roleService.checkRoleAllowed(role)
         if (!roleService.checkRoleNameUnique(role)) {
             throw ServiceException("新增角色'" + role.roleName + "'失败，角色名称已存在")
@@ -93,7 +93,7 @@ class SysRoleController(
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody role: SysRoleBo) {
+    fun edit(@Validated @RequestBody role: SysRoleParam) {
         roleService.checkRoleAllowed(role)
         roleService.checkRoleDataScope(role.roleId ?: 0)
         if (!roleService.checkRoleNameUnique(role)) {
@@ -116,7 +116,7 @@ class SysRoleController(
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/dataScope")
     @ResultBody
-    fun dataScope(@RequestBody role: SysRoleBo) {
+    fun dataScope(@RequestBody role: SysRoleParam) {
         roleService.checkRoleAllowed(role)
         roleService.checkRoleDataScope(role.roleId ?: 0)
         roleService.authDataScope(role).validateRow()
@@ -129,7 +129,7 @@ class SysRoleController(
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     @ResultBody
-    fun changeStatus(@RequestBody role: SysRoleBo) {
+    fun changeStatus(@RequestBody role: SysRoleParam) {
         roleService.checkRoleAllowed(role)
         roleService.checkRoleDataScope(role.roleId ?: 0)
         roleService.updateRoleStatus(role.roleId, role.status).validateRow()
@@ -162,7 +162,7 @@ class SysRoleController(
      */
     @SaCheckPermission("system:role:list")
     @GetMapping("/authUser/allocatedList")
-    fun allocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    fun allocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         return userService.selectAllocatedList(user, pageQuery)
     }
 
@@ -171,7 +171,7 @@ class SysRoleController(
      */
     @SaCheckPermission("system:role:list")
     @GetMapping("/authUser/unallocatedList")
-    fun unallocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    fun unallocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         return userService.selectUnallocatedList(user, pageQuery)
     }
 

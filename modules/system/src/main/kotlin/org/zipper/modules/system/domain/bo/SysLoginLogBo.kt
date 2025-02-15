@@ -2,6 +2,8 @@ package org.zipper.modules.system.domain.bo
 
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.modules.system.domain.entity.SysLoginLogEntity
+import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -10,66 +12,61 @@ import java.util.*
  * @author Michelle.Chung
  */
 @AutoMapper(target = SysLoginLogEntity::class, reverseConvertGenerate = false)
-class SysLoginLogBo {
+class SysLoginLogBo : SysLoginLogMixin {
     /**
      * 访问ID
      */
-    var infoId: Long? = null
-
-    /**
-     * 租户编号
-     */
-    var tenantId: String? = null
+    override var infoId: Long? = null
 
     /**
      * 用户账号
      */
-    var userName: String? = null
+    override var userName: String? = null
 
     /**
      * 客户端
      */
-    var clientKey: String? = null
+    override var clientKey: String? = null
 
     /**
      * 设备类型
      */
-    var deviceType: String? = null
+    override var deviceType: String? = null
 
     /**
      * 登录IP地址
      */
-    var ipaddr: String? = null
+    override var ipaddr: String? = null
 
     /**
      * 登录地点
      */
-    var loginLocation: String? = null
+    override var loginLocation: String? = null
 
     /**
      * 浏览器类型
      */
-    var browser: String? = null
+    override var browser: String? = null
 
     /**
      * 操作系统
      */
-    var os: String? = null
+    override var os: String? = null
 
     /**
      * 登录状态（0成功 1失败）
      */
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 提示消息
      */
-    var msg: String? = null
+    override var msg: String? = null
 
     /**
      * 访问时间
      */
-    var loginTime: Date? = null
+    override var loginTime: LocalDateTime? = null
 
     /**
      * 请求参数

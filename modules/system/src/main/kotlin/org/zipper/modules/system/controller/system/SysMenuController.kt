@@ -12,7 +12,7 @@ import org.zipper.framework.log.enums.BusinessType
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.security.utils.LoginHelper
 import org.zipper.framework.web.ext.validateRow
-import org.zipper.modules.system.domain.bo.SysMenuBo
+import org.zipper.modules.system.domain.param.SysMenuParam
 import org.zipper.modules.system.domain.vo.MenuTreeSelectVo
 import org.zipper.modules.system.domain.vo.RouterVo
 import org.zipper.modules.system.domain.vo.SysMenuVo
@@ -54,7 +54,7 @@ class SysMenuController(
     @SaCheckPermission("system:menu:list")
     @GetMapping("/list")
     @ResultBody
-    fun list(menu: SysMenuBo): List<SysMenuVo> {
+    fun list(menu: SysMenuParam): List<SysMenuVo> {
         return menuService.selectMenuList(menu, LoginHelper.getUserId())
     }
 
@@ -80,7 +80,7 @@ class SysMenuController(
     @SaCheckPermission("system:menu:query")
     @GetMapping("/treeselect")
     @ResultBody
-    fun treeselect(menu: SysMenuBo): List<Tree<Long>> {
+    fun treeselect(menu: SysMenuParam): List<Tree<Long>> {
         val menus = menuService.selectMenuList(menu, LoginHelper.getUserId())
         return menuService.buildMenuTreeSelect(menus)
     }
@@ -126,7 +126,7 @@ class SysMenuController(
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody menu: SysMenuBo) {
+    fun add(@Validated @RequestBody menu: SysMenuParam) {
         if (!menuService.checkMenuNameUnique(menu)) {
             throw ServiceException("新增菜单'" + menu.menuName + "'失败，菜单名称已存在")
         } else if (UserConstants.YES_FRAME == menu.isFrame && !menu.path.isHttpUrl()) {
@@ -143,7 +143,7 @@ class SysMenuController(
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody menu: SysMenuBo) {
+    fun edit(@Validated @RequestBody menu: SysMenuParam) {
         if (!menuService.checkMenuNameUnique(menu)) {
             throw ServiceException("修改菜单'" + menu.menuName + "'失败，菜单名称已存在")
         } else if (UserConstants.YES_FRAME == menu.isFrame && !menu.path.isHttpUrl()) {

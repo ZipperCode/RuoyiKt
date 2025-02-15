@@ -10,10 +10,11 @@ import org.zipper.common.core.constant.UserConstants
 import org.zipper.common.core.ext.MapStructExt.convert
 import org.zipper.common.core.ext.MapStructExt.convertList
 import org.zipper.common.core.ext.MapStructExt.convertOrNull
+import org.zipper.common.core.ext.MapStructExt.convertTypeList
 import org.zipper.common.core.utils.TreeBuildUtils
 import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.bo.SysMenuBo
+import org.zipper.modules.system.domain.param.SysMenuParam
 import org.zipper.modules.system.domain.entity.SysMenuEntity
 import org.zipper.modules.system.domain.entity.SysRoleMenuEntity
 import org.zipper.modules.system.domain.vo.MetaVo
@@ -42,7 +43,7 @@ class SysMenuServiceImpl(
      * @return 菜单列表
      */
     override fun selectMenuList(userId: Long?): List<SysMenuVo> {
-        return selectMenuList(SysMenuBo(), userId)
+        return selectMenuList(SysMenuParam(), userId)
     }
 
     /**
@@ -51,7 +52,7 @@ class SysMenuServiceImpl(
      * @param menu 菜单信息
      * @return 菜单列表
      */
-    override fun selectMenuList(menu: SysMenuBo, userId: Long?): List<SysMenuVo> {
+    override fun selectMenuList(menu: SysMenuParam, userId: Long?): List<SysMenuVo> {
         val menuList: List<SysMenuVo>
         // 管理员显示所有菜单信息
         if (LoginHelper.isSuperAdmin(userId)) {
@@ -116,7 +117,7 @@ class SysMenuServiceImpl(
      * @param userId 用户名称
      * @return 菜单列表
      */
-    override fun selectMenuTreeByUserId(userId: Long?): List<SysMenuEntity> {
+    override fun selectMenuTreeByUserId(userId: Long?): List<SysMenuVo> {
         val menus = if (LoginHelper.isSuperAdmin(userId)) {
             val lqw = MybatisKt.ktQuery<SysMenuEntity>()
                 .`in`(SysMenuEntity::menuType, UserConstants.TYPE_DIR, UserConstants.TYPE_MENU)
@@ -127,7 +128,7 @@ class SysMenuServiceImpl(
         } else {
             baseMapper.selectMenuTreeByUserId(userId)
         }
-        return getChildPerms(menus, 0)
+        return getChildPerms(menus.convertTypeList(), 0)
     }
 
     /**
@@ -168,7 +169,7 @@ class SysMenuServiceImpl(
      * @param menus 菜单列表
      * @return 路由列表
      */
-    override fun buildMenus(menus: List<SysMenuEntity>): List<RouterVo> {
+    override fun buildMenus(menus: List<SysMenuVo>): List<RouterVo> {
         val routers: MutableList<RouterVo> = LinkedList()
         for (menu in menus) {
             val router = RouterVo()
@@ -177,7 +178,7 @@ class SysMenuServiceImpl(
             router.path = menu.getRouterPath()
             router.component = menu.getComponentInfo()
             router.query = menu.queryParam
-            router.meta = MetaVo(menu.menuName!!, menu.icon!!, StringUtils.equals("1", menu.getIsCache()), menu.path)
+            router.meta = MetaVo(menu.menuName!!, menu.icon!!, StringUtils.equals("1", menu.isCache), menu.path)
             val cMenus = menu.children
             if (CollUtil.isNotEmpty(cMenus) && UserConstants.TYPE_DIR == menu.menuType) {
                 router.alwaysShow = true
@@ -199,7 +200,7 @@ class SysMenuServiceImpl(
                 router.path = "/"
                 val childrenList: MutableList<RouterVo> = ArrayList()
                 val children = RouterVo()
-                val routerPath = SysMenuEntity.innerLinkReplaceEach(menu.path)
+                val routerPath = SysMenuVo.innerLinkReplaceEach(menu.path)
                 children.path = routerPath
                 children.component = UserConstants.INNER_LINK
                 children.name = StringUtils.capitalize(routerPath)
@@ -266,7 +267,7 @@ class SysMenuServiceImpl(
      * @param bo 菜单信息
      * @return 结果
      */
-    override fun insertMenu(bo: SysMenuBo): Int {
+    override fun insertMenu(bo: SysMenuParam): Int {
         val menu = bo.convert<SysMenuEntity>()
         return baseMapper.insert(menu)
     }
@@ -277,7 +278,7 @@ class SysMenuServiceImpl(
      * @param bo 菜单信息
      * @return 结果
      */
-    override fun updateMenu(bo: SysMenuBo): Int {
+    override fun updateMenu(bo: SysMenuParam): Int {
         val menu = bo.convert<SysMenuEntity>()
         return baseMapper.updateById(menu)
     }
@@ -298,7 +299,7 @@ class SysMenuServiceImpl(
      * @param menu 菜单信息
      * @return 结果
      */
-    override fun checkMenuNameUnique(menu: SysMenuBo): Boolean {
+    override fun checkMenuNameUnique(menu: SysMenuParam): Boolean {
         val exist = baseMapper.exists(
             MybatisKt.ktQuery<SysMenuEntity>()
                 .eq(SysMenuEntity::menuName, menu.menuName)
@@ -315,8 +316,8 @@ class SysMenuServiceImpl(
      * @param parentId 传入的父节点ID
      * @return String
      */
-    private fun getChildPerms(list: List<SysMenuEntity>, parentId: Int): List<SysMenuEntity> {
-        val returnList: MutableList<SysMenuEntity> = ArrayList()
+    private fun getChildPerms(list: List<SysMenuVo>, parentId: Int): List<SysMenuVo> {
+        val returnList: MutableList<SysMenuVo> = ArrayList()
         for (t in list) {
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
             if (t.parentId == parentId.toLong()) {
@@ -330,7 +331,7 @@ class SysMenuServiceImpl(
     /**
      * 递归列表
      */
-    private fun recursionFn(list: List<SysMenuEntity>, t: SysMenuEntity) {
+    private fun recursionFn(list: List<SysMenuVo>, t: SysMenuVo) {
         // 得到子节点列表
         t.children = list.filter { it.parentId == t.menuId }
         for (tChild in t.children) {

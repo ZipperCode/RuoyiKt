@@ -10,7 +10,7 @@ import org.zipper.framework.log.enums.BusinessType
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
-import org.zipper.modules.system.domain.bo.SysDictTypeBo
+import org.zipper.modules.system.domain.param.SysDictTypeParam
 import org.zipper.modules.system.domain.vo.SysDictTypeVo
 import org.zipper.modules.system.excel.responseToExcel
 import org.zipper.modules.system.service.dict.ISysDictTypeService
@@ -29,7 +29,7 @@ class SysDictTypeController(private val dictTypeService: ISysDictTypeService) {
      */
     @SaCheckPermission("system:dict:list")
     @GetMapping("/list")
-    fun list(dictType: SysDictTypeBo, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo> {
+    fun list(dictType: SysDictTypeParam, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo> {
         return dictTypeService.selectPageDictTypeList(dictType, pageQuery)
     }
 
@@ -39,7 +39,7 @@ class SysDictTypeController(private val dictTypeService: ISysDictTypeService) {
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    fun export(dictType: SysDictTypeBo, response: HttpServletResponse) {
+    fun export(dictType: SysDictTypeParam, response: HttpServletResponse) {
         val list = dictTypeService.selectDictTypeList(dictType)
         response.responseToExcel<SysDictTypeVo>(list, "字典类型")
     }
@@ -63,7 +63,7 @@ class SysDictTypeController(private val dictTypeService: ISysDictTypeService) {
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody dict: SysDictTypeBo) {
+    fun add(@Validated @RequestBody dict: SysDictTypeParam) {
         if (!dictTypeService.checkDictTypeUnique(dict)) {
             throw ServiceException("新增字典'" + dict.dictName + "'失败，字典类型已存在")
         }
@@ -77,7 +77,7 @@ class SysDictTypeController(private val dictTypeService: ISysDictTypeService) {
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody dict: SysDictTypeBo) {
+    fun edit(@Validated @RequestBody dict: SysDictTypeParam) {
         if (!dictTypeService.checkDictTypeUnique(dict)) {
             throw ServiceException("修改字典'" + dict.dictName + "'失败，字典类型已存在")
         }

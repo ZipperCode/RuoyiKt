@@ -1,4 +1,4 @@
-package org.zipper.modules.system.domain.bo
+package org.zipper.modules.system.domain.param
 
 import io.github.linpeilie.annotations.AutoMapper
 import jakarta.validation.constraints.NotBlank
@@ -6,18 +6,18 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDictTypeEntity
+import org.zipper.modules.system.domain.mixin.SysDictTypeMixin
 
 /**
- * 字典类型业务对象 sys_dict_type
+ * 字典类型业务对象 dto
  *
- * @author Michelle.Chung
  */
 @AutoMapper(target = SysDictTypeEntity::class, reverseConvertGenerate = false)
-class SysDictTypeBo : BaseMixinVo() {
+class SysDictTypeParam : BaseMixinVo(), SysDictTypeMixin {
     /**
      * 字典主键
      */
-    var dictId: Long? = null
+    override var dictId: Long? = null
 
     /**
      * 字典名称
@@ -28,7 +28,7 @@ class SysDictTypeBo : BaseMixinVo() {
         max = 100,
         message = "字典类型名称长度不能超过{max}个字符"
     )
-    var dictName: String? = null
+    override var dictName: String = ""
 
     /**
      * 字典类型
@@ -40,10 +40,10 @@ class SysDictTypeBo : BaseMixinVo() {
         message = "字典类型类型长度不能超过{max}个字符"
     )
     @field:Pattern(regexp = "^[a-z][a-z0-9_]*$", message = "字典类型必须以字母开头，且只能为（小写字母，数字，下滑线）")
-    var dictType: String? = null
+    override var dictType: String = ""
 
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 }

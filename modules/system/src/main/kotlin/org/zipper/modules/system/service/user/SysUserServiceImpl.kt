@@ -21,7 +21,7 @@ import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.mybatis.helper.DataBaseHelper
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.bo.SysUserBo
+import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.entity.SysDeptEntity
 import org.zipper.modules.system.domain.entity.SysUserEntity
 import org.zipper.modules.system.domain.entity.SysUserPostEntity
@@ -45,7 +45,7 @@ class SysUserServiceImpl(
 ) : ISysUserService, UserService {
 
 
-    override fun selectPageUserList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    override fun selectPageUserList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         val page = baseMapper.selectPageUserList(pageQuery.build(), this.buildQueryWrapper(user))
         return TableDataInfo.build(page)
     }
@@ -56,11 +56,11 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    override fun selectUserList(user: SysUserBo): List<SysUserVo> {
+    override fun selectUserList(user: SysUserParam): List<SysUserVo> {
         return baseMapper.selectUserList(this.buildQueryWrapper(user))
     }
 
-    private fun buildQueryWrapper(user: SysUserBo): Wrapper<SysUserEntity> {
+    private fun buildQueryWrapper(user: SysUserParam): Wrapper<SysUserEntity> {
         val params = user.params
         val wrapper = Wrappers.query<SysUserEntity>()
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
@@ -92,7 +92,7 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    override fun selectAllocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    override fun selectAllocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         val wrapper = Wrappers.query<SysUserEntity>()
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
             .eq(ObjectUtil.isNotNull(user.roleId), "r.role_id", user.roleId)
@@ -110,7 +110,7 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    override fun selectUnallocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    override fun selectUnallocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         val userIds = userRoleMapper.selectUserIdsByRoleId(user.roleId ?: 0)
         val wrapper = Wrappers.query<SysUserEntity>()
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
@@ -187,7 +187,7 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 结果
      */
-    override fun checkUserNameUnique(user: SysUserBo): Boolean {
+    override fun checkUserNameUnique(user: SysUserParam): Boolean {
         val exist = baseMapper.exists(
             MybatisKt.ktQuery<SysUserEntity>()
                 .eq(SysUserEntity::userName, user.userName)
@@ -201,7 +201,7 @@ class SysUserServiceImpl(
      *
      * @param user 用户信息
      */
-    override fun checkPhoneUnique(user: SysUserBo): Boolean {
+    override fun checkPhoneUnique(user: SysUserParam): Boolean {
         val exist = baseMapper.exists(
             MybatisKt.ktQuery<SysUserEntity>()
                 .eq(SysUserEntity::phonenumber, user.phonenumber)
@@ -215,7 +215,7 @@ class SysUserServiceImpl(
      *
      * @param user 用户信息
      */
-    override fun checkEmailUnique(user: SysUserBo): Boolean {
+    override fun checkEmailUnique(user: SysUserParam): Boolean {
         val exist = baseMapper.exists(
             MybatisKt.ktQuery<SysUserEntity>()
                 .eq(SysUserEntity::email, user.email)
@@ -259,7 +259,7 @@ class SysUserServiceImpl(
      * @return 结果
      */
     @Transactional(rollbackFor = [Exception::class])
-    override fun insertUser(user: SysUserBo): Int {
+    override fun insertUser(user: SysUserParam): Int {
         val sysUserEntity = user.convert<SysUserEntity>()
         // 新增用户信息
         val rows = baseMapper.insert(sysUserEntity)
@@ -277,7 +277,7 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 结果
      */
-    override fun registerUser(user: SysUserBo, tenantId: String?): Boolean {
+    override fun registerUser(user: SysUserParam, tenantId: String?): Boolean {
         user.createBy = user.userId
         user.updateBy = user.userId
         val sysUserEntity = user.convert<SysUserEntity>()
@@ -292,7 +292,7 @@ class SysUserServiceImpl(
      * @return 结果
      */
     @Transactional(rollbackFor = [Exception::class])
-    override fun updateUser(user: SysUserBo): Int {
+    override fun updateUser(user: SysUserParam): Int {
         // 新增用户与角色管理
         insertUserRole(user, true)
         // 新增用户与岗位管理
@@ -339,7 +339,7 @@ class SysUserServiceImpl(
      * @param user 用户信息
      * @return 结果
      */
-    override fun updateUserProfile(user: SysUserBo): Int {
+    override fun updateUserProfile(user: SysUserParam): Int {
         return baseMapper.update(
             null,
             MybatisKt.ktUpdate<SysUserEntity>()
@@ -389,7 +389,7 @@ class SysUserServiceImpl(
      * @param user  用户对象
      * @param clear 清除已存在的关联数据
      */
-    private fun insertUserRole(user: SysUserBo, clear: Boolean) {
+    private fun insertUserRole(user: SysUserParam, clear: Boolean) {
         this.insertUserRole(user.userId, user.roleIds, clear)
     }
 
@@ -399,7 +399,7 @@ class SysUserServiceImpl(
      * @param user  用户对象
      * @param clear 清除已存在的关联数据
      */
-    private fun insertUserPost(user: SysUserBo, clear: Boolean) {
+    private fun insertUserPost(user: SysUserParam, clear: Boolean) {
         val posts = user.postIds
         if (ArrayUtil.isNotEmpty<Long>(posts)) {
             if (clear) {

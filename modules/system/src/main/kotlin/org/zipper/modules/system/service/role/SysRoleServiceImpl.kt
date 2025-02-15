@@ -19,7 +19,7 @@ import org.zipper.framework.mybatis.core.insertBatch
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.bo.SysRoleBo
+import org.zipper.modules.system.domain.param.SysRoleParam
 import org.zipper.modules.system.domain.entity.SysRoleDeptEntity
 import org.zipper.modules.system.domain.entity.SysRoleEntity
 import org.zipper.modules.system.domain.entity.SysRoleMenuEntity
@@ -43,7 +43,7 @@ class SysRoleServiceImpl(
     private val userRoleMapper: SysUserRoleMapper,
     private val roleDeptMapper: SysRoleDeptMapper
 ) : ISysRoleService {
-    override fun selectPageRoleList(role: SysRoleBo, pageQuery: PageQuery): TableDataInfo<SysRoleVo> {
+    override fun selectPageRoleList(role: SysRoleParam, pageQuery: PageQuery): TableDataInfo<SysRoleVo> {
         val page = baseMapper.selectPageRoleList(pageQuery.build(), this.buildQueryWrapper(role))
         return TableDataInfo.build(page)
     }
@@ -54,11 +54,11 @@ class SysRoleServiceImpl(
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    override fun selectRoleList(role: SysRoleBo): List<SysRoleVo> {
+    override fun selectRoleList(role: SysRoleParam): List<SysRoleVo> {
         return baseMapper.selectRoleList(this.buildQueryWrapper(role))
     }
 
-    private fun buildQueryWrapper(bo: SysRoleBo): Wrapper<SysRoleEntity> {
+    private fun buildQueryWrapper(bo: SysRoleParam): Wrapper<SysRoleEntity> {
         val params = bo.params
         val wrapper = Wrappers.query<SysRoleEntity>()
         wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
@@ -120,7 +120,7 @@ class SysRoleServiceImpl(
      * @return 角色列表
      */
     override fun selectRoleAll(): List<SysRoleVo> {
-        return this.selectRoleList(SysRoleBo())
+        return this.selectRoleList(SysRoleParam())
     }
 
     /**
@@ -149,7 +149,7 @@ class SysRoleServiceImpl(
      * @param role 角色信息
      * @return 结果
      */
-    override fun checkRoleNameUnique(role: SysRoleBo): Boolean {
+    override fun checkRoleNameUnique(role: SysRoleParam): Boolean {
         val exist = baseMapper.exists(
             KtQueryWrapper(SysRoleEntity::class.java)
                 .eq(SysRoleEntity::roleName, role.roleName)
@@ -164,7 +164,7 @@ class SysRoleServiceImpl(
      * @param role 角色信息
      * @return 结果
      */
-    override fun checkRoleKeyUnique(role: SysRoleBo): Boolean {
+    override fun checkRoleKeyUnique(role: SysRoleParam): Boolean {
         val exist = baseMapper.exists(
             KtQueryWrapper(SysRoleEntity::class.java)
                 .eq(SysRoleEntity::roleKey, role.roleKey)
@@ -178,7 +178,7 @@ class SysRoleServiceImpl(
      *
      * @param role 角色信息
      */
-    override fun checkRoleAllowed(role: SysRoleBo) {
+    override fun checkRoleAllowed(role: SysRoleParam) {
         if (ObjectUtil.isNotNull(role.roleId) && LoginHelper.isSuperAdmin(role.roleId)) {
             throw ServiceException("不允许操作超级管理员角色")
         }
@@ -214,7 +214,7 @@ class SysRoleServiceImpl(
         if (LoginHelper.isSuperAdmin()) {
             return
         }
-        val roles: List<SysRoleVo?> = this.selectRoleList(SysRoleBo().apply {
+        val roles: List<SysRoleVo?> = this.selectRoleList(SysRoleParam().apply {
             this.roleId = roleId
         })
         if (CollUtil.isEmpty(roles)) {
@@ -239,7 +239,7 @@ class SysRoleServiceImpl(
      * @return 结果
      */
     @Transactional(rollbackFor = [Exception::class])
-    override fun insertRole(bo: SysRoleBo): Int {
+    override fun insertRole(bo: SysRoleParam): Int {
         val role = bo.convert<SysRoleEntity>()
         // 新增角色信息
         baseMapper.insert(role)
@@ -254,7 +254,7 @@ class SysRoleServiceImpl(
      * @return 结果
      */
     @Transactional(rollbackFor = [Exception::class])
-    override fun updateRole(bo: SysRoleBo): Int {
+    override fun updateRole(bo: SysRoleParam): Int {
         val role = bo.convert<SysRoleEntity>()
         // 修改角色信息
         baseMapper.updateById(role)
@@ -289,7 +289,7 @@ class SysRoleServiceImpl(
      * @return 结果
      */
     @Transactional(rollbackFor = [Exception::class])
-    override fun authDataScope(bo: SysRoleBo): Int {
+    override fun authDataScope(bo: SysRoleParam): Int {
         val role = bo.convert<SysRoleEntity>()
         // 修改角色信息
         baseMapper.updateById(role)
@@ -304,7 +304,7 @@ class SysRoleServiceImpl(
      *
      * @param role 角色对象
      */
-    private fun insertRoleMenu(role: SysRoleBo): Int {
+    private fun insertRoleMenu(role: SysRoleParam): Int {
         var rows = 1
         // 新增用户与角色管理
         val list: MutableList<SysRoleMenuEntity> = ArrayList()
@@ -325,7 +325,7 @@ class SysRoleServiceImpl(
      *
      * @param role 角色对象
      */
-    private fun insertRoleDept(role: SysRoleBo): Int {
+    private fun insertRoleDept(role: SysRoleParam): Int {
         var rows = 1
         // 新增角色与部门（数据权限）管理
         val list: MutableList<SysRoleDeptEntity> = ArrayList()
@@ -366,7 +366,7 @@ class SysRoleServiceImpl(
     override fun deleteRoleByIds(roleIds: Array<Long>): Int {
         for (roleId in roleIds) {
             val role = baseMapper.selectById(roleId)
-            checkRoleAllowed(BeanUtil.toBean(role, SysRoleBo::class.java))
+            checkRoleAllowed(BeanUtil.toBean(role, SysRoleParam::class.java))
             checkRoleDataScope(roleId)
             if (countUserRoleByRoleId(roleId) > 0) {
                 throw ServiceException(String.format("%1\$s已分配，不能删除!", role.roleName))

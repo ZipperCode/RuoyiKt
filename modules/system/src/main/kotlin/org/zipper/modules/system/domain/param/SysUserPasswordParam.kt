@@ -1,13 +1,13 @@
-package org.zipper.modules.system.domain.bo
+package org.zipper.modules.system.domain.param
 
 import jakarta.validation.constraints.NotBlank
 import java.io.Serial
 import java.io.Serializable
 
 /**
- * 用户密码修改bo
+ * 用户密码修改 dto
  */
-class SysUserPasswordBo : Serializable {
+class SysUserPasswordParam : Serializable {
     /**
      * 旧密码
      */

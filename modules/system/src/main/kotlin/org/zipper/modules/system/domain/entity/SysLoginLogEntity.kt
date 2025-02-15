@@ -2,70 +2,70 @@ package org.zipper.modules.system.domain.entity
 
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
-import java.io.Serial
+import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
 import java.io.Serializable
-import java.util.*
+import java.time.LocalDateTime
 
 /**
  * 系统访问记录表 sys_login_log
  */
 @TableName("sys_login_log")
-class SysLoginLogEntity : Serializable {
+class SysLoginLogEntity : SysLoginLogMixin, Serializable {
     /**
      * ID
      */
     @field:TableId(value = "info_id")
-    var infoId: Long? = null
+    override var infoId: Long? = null
 
     /**
      * 用户账号
      */
-    var userName: String? = null
+    override var userName: String? = null
 
     /**
      * 客户端
      */
-    var clientKey: String? = null
+    override var clientKey: String? = null
 
     /**
      * 设备类型
      */
-    var deviceType: String? = null
+    override var deviceType: String? = null
 
     /**
      * 登录状态 0成功 1失败
      */
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 登录IP地址
      */
-    var ipaddr: String? = null
+    override var ipaddr: String? = null
 
     /**
      * 登录地点
      */
-    var loginLocation: String? = null
+    override var loginLocation: String? = null
 
     /**
      * 浏览器类型
      */
-    var browser: String? = null
+    override var browser: String? = null
 
     /**
      * 操作系统
      */
-    var os: String? = null
+    override var os: String? = null
 
     /**
      * 提示消息
      */
-    var msg: String? = null
+    override var msg: String? = null
 
     /**
      * 访问时间
      */
-    var loginTime: Date? = null
+    override var loginTime: LocalDateTime? = null
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is SysLoginLogEntity) return false

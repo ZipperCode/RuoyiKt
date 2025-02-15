@@ -3,64 +3,60 @@ package org.zipper.modules.system.domain.entity
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
+import org.zipper.modules.system.domain.mixin.SysDictDataMixin
 
 /**
  * 字典数据表 sys_dict_data
  *
  */
 @TableName("sys_dict_data")
-open class SysDictDataEntity : BaseMixinEntity() {
+open class SysDictDataEntity : BaseMixinEntity(), SysDictDataMixin {
     /**
      * 字典编码
      */
     @TableId(value = "dict_code")
-    var dictCode: Long? = null
+    override var dictCode: Long? = null
 
     /**
      * 字典排序
      */
-    var dictSort: Int? = null
+    override var dictSort: Int? = null
 
     /**
      * 字典标签
      */
-    var dictLabel: String? = null
+    override var dictLabel: String = ""
 
     /**
      * 字典键值
      */
-    var dictValue: String? = null
+    override var dictValue: String = ""
 
     /**
      * 字典类型
      */
-    var dictType: String? = null
+    override var dictType: String? = null
 
     /**
      * 样式属性（其他样式扩展）
      */
-    var cssClass: String? = null
+    override var cssClass: String? = null
 
     /**
      * 表格字典样式
      */
-    var listClass: String? = null
+    override var listClass: String? = null
 
     /**
      * 是否默认（Y是 N否）
      */
 
-    var isDefault: String? = null
+    override var isDefault: String? = null
 
-    fun setIsDefault(isDefault: String?) {
-        this.isDefault = isDefault
-    }
-
-    fun getIsDefault(): String? = this.isDefault
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

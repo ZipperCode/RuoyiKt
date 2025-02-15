@@ -9,7 +9,7 @@ import org.zipper.framework.log.enums.BusinessType
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
-import org.zipper.modules.system.domain.bo.SysDictDataBo
+import org.zipper.modules.system.domain.param.SysDictDataParam
 import org.zipper.modules.system.domain.vo.SysDictDataVo
 import org.zipper.modules.system.excel.responseToExcel
 import org.zipper.modules.system.service.dict.ISysDictDataService
@@ -32,7 +32,7 @@ class SysDictDataController(
      */
     @SaCheckPermission("system:dict:list")
     @GetMapping("/list")
-    fun list(dictData: SysDictDataBo, pageQuery: PageQuery): TableDataInfo<SysDictDataVo> {
+    fun list(dictData: SysDictDataParam, pageQuery: PageQuery): TableDataInfo<SysDictDataVo> {
         return dictDataService.selectPageDictDataList(dictData, pageQuery)
     }
 
@@ -42,7 +42,7 @@ class SysDictDataController(
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    fun export(dictData: SysDictDataBo, response: HttpServletResponse) {
+    fun export(dictData: SysDictDataParam, response: HttpServletResponse) {
         val list = dictDataService.selectDictDataList(dictData)
         response.responseToExcel(list, "字典数据")
     }
@@ -77,7 +77,7 @@ class SysDictDataController(
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody dict: SysDictDataBo) {
+    fun add(@Validated @RequestBody dict: SysDictDataParam) {
         dictDataService.insertDictData(dict)
     }
 
@@ -88,7 +88,7 @@ class SysDictDataController(
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody dict: SysDictDataBo) {
+    fun edit(@Validated @RequestBody dict: SysDictDataParam) {
         dictDataService.updateDictData(dict)
     }
 

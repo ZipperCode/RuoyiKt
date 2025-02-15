@@ -10,7 +10,7 @@ import org.zipper.modules.system.domain.entity.SysDeptEntity
 import org.zipper.modules.system.domain.mixin.SysDeptMixin
 
 /**
- * 部门业务 参数对象
+ * 部门业务 dto
  *
  */
 @AutoMapper(target = SysDeptEntity::class, reverseConvertGenerate = false)

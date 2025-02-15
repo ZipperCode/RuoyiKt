@@ -2,7 +2,7 @@ package org.zipper.modules.system.service.user
 
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.modules.system.domain.bo.SysUserBo
+import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.vo.SysUserVo
 
 /**
@@ -11,7 +11,7 @@ import org.zipper.modules.system.domain.vo.SysUserVo
  * @author Lion Li
  */
 interface ISysUserService {
-    fun selectPageUserList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo>
+    fun selectPageUserList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo>
 
     /**
      * 根据条件分页查询用户列表
@@ -19,7 +19,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    fun selectUserList(user: SysUserBo): List<SysUserVo>
+    fun selectUserList(user: SysUserParam): List<SysUserVo>
 
     /**
      * 根据条件分页查询已分配用户角色列表
@@ -27,7 +27,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    fun selectAllocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo>
+    fun selectAllocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo>
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -35,7 +35,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    fun selectUnallocatedList(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo>
+    fun selectUnallocatedList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo>
 
     /**
      * 通过用户名查询用户
@@ -83,7 +83,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun checkUserNameUnique(user: SysUserBo): Boolean
+    fun checkUserNameUnique(user: SysUserParam): Boolean
 
     /**
      * 校验手机号码是否唯一
@@ -91,7 +91,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun checkPhoneUnique(user: SysUserBo): Boolean
+    fun checkPhoneUnique(user: SysUserParam): Boolean
 
     /**
      * 校验email是否唯一
@@ -99,7 +99,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun checkEmailUnique(user: SysUserBo): Boolean
+    fun checkEmailUnique(user: SysUserParam): Boolean
 
     /**
      * 校验用户是否允许操作
@@ -121,7 +121,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun insertUser(user: SysUserBo): Int
+    fun insertUser(user: SysUserParam): Int
 
     /**
      * 注册用户信息
@@ -129,7 +129,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun registerUser(user: SysUserBo, tenantId: String?): Boolean
+    fun registerUser(user: SysUserParam, tenantId: String?): Boolean
 
     /**
      * 修改用户信息
@@ -137,7 +137,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun updateUser(user: SysUserBo): Int
+    fun updateUser(user: SysUserParam): Int
 
     /**
      * 用户授权角色
@@ -162,7 +162,7 @@ interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    fun updateUserProfile(user: SysUserBo): Int
+    fun updateUserProfile(user: SysUserParam): Int
 
     /**
      * 修改用户头像

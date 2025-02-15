@@ -2,7 +2,7 @@ package org.zipper.modules.system.service.role
 
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.modules.system.domain.bo.SysRoleBo
+import org.zipper.modules.system.domain.param.SysRoleParam
 import org.zipper.modules.system.domain.entity.SysUserRoleEntity
 import org.zipper.modules.system.domain.vo.SysRoleVo
 
@@ -12,7 +12,7 @@ import org.zipper.modules.system.domain.vo.SysRoleVo
  * @author Lion Li
  */
 interface ISysRoleService {
-    fun selectPageRoleList(role: SysRoleBo, pageQuery: PageQuery): TableDataInfo<SysRoleVo>
+    fun selectPageRoleList(role: SysRoleParam, pageQuery: PageQuery): TableDataInfo<SysRoleVo>
 
     /**
      * 根据条件分页查询角色数据
@@ -20,7 +20,7 @@ interface ISysRoleService {
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    fun selectRoleList(role: SysRoleBo): List<SysRoleVo>
+    fun selectRoleList(role: SysRoleParam): List<SysRoleVo>
 
     /**
      * 根据用户ID查询角色列表
@@ -67,7 +67,7 @@ interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    fun checkRoleNameUnique(role: SysRoleBo): Boolean
+    fun checkRoleNameUnique(role: SysRoleParam): Boolean
 
     /**
      * 校验角色权限是否唯一
@@ -75,14 +75,14 @@ interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    fun checkRoleKeyUnique(role: SysRoleBo): Boolean
+    fun checkRoleKeyUnique(role: SysRoleParam): Boolean
 
     /**
      * 校验角色是否允许操作
      *
      * @param role 角色信息
      */
-    fun checkRoleAllowed(role: SysRoleBo)
+    fun checkRoleAllowed(role: SysRoleParam)
 
     /**
      * 校验角色是否有数据权限
@@ -105,7 +105,7 @@ interface ISysRoleService {
      * @param bo 角色信息
      * @return 结果
      */
-    fun insertRole(bo: SysRoleBo): Int
+    fun insertRole(bo: SysRoleParam): Int
 
     /**
      * 修改保存角色信息
@@ -113,7 +113,7 @@ interface ISysRoleService {
      * @param bo 角色信息
      * @return 结果
      */
-    fun updateRole(bo: SysRoleBo): Int
+    fun updateRole(bo: SysRoleParam): Int
 
     /**
      * 修改角色状态
@@ -130,7 +130,7 @@ interface ISysRoleService {
      * @param bo 角色信息
      * @return 结果
      */
-    fun authDataScope(bo: SysRoleBo): Int
+    fun authDataScope(bo: SysRoleParam): Int
 
     /**
      * 通过角色ID删除角色

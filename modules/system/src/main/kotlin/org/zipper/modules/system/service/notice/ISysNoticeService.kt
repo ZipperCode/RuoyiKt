@@ -2,7 +2,7 @@ package org.zipper.modules.system.service.notice
 
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.modules.system.domain.bo.SysNoticeBo
+import org.zipper.modules.system.domain.param.SysNoticeParam
 import org.zipper.modules.system.domain.vo.SysNoticeVo
 
 /**
@@ -11,7 +11,7 @@ import org.zipper.modules.system.domain.vo.SysNoticeVo
  * @author Lion Li
  */
 interface ISysNoticeService {
-    fun selectPageNoticeList(notice: SysNoticeBo, pageQuery: PageQuery): TableDataInfo<SysNoticeVo>
+    fun selectPageNoticeList(notice: SysNoticeParam, pageQuery: PageQuery): TableDataInfo<SysNoticeVo>
 
     /**
      * 查询公告信息
@@ -27,7 +27,7 @@ interface ISysNoticeService {
      * @param notice 公告信息
      * @return 公告集合
      */
-    fun selectNoticeList(notice: SysNoticeBo): List<SysNoticeVo>
+    fun selectNoticeList(notice: SysNoticeParam): List<SysNoticeVo>
 
     /**
      * 新增公告
@@ -35,7 +35,7 @@ interface ISysNoticeService {
      * @param bo 公告信息
      * @return 结果
      */
-    fun insertNotice(bo: SysNoticeBo): Int
+    fun insertNotice(bo: SysNoticeParam): Int
 
     /**
      * 修改公告
@@ -43,7 +43,7 @@ interface ISysNoticeService {
      * @param bo 公告信息
      * @return 结果
      */
-    fun updateNotice(bo: SysNoticeBo): Int
+    fun updateNotice(bo: SysNoticeParam): Int
 
     /**
      * 删除公告信息

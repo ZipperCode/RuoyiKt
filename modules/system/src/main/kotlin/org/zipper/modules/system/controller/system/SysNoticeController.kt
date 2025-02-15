@@ -11,7 +11,7 @@ import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.web.ext.validateRow
-import org.zipper.modules.system.domain.bo.SysNoticeBo
+import org.zipper.modules.system.domain.param.SysNoticeParam
 import org.zipper.modules.system.domain.vo.SysNoticeVo
 import org.zipper.modules.system.service.dict.DictService
 import org.zipper.modules.system.service.notice.ISysNoticeService
@@ -33,7 +33,7 @@ class SysNoticeController(
      */
     @SaCheckPermission("system:notice:list")
     @GetMapping("/list")
-    fun list(notice: SysNoticeBo?, pageQuery: PageQuery?): TableDataInfo<SysNoticeVo> {
+    fun list(notice: SysNoticeParam?, pageQuery: PageQuery?): TableDataInfo<SysNoticeVo> {
         return noticeService.selectPageNoticeList(notice!!, pageQuery!!)
     }
 
@@ -56,7 +56,7 @@ class SysNoticeController(
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody notice: SysNoticeBo) {
+    fun add(@Validated @RequestBody notice: SysNoticeParam) {
         noticeService.insertNotice(notice).validateRow()
         val type = dictService.getDictLabel("sys_notice_type", notice.noticeType!!)
         currentSpringContext().publishEvent(WebSocketMsgEvent("[$type]${notice.noticeTitle}"))
@@ -69,7 +69,7 @@ class SysNoticeController(
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody notice: SysNoticeBo) {
+    fun edit(@Validated @RequestBody notice: SysNoticeParam) {
         noticeService.updateNotice(notice).validateRow()
     }
 

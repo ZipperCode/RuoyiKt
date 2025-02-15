@@ -3,8 +3,8 @@ package org.zipper.build.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.plugins
 import org.gradle.kotlin.dsl.repositories
+import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
 
 class ModulePlugin : Plugin<Project> {
@@ -27,6 +27,13 @@ class ModulePlugin : Plugin<Project> {
 
             with(extensions.getByType(KotlinTopLevelExtension::class.java)) {
                 jvmToolchain(17)
+            }
+
+            with(extensions.getByType(AllOpenExtension::class.java)) {
+                annotations(
+                    BuildConfig.ALL_OPEN,
+                    "org.springframework.boot.autoconfigure.SpringBootApplication"
+                )
             }
 
         }

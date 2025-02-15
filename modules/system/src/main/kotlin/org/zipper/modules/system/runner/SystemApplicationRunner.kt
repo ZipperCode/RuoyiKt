@@ -9,7 +9,6 @@ import org.zipper.common.core.ext.log
 import org.zipper.common.core.framework.store.IStorageService
 import org.zipper.modules.system.service.dept.DeptService
 import org.zipper.modules.system.service.dict.DictService
-import org.zipper.modules.system.service.oss.OssService
 import org.zipper.modules.system.service.user.UserService
 import org.zipper.modules.system.translation.*
 

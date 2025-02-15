@@ -2,7 +2,7 @@ package org.zipper.modules.system.domain.entity
 
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
-import java.io.Serial
+import org.zipper.modules.system.domain.mixin.SysOperateLogMixin
 import java.io.Serializable
 import java.util.*
 
@@ -13,103 +13,97 @@ import java.util.*
  * @author Lion Li
  */
 @TableName("sys_oper_log")
-open class SysOperLogEntity : Serializable {
+open class SysOperateLogEntity : SysOperateLogMixin, Serializable {
     /**
      * 日志主键
      */
     @field:TableId(value = "oper_id")
-    var operId: Long? = null
-
-    /**
-     * 租户编号
-     */
-    var tenantId: String? = null
+    override var operId: Long? = null
 
     /**
      * 操作模块
      */
-    var title: String? = null
+    override var title: String? = null
 
     /**
      * 业务类型（0其它 1新增 2修改 3删除）
      */
-    var businessType: Int? = null
+    override var businessType: Int? = null
 
     /**
      * 请求方法
      */
-    var method: String? = null
+    override var method: String? = null
 
     /**
      * 请求方式
      */
-    var requestMethod: String? = null
+    override var requestMethod: String? = null
 
     /**
      * 操作类别（0其它 1后台用户 2手机端用户）
      */
-    var operatorType: Int? = null
+    override var operatorType: Int? = null
 
     /**
      * 操作人员
      */
-    var operName: String? = null
+    override var operName: String? = null
 
     /**
      * 部门名称
      */
-    var deptName: String? = null
+    override var deptName: String? = null
 
     /**
      * 请求url
      */
-    var operUrl: String? = null
+    override var operUrl: String? = null
 
     /**
      * 操作地址
      */
-    var operIp: String? = null
+    override var operIp: String? = null
 
     /**
      * 操作地点
      */
-    var operLocation: String? = null
+    override var operLocation: String? = null
 
     /**
      * 请求参数
      */
-    var operParam: String? = null
+    override var operParam: String? = null
 
     /**
      * 返回参数
      */
-    var jsonResult: String? = null
+    override var jsonResult: String? = null
 
     /**
      * 操作状态（0正常 1异常）
      */
-    var status: Int = 0
+    override var status: Int = 0
 
     /**
      * 错误消息
      */
-    var errorMsg: String? = null
+    override var errorMsg: String? = null
 
     /**
      * 操作时间
      */
-    var operTime: Date? = null
+    override var operTime: Date? = null
 
     /**
      * 消耗时间
      */
-    var costTime: Long? = null
+    override var costTime: Long? = null
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is SysOperLogEntity) return false
+        if (other !is SysOperateLogEntity) return false
 
         if (operId != other.operId) return false
-        if (tenantId != other.tenantId) return false
         if (title != other.title) return false
         if (businessType != other.businessType) return false
         if (method != other.method) return false
@@ -132,7 +126,6 @@ open class SysOperLogEntity : Serializable {
 
     override fun hashCode(): Int {
         var result = operId?.hashCode() ?: 0
-        result = 31 * result + (tenantId?.hashCode() ?: 0)
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (businessType ?: 0)
         result = 31 * result + (method?.hashCode() ?: 0)

@@ -23,7 +23,7 @@ import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.mybatis.core.selectVoPage
 import org.zipper.framework.redis.utils.CacheUtils
-import org.zipper.modules.system.domain.bo.SysDictTypeBo
+import org.zipper.modules.system.domain.param.SysDictTypeParam
 import org.zipper.modules.system.domain.entity.SysDictDataEntity
 import org.zipper.modules.system.domain.entity.SysDictTypeEntity
 import org.zipper.modules.system.domain.vo.SysDictDataVo
@@ -43,7 +43,7 @@ class SysDictTypeServiceImpl(
 ) : ISysDictTypeService, DictService {
 
 
-    override fun selectPageDictTypeList(dictType: SysDictTypeBo, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo> {
+    override fun selectPageDictTypeList(dictType: SysDictTypeParam, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo> {
         val lqw = buildQueryWrapper(dictType)
         return TableDataInfo.build(baseMapper.selectVoPage<SysDictTypeEntity, SysDictTypeVo>(pageQuery.build(), lqw))
     }
@@ -54,12 +54,12 @@ class SysDictTypeServiceImpl(
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
-    override fun selectDictTypeList(dictType: SysDictTypeBo): List<SysDictTypeVo> {
+    override fun selectDictTypeList(dictType: SysDictTypeParam): List<SysDictTypeVo> {
         val lqw = buildQueryWrapper(dictType)
         return baseMapper.selectList(lqw).convertList()
     }
 
-    private fun buildQueryWrapper(bo: SysDictTypeBo): KtQueryWrapper<SysDictTypeEntity> {
+    private fun buildQueryWrapper(bo: SysDictTypeParam): KtQueryWrapper<SysDictTypeEntity> {
         val params: Map<String, Any?> = bo.params
         val lqw = MybatisKt.ktQuery<SysDictTypeEntity>()
         lqw.like(StringUtils.isNotBlank(bo.dictName), SysDictTypeEntity::dictName, bo.dictName)
@@ -152,7 +152,7 @@ class SysDictTypeServiceImpl(
      * @return 结果
      */
     @CachePut(cacheNames = [CacheNames.SYS_DICT], key = "#bo.dictType")
-    override fun insertDictType(bo: SysDictTypeBo): List<SysDictDataVo> {
+    override fun insertDictType(bo: SysDictTypeParam): List<SysDictDataVo> {
         val dict: SysDictTypeEntity = bo.convert()
         val row: Int = baseMapper.insert(dict)
         if (row > 0) {
@@ -170,7 +170,7 @@ class SysDictTypeServiceImpl(
      */
     @CachePut(cacheNames = [CacheNames.SYS_DICT], key = "#bo.dictType")
     @Transactional(rollbackFor = [Exception::class])
-    override fun updateDictType(bo: SysDictTypeBo): List<SysDictDataVo> {
+    override fun updateDictType(bo: SysDictTypeParam): List<SysDictDataVo> {
         val dict: SysDictTypeEntity = bo.convert()
         val oldDict: SysDictTypeEntity = baseMapper.selectById(dict.dictId)
         dictDataMapper.update(
@@ -192,7 +192,7 @@ class SysDictTypeServiceImpl(
      * @param dictType 字典类型
      * @return 结果
      */
-    override fun checkDictTypeUnique(dictType: SysDictTypeBo): Boolean {
+    override fun checkDictTypeUnique(dictType: SysDictTypeParam): Boolean {
         val exist: Boolean = baseMapper.exists(
             MybatisKt.ktQuery<SysDictTypeEntity>()
                 .eq(SysDictTypeEntity::dictType, dictType.dictType)

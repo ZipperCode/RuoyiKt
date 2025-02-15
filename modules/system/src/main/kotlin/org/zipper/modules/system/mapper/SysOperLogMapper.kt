@@ -1,7 +1,7 @@
 package org.zipper.modules.system.mapper
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
-import org.zipper.modules.system.domain.entity.SysOperLogEntity
+import org.zipper.modules.system.domain.entity.SysOperateLogEntity
 
 
 /**
@@ -9,4 +9,4 @@ import org.zipper.modules.system.domain.entity.SysOperLogEntity
  *
  * @author Lion Li
  */
-interface SysOperLogMapper : BaseMapper<SysOperLogEntity>
+interface SysOperLogMapper : BaseMapper<SysOperateLogEntity>

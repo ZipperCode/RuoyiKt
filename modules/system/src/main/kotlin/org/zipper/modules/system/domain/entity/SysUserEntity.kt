@@ -3,6 +3,8 @@ package org.zipper.modules.system.domain.entity
 import com.baomidou.mybatisplus.annotation.*
 import org.zipper.common.core.constant.UserConstants
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
+import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
+import org.zipper.modules.system.domain.mixin.SysUserMixin
 import java.util.*
 
 /**
@@ -11,47 +13,47 @@ import java.util.*
  * @author Lion Li
  */
 @TableName("sys_user")
-class SysUserEntity : BaseMixinEntity() {
+class SysUserEntity : BaseMixinEntity(), SysUserMixin, LogicDeleteMixin {
     /**
      * 用户ID
      */
     @field:TableId(value = "user_id")
-    var userId: Long? = null
+    override var userId: Long? = null
 
     /**
      * 部门ID
      */
-    var deptId: Long? = null
+    override var deptId: Long? = null
 
     /**
      * 用户账号
      */
-    var userName: String? = null
+    override var userName: String? = null
 
     /**
      * 用户昵称
      */
-    var nickName: String? = null
+    override var nickName: String? = null
 
     /**
      * 用户类型（sys_user系统用户）
      */
-    var userType: String? = null
+    override var userType: String? = null
 
     /**
      * 用户邮箱
      */
-    var email: String? = null
+    override var email: String? = null
 
     /**
      * 手机号码
      */
-    var phonenumber: String? = null
+    override var phonenumber: String? = null
 
     /**
      * 用户性别
      */
-    var sex: String? = null
+    override var sex: String? = null
 
     /**
      * 用户头像
@@ -66,18 +68,18 @@ class SysUserEntity : BaseMixinEntity() {
         updateStrategy = FieldStrategy.NOT_EMPTY,
         whereStrategy = FieldStrategy.NOT_EMPTY
     )
-    var password: String? = null
+    override var password: String? = null
 
     /**
      * 帐号状态（0正常 1停用）
      */
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 删除标志（0代表存在 2代表删除）
      */
-    @field:TableLogic
-    var delFlag: String? = null
+    @field:TableLogic(value = LogicDeleteMixin.NORMAL, delval = LogicDeleteMixin.DELETED)
+    override var deleted: String? = LogicDeleteMixin.NORMAL
 
     /**
      * 最后登录IP
@@ -92,7 +94,7 @@ class SysUserEntity : BaseMixinEntity() {
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 
 
     val isSuperAdmin: Boolean

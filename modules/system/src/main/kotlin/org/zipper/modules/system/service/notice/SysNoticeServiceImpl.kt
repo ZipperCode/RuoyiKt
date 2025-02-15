@@ -10,7 +10,7 @@ import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.mybatis.core.selectVoPage
-import org.zipper.modules.system.domain.bo.SysNoticeBo
+import org.zipper.modules.system.domain.param.SysNoticeParam
 import org.zipper.modules.system.domain.entity.SysNoticeEntity
 import org.zipper.modules.system.domain.vo.SysNoticeVo
 import org.zipper.modules.system.mapper.SysNoticeMapper
@@ -26,7 +26,7 @@ class SysNoticeServiceImpl(
     private val baseMapper: SysNoticeMapper,
     private val userMapper: SysUserMapper
 ) : ISysNoticeService {
-    override fun selectPageNoticeList(notice: SysNoticeBo, pageQuery: PageQuery): TableDataInfo<SysNoticeVo> {
+    override fun selectPageNoticeList(notice: SysNoticeParam, pageQuery: PageQuery): TableDataInfo<SysNoticeVo> {
         val lqw = buildQueryWrapper(notice)
         val page = baseMapper.selectVoPage<SysNoticeEntity, SysNoticeVo>(pageQuery.build(), lqw)
         return TableDataInfo.build(page)
@@ -48,12 +48,12 @@ class SysNoticeServiceImpl(
      * @param notice 公告信息
      * @return 公告集合
      */
-    override fun selectNoticeList(notice: SysNoticeBo): List<SysNoticeVo> {
+    override fun selectNoticeList(notice: SysNoticeParam): List<SysNoticeVo> {
         val lqw = buildQueryWrapper(notice)
         return baseMapper.selectList(lqw).convertList()
     }
 
-    private fun buildQueryWrapper(bo: SysNoticeBo): KtQueryWrapper<SysNoticeEntity> {
+    private fun buildQueryWrapper(bo: SysNoticeParam): KtQueryWrapper<SysNoticeEntity> {
         val lqw = MybatisKt.ktQuery<SysNoticeEntity>()
         lqw.like(StringUtils.isNotBlank(bo.noticeTitle), SysNoticeEntity::noticeTitle, bo.noticeTitle)
         lqw.eq(StringUtils.isNotBlank(bo.noticeType), SysNoticeEntity::noticeType, bo.noticeType)
@@ -71,7 +71,7 @@ class SysNoticeServiceImpl(
      * @param bo 公告信息
      * @return 结果
      */
-    override fun insertNotice(bo: SysNoticeBo): Int {
+    override fun insertNotice(bo: SysNoticeParam): Int {
         val notice = bo.convert<SysNoticeEntity>()
         return baseMapper.insert(notice)
     }
@@ -82,7 +82,7 @@ class SysNoticeServiceImpl(
      * @param bo 公告信息
      * @return 结果
      */
-    override fun updateNotice(bo: SysNoticeBo): Int {
+    override fun updateNotice(bo: SysNoticeParam): Int {
         val notice = bo.convert<SysNoticeEntity>()
         return baseMapper.updateById(notice)
     }

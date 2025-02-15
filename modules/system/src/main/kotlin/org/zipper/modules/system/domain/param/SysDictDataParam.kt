@@ -1,27 +1,27 @@
-package org.zipper.modules.system.domain.bo
+package org.zipper.modules.system.domain.param
 
 import io.github.linpeilie.annotations.AutoMapper
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDictDataEntity
+import org.zipper.modules.system.domain.mixin.SysDictDataMixin
 
 /**
- * 字典数据业务对象 sys_dict_data
+ * 字典数据业务对象 dto
  *
- * @author Michelle.Chung
  */
 @AutoMapper(target = SysDictDataEntity::class, reverseConvertGenerate = false)
-class SysDictDataBo : BaseMixinVo() {
+class SysDictDataParam : BaseMixinVo(), SysDictDataMixin {
     /**
      * 字典编码
      */
-    var dictCode: Long? = null
+    override var dictCode: Long? = null
 
     /**
      * 字典排序
      */
-    var dictSort: Int? = null
+    override var dictSort: Int? = null
 
     /**
      * 字典标签
@@ -32,7 +32,7 @@ class SysDictDataBo : BaseMixinVo() {
         max = 100,
         message = "字典标签长度不能超过{max}个字符"
     )
-    var dictLabel: String? = null
+    override var dictLabel: String = ""
 
     /**
      * 字典键值
@@ -43,7 +43,7 @@ class SysDictDataBo : BaseMixinVo() {
         max = 100,
         message = "字典键值长度不能超过{max}个字符"
     )
-    var dictValue: String? = null
+    override var dictValue: String = ""
 
     /**
      * 字典类型
@@ -54,34 +54,26 @@ class SysDictDataBo : BaseMixinVo() {
         max = 100,
         message = "字典类型长度不能超过{max}个字符"
     )
-    var dictType: String? = null
+    override var dictType: String? = null
 
     /**
      * 样式属性（其他样式扩展）
      */
     @field:Size(min = 0, max = 100, message = "样式属性长度不能超过{max}个字符")
-    var cssClass: String? = null
+    override var cssClass: String? = null
 
     /**
      * 表格回显样式
      */
-    var listClass: String? = null
+    override var listClass: String? = null
 
     /**
      * 是否默认（Y是 N否）
      */
-    var isDefault: String? = null
-
-    fun setIsDefault(isDefault: String?) {
-        this.isDefault = isDefault
-    }
-
-    fun getIsDefault(): String? {
-        return isDefault
-    }
+    override var isDefault: String? = null
 
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 }

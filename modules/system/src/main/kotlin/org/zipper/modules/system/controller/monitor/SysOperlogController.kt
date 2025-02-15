@@ -10,8 +10,8 @@ import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.web.ext.validateRow
-import org.zipper.modules.system.domain.bo.SysOperLogBo
-import org.zipper.modules.system.domain.vo.SysOperLogVo
+import org.zipper.modules.system.domain.bo.SysOperateLogBo
+import org.zipper.modules.system.domain.vo.SysOperateLogVo
 import org.zipper.modules.system.excel.responseToExcel
 import org.zipper.modules.system.service.log.ISysOperLogService
 
@@ -29,7 +29,7 @@ class SysOperlogController(private val operLogService: ISysOperLogService) {
      */
     @SaCheckPermission("monitor:operlog:list")
     @GetMapping("/list")
-    fun list(operLog: SysOperLogBo, pageQuery: PageQuery): TableDataInfo<SysOperLogVo> {
+    fun list(operLog: SysOperateLogBo, pageQuery: PageQuery): TableDataInfo<SysOperateLogVo> {
         return operLogService.selectPageOperLogList(operLog, pageQuery)
     }
 
@@ -39,7 +39,7 @@ class SysOperlogController(private val operLogService: ISysOperLogService) {
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
-    fun export(operLog: SysOperLogBo, response: HttpServletResponse) {
+    fun export(operLog: SysOperateLogBo, response: HttpServletResponse) {
         val list = operLogService.selectOperLogList(operLog)
         response.responseToExcel(list, "操作日志")
     }

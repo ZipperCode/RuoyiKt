@@ -1,8 +1,7 @@
 package org.zipper.modules.system.service.menu
 
 import cn.hutool.core.lang.tree.Tree
-import org.zipper.modules.system.domain.bo.SysMenuBo
-import org.zipper.modules.system.domain.entity.SysMenuEntity
+import org.zipper.modules.system.domain.param.SysMenuParam
 import org.zipper.modules.system.domain.vo.RouterVo
 import org.zipper.modules.system.domain.vo.SysMenuVo
 
@@ -27,7 +26,7 @@ interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    fun selectMenuList(menu: SysMenuBo, userId: Long?): List<SysMenuVo>
+    fun selectMenuList(menu: SysMenuParam, userId: Long?): List<SysMenuVo>
 
     /**
      * 根据用户ID查询权限
@@ -51,7 +50,7 @@ interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    fun selectMenuTreeByUserId(userId: Long?): List<SysMenuEntity>
+    fun selectMenuTreeByUserId(userId: Long?): List<SysMenuVo>
 
     /**
      * 根据角色ID查询菜单树信息
@@ -75,7 +74,7 @@ interface ISysMenuService {
      * @param menus 菜单列表
      * @return 路由列表
      */
-    fun buildMenus(menus: List<SysMenuEntity>): List<RouterVo>
+    fun buildMenus(menus: List<SysMenuVo>): List<RouterVo>
 
     /**
      * 构建前端所需要下拉树结构
@@ -115,7 +114,7 @@ interface ISysMenuService {
      * @param bo 菜单信息
      * @return 结果
      */
-    fun insertMenu(bo: SysMenuBo): Int
+    fun insertMenu(bo: SysMenuParam): Int
 
     /**
      * 修改保存菜单信息
@@ -123,7 +122,7 @@ interface ISysMenuService {
      * @param bo 菜单信息
      * @return 结果
      */
-    fun updateMenu(bo: SysMenuBo): Int
+    fun updateMenu(bo: SysMenuParam): Int
 
     /**
      * 删除菜单管理信息
@@ -139,5 +138,5 @@ interface ISysMenuService {
      * @param menu 菜单信息
      * @return 结果
      */
-    fun checkMenuNameUnique(menu: SysMenuBo): Boolean
+    fun checkMenuNameUnique(menu: SysMenuParam): Boolean
 }

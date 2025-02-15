@@ -1,4 +1,4 @@
-package org.zipper.modules.system.domain.bo
+package org.zipper.modules.system.domain.param
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Size
@@ -12,7 +12,7 @@ import org.zipper.framework.mybatis.core.domain.BaseMixinVo
  *
  * @author Michelle.Chung
  */
-class SysUserProfileBo : BaseMixinVo() {
+class SysUserProfileParam : BaseMixinVo() {
     /**
      * 用户ID
      */

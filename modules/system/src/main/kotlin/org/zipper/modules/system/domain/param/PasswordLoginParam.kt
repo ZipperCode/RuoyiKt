@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.Length
 import org.zipper.common.core.constant.UserConstants
 import java.io.Serializable
 
+/**
+ * 密码登录 dto
+ */
 class PasswordLoginParam : Serializable {
 
     /**

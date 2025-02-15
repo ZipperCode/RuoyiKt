@@ -4,8 +4,9 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated
 import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.excel.annotation.ExcelDictFormat
-import org.zipper.modules.system.excel.ExcelDictConvert
 import org.zipper.modules.system.domain.entity.SysPostEntity
+import org.zipper.modules.system.domain.mixin.SysPostMixin
+import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.util.*
 
@@ -16,43 +17,43 @@ import java.util.*
  */
 @ExcelIgnoreUnannotated
 @AutoMapper(target = SysPostEntity::class)
-class SysPostVo : Serializable {
+class SysPostVo : SysPostMixin, Serializable {
     /**
      * 岗位ID
      */
     @field:ExcelProperty(value = ["岗位序号"])
-    var postId: Long? = null
+    override var postId: Long? = null
 
     /**
      * 岗位编码
      */
     @field:ExcelProperty(value = ["岗位编码"])
-    var postCode: String? = null
+    override var postCode: String? = null
 
     /**
      * 岗位名称
      */
     @field:ExcelProperty(value = ["岗位名称"])
-    var postName: String? = null
+    override var postName: String? = null
 
     /**
      * 显示顺序
      */
     @field:ExcelProperty(value = ["岗位排序"])
-    var postSort: Int? = null
+    override var postSort: Int? = null
 
     /**
      * 状态（0正常 1停用）
      */
     @field:ExcelProperty(value = ["状态"], converter = ExcelDictConvert::class)
     @field:ExcelDictFormat(dictType = "sys_normal_disable")
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 备注
      */
     @field:ExcelProperty(value = ["备注"])
-    var remark: String? = null
+    override var remark: String? = null
 
     /**
      * 创建时间

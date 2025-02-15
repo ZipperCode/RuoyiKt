@@ -2,7 +2,7 @@ package org.zipper.modules.system.service.dict
 
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.modules.system.domain.bo.SysDictTypeBo
+import org.zipper.modules.system.domain.param.SysDictTypeParam
 import org.zipper.modules.system.domain.vo.SysDictDataVo
 import org.zipper.modules.system.domain.vo.SysDictTypeVo
 
@@ -12,7 +12,7 @@ import org.zipper.modules.system.domain.vo.SysDictTypeVo
  * @author Lion Li
  */
 interface ISysDictTypeService {
-    fun selectPageDictTypeList(dictType: SysDictTypeBo, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo>
+    fun selectPageDictTypeList(dictType: SysDictTypeParam, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo>
 
     /**
      * 根据条件分页查询字典类型
@@ -20,7 +20,7 @@ interface ISysDictTypeService {
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
-    fun selectDictTypeList(dictType: SysDictTypeBo): List<SysDictTypeVo>
+    fun selectDictTypeList(dictType: SysDictTypeParam): List<SysDictTypeVo>
 
     /**
      * 根据所有字典类型
@@ -71,7 +71,7 @@ interface ISysDictTypeService {
      * @param bo 字典类型信息
      * @return 结果
      */
-    fun insertDictType(bo: SysDictTypeBo): List<SysDictDataVo>
+    fun insertDictType(bo: SysDictTypeParam): List<SysDictDataVo>
 
     /**
      * 修改保存字典类型信息
@@ -79,7 +79,7 @@ interface ISysDictTypeService {
      * @param bo 字典类型信息
      * @return 结果
      */
-    fun updateDictType(bo: SysDictTypeBo): List<SysDictDataVo>
+    fun updateDictType(bo: SysDictTypeParam): List<SysDictDataVo>
 
     /**
      * 校验字典类型称是否唯一
@@ -87,5 +87,5 @@ interface ISysDictTypeService {
      * @param dictType 字典类型
      * @return 结果
      */
-    fun checkDictTypeUnique(dictType: SysDictTypeBo): Boolean
+    fun checkDictTypeUnique(dictType: SysDictTypeParam): Boolean
 }

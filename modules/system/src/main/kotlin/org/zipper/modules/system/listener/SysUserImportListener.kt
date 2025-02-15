@@ -12,7 +12,7 @@ import org.zipper.common.core.utils.ValidatorUtils
 import org.zipper.framework.excel.core.ExcelListener
 import org.zipper.framework.excel.core.ExcelResult
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.bo.SysUserBo
+import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.vo.SysUserImportVo
 import org.zipper.modules.system.service.config.ISysConfigService
 import org.zipper.modules.system.service.user.ISysUserService
@@ -51,7 +51,7 @@ class SysUserImportListener(
         try {
             // 验证是否存在这个用户
             if (ObjectUtil.isNull(sysUser)) {
-                val user = BeanUtil.toBean(userVo, SysUserBo::class.java)
+                val user = BeanUtil.toBean(userVo, SysUserParam::class.java)
                 ValidatorUtils.validate(user)
                 user.password = password
                 user.createBy = operUserId
@@ -60,7 +60,7 @@ class SysUserImportListener(
                 successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.userName).append(" 导入成功")
             } else if (isUpdateSupport) {
                 val userId = sysUser!!.userId
-                val user = BeanUtil.toBean(userVo, SysUserBo::class.java)
+                val user = BeanUtil.toBean(userVo, SysUserParam::class.java)
                 user.userId = userId
                 ValidatorUtils.validate(user)
                 userService.checkUserAllowed(user.userId)

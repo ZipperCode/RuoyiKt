@@ -4,33 +4,34 @@ import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
+import org.zipper.modules.system.domain.mixin.SysDictTypeMixin
 
 /**
  * 字典类型表 sys_dict_type
  *
  */
 @TableName("sys_dict_type")
-class SysDictTypeEntity : BaseMixinEntity() {
+class SysDictTypeEntity : BaseMixinEntity(), SysDictTypeMixin {
     /**
      * 字典主键
      */
     @TableId(value = "dict_id", type = IdType.AUTO)
-    var dictId: Long? = null
+    override var dictId: Long? = null
 
     /**
      * 字典名称
      */
-    var dictName: String = ""
+    override var dictName: String = ""
 
     /**
      * 字典类型
      */
-    var dictType: String = "'"
+    override var dictType: String = "'"
 
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is SysDictTypeEntity) return false

@@ -83,7 +83,7 @@ class AuthService(
             log.info("登录用户：{} 已被停用.", param.username)
             throw MessageException("user.blocked", param.username)
         }
-        if (user.delFlag == UserStatus.DELETED.code) {
+        if (user.deleted == UserStatus.DELETED.code) {
             throw MessageException("user.not.exists", param.username)
         }
         val userVo = userMapper.selectUserByUserName(user.userName)
@@ -197,7 +197,6 @@ class AuthService(
 
     private fun buildLoginUser(user: SysUserVo): LoginUser {
         val loginUser = LoginUser()
-        loginUser.tenantId = user.tenantId
         loginUser.userId = user.userId
         loginUser.deptId = user.deptId
         loginUser.username = user.userName

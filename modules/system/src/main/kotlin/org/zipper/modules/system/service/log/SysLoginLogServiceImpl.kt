@@ -18,6 +18,7 @@ import org.zipper.modules.system.domain.bo.SysLoginLogBo
 import org.zipper.modules.system.domain.entity.SysLoginLogEntity
 import org.zipper.modules.system.domain.vo.SysLoginLogVo
 import org.zipper.modules.system.mapper.SysLoginLogMapper
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -54,7 +55,6 @@ class SysLoginLogServiceImpl(
         val browser = loginLogEvent.userAgent.browser.name
         // 封装对象
         val loginLog = SysLoginLogBo()
-        loginLog.tenantId = loginLogEvent.tenantId
         loginLog.userName = loginLogEvent.username
         loginLog.clientKey = loginLogEvent.clientKey
         loginLog.deviceType = loginLogEvent.deviceType
@@ -103,7 +103,7 @@ class SysLoginLogServiceImpl(
      */
     override fun insertLoginLog(bo: SysLoginLogBo) {
         val loginLog = bo.convert<SysLoginLogEntity>(SysLoginLogEntity())
-        loginLog.loginTime = Date()
+        loginLog.loginTime = LocalDateTime.now()
         baseMapper.insert(loginLog)
     }
 

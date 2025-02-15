@@ -15,9 +15,9 @@ import org.zipper.framework.log.annotation.Log
 import org.zipper.framework.log.enums.BusinessType
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.bo.SysUserBo
-import org.zipper.modules.system.domain.bo.SysUserPasswordBo
-import org.zipper.modules.system.domain.bo.SysUserProfileBo
+import org.zipper.modules.system.domain.param.SysUserParam
+import org.zipper.modules.system.domain.param.SysUserPasswordParam
+import org.zipper.modules.system.domain.param.SysUserProfileParam
 import org.zipper.modules.system.domain.vo.AvatarVo
 import org.zipper.modules.system.domain.vo.ProfileVo
 import org.zipper.modules.system.service.user.ISysUserService
@@ -55,8 +55,8 @@ class SysProfileController(
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun updateProfile(@RequestBody profile: SysUserProfileBo?) {
-        val user = BeanUtil.toBean(profile, SysUserBo::class.java)
+    fun updateProfile(@RequestBody profile: SysUserProfileParam?) {
+        val user = BeanUtil.toBean(profile, SysUserParam::class.java)
         val username = LoginHelper.getUserName()
         if (StringUtils.isNotEmpty(user.phonenumber) && !userService.checkPhoneUnique(user)) {
             throw ServiceException("修改用户'$username'失败，手机号码已存在")
@@ -79,7 +79,7 @@ class SysProfileController(
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     @ResultBody
-    fun updatePwd(@Validated @RequestBody bo: SysUserPasswordBo) {
+    fun updatePwd(@Validated @RequestBody bo: SysUserPasswordParam) {
         val user = userService.selectUserById(LoginHelper.getUserId())
         val password = user!!.password
         if (!BCrypt.checkpw(bo.oldPassword, password)) {

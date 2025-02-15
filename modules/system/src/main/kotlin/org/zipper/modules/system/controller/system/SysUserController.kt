@@ -23,10 +23,10 @@ import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.framework.security.utils.LoginHelper
 import org.zipper.framework.web.ext.validateRow
-import org.zipper.modules.system.domain.param.SysDeptParam
 import org.zipper.modules.system.domain.bo.SysPostBo
-import org.zipper.modules.system.domain.bo.SysRoleBo
-import org.zipper.modules.system.domain.bo.SysUserBo
+import org.zipper.modules.system.domain.param.SysRoleParam
+import org.zipper.modules.system.domain.param.SysUserParam
+import org.zipper.modules.system.domain.param.SysDeptParam
 import org.zipper.modules.system.domain.vo.*
 import org.zipper.modules.system.excel.responseToExcel
 import org.zipper.modules.system.listener.SysUserImportListener
@@ -55,7 +55,7 @@ class SysUserController(
      */
     @SaCheckPermission("system:user:list")
     @GetMapping("/list")
-    fun list(user: SysUserBo, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
+    fun list(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
         return userService.selectPageUserList(user, pageQuery)
     }
 
@@ -65,7 +65,7 @@ class SysUserController(
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
-    fun export(user: SysUserBo, response: HttpServletResponse) {
+    fun export(user: SysUserParam, response: HttpServletResponse) {
         val list = userService.selectUserList(user)
         response.responseToExcel(list.convertList<SysUserExportVo>(), "用户数据")
     }
@@ -124,7 +124,7 @@ class SysUserController(
     fun getInfo(@PathVariable(value = "userId", required = false) userId: Long?): SysUserInfoVo {
         userService.checkUserDataScope(userId)
         val userInfoVo = SysUserInfoVo()
-        val roleBo = SysRoleBo()
+        val roleBo = SysRoleParam()
         roleBo.status = UserConstants.ROLE_NORMAL
         val postBo = SysPostBo()
         postBo.status = UserConstants.POST_NORMAL
@@ -147,7 +147,7 @@ class SysUserController(
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
     @ResultBody
-    fun add(@Validated @RequestBody user: SysUserBo) {
+    fun add(@Validated @RequestBody user: SysUserParam) {
         deptService.checkDeptDataScope(user.deptId)
         if (!userService.checkUserNameUnique(user)) {
             throw ServiceException("新增用户'" + user.userName + "'失败，登录账号已存在")
@@ -172,7 +172,7 @@ class SysUserController(
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
     @ResultBody
-    fun edit(@Validated @RequestBody user: SysUserBo) {
+    fun edit(@Validated @RequestBody user: SysUserParam) {
         userService.checkUserAllowed(user.userId)
         userService.checkUserDataScope(user.userId)
         deptService.checkDeptDataScope(user.deptId)
@@ -210,7 +210,7 @@ class SysUserController(
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
     @ResultBody
-    fun resetPwd(@RequestBody user: SysUserBo) {
+    fun resetPwd(@RequestBody user: SysUserParam) {
         userService.checkUserAllowed(user.userId)
         userService.checkUserDataScope(user.userId)
         user.password = BCrypt.hashpw(user.password)
@@ -224,7 +224,7 @@ class SysUserController(
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     @ResultBody
-    fun changeStatus(@RequestBody user: SysUserBo) {
+    fun changeStatus(@RequestBody user: SysUserParam) {
         userService.checkUserAllowed(user.userId)
         userService.checkUserDataScope(user.userId)
         userService.updateUserStatus(user.userId, user.status).validateRow()

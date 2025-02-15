@@ -2,8 +2,8 @@ package org.zipper.modules.system.service.log
 
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.modules.system.domain.bo.SysOperLogBo
-import org.zipper.modules.system.domain.vo.SysOperLogVo
+import org.zipper.modules.system.domain.bo.SysOperateLogBo
+import org.zipper.modules.system.domain.vo.SysOperateLogVo
 
 /**
  * 操作日志 服务层
@@ -11,14 +11,14 @@ import org.zipper.modules.system.domain.vo.SysOperLogVo
  * @author Lion Li
  */
 interface ISysOperLogService {
-    fun selectPageOperLogList(operLog: SysOperLogBo, pageQuery: PageQuery): TableDataInfo<SysOperLogVo>
+    fun selectPageOperLogList(operLog: SysOperateLogBo, pageQuery: PageQuery): TableDataInfo<SysOperateLogVo>
 
     /**
      * 新增操作日志
      *
      * @param bo 操作日志对象
      */
-    fun insertOperlog(bo: SysOperLogBo)
+    fun insertOperlog(bo: SysOperateLogBo)
 
     /**
      * 查询系统操作日志集合
@@ -26,7 +26,7 @@ interface ISysOperLogService {
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-    fun selectOperLogList(operLog: SysOperLogBo): List<SysOperLogVo>
+    fun selectOperLogList(operLog: SysOperateLogBo): List<SysOperateLogVo>
 
     /**
      * 批量删除系统操作日志
@@ -42,7 +42,7 @@ interface ISysOperLogService {
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    fun selectOperLogById(operId: Long?): SysOperLogVo?
+    fun selectOperLogById(operId: Long?): SysOperateLogVo?
 
     /**
      * 清空操作日志

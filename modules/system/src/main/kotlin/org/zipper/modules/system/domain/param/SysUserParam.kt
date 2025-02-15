@@ -1,30 +1,30 @@
-package org.zipper.modules.system.domain.bo
+package org.zipper.modules.system.domain.param
 
-import org.zipper.framework.core.xss.Xss
 import io.github.linpeilie.annotations.AutoMapper
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.zipper.common.core.constant.UserConstants
+import org.zipper.framework.core.xss.Xss
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysUserEntity
+import org.zipper.modules.system.domain.mixin.SysUserMixin
 
 /**
- * 用户信息业务对象 sys_user
+ * 用户信息业务对象 dto
  *
- * @author Michelle.Chung
  */
 @AutoMapper(target = SysUserEntity::class, reverseConvertGenerate = false)
-class SysUserBo : BaseMixinVo() {
+class SysUserParam : BaseMixinVo(), SysUserMixin {
     /**
      * 用户ID
      */
-    var userId: Long? = null
+    override var userId: Long? = null
 
     /**
      * 部门ID
      */
-    var deptId: Long? = null
+    override var deptId: Long? = null
 
     /**
      * 用户账号
@@ -36,7 +36,7 @@ class SysUserBo : BaseMixinVo() {
         max = 30,
         message = "用户账号长度不能超过{max}个字符"
     )
-    var userName: String? = null
+    override var userName: String? = null
 
     /**
      * 用户昵称
@@ -48,44 +48,44 @@ class SysUserBo : BaseMixinVo() {
         max = 30,
         message = "用户昵称长度不能超过{max}个字符"
     )
-    var nickName: String? = null
+    override var nickName: String? = null
 
     /**
      * 用户类型（sys_user系统用户）
      */
-    var userType: String? = null
+    override var userType: String? = null
 
     /**
      * 用户邮箱
      */
     @field:Email(message = "邮箱格式不正确")
     @field:Size(min = 0, max = 50, message = "邮箱长度不能超过{max}个字符")
-    var email: String? = null
+    override var email: String? = null
 
     /**
      * 手机号码
      */
-    var phonenumber: String? = null
+    override var phonenumber: String? = null
 
     /**
      * 用户性别（0男 1女 2未知）
      */
-    var sex: String? = null
+    override var sex: String? = null
 
     /**
      * 密码
      */
-    var password: String? = null
+    override var password: String? = null
 
     /**
      * 帐号状态（0正常 1停用）
      */
-    var status: String? = null
+    override var status: String? = null
 
     /**
      * 备注
      */
-    var remark: String? = null
+    override var remark: String? = null
 
     /**
      * 角色组

@@ -8,7 +8,7 @@ import org.zipper.modules.system.domain.entity.SysConfigEntity
 import org.zipper.modules.system.domain.mixin.SysConfigMixin
 
 /**
- * 参数配置 参数对象
+ * 参数配置 dto
  *
  */
 @AutoMapper(target = SysConfigEntity::class, reverseConvertGenerate = false)
