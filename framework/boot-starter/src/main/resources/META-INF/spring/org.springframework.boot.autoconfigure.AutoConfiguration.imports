@@ -1,0 +1,3 @@
+org.zipper.framework.starter.config.ApplicationConfig
+org.zipper.framework.starter.config.ValidatorConfig
+org.zipper.framework.starter.json.config.JacksonConfig

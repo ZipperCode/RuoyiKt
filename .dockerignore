@@ -1,0 +1,8 @@
+ui/
+logs/
+script/
+build/
+.idea/
+.git/
+.gradle/
+docker/

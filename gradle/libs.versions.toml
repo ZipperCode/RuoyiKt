@@ -1,0 +1,81 @@
+[versions]
+kotlin-version = "1.9.23"
+spring-dependency-management-version = "1.1.7"
+spring-boot-version = "3.4.1"
+
+hutool-version = "5.8.25"
+jakarta-version = "6.0.0"
+ip2region-version = "2.7.0"
+
+satoken-version = "1.37.0"
+mybatis-plus-version = "3.5.5"
+mapstruct-plus-version = "1.3.5"
+
+[libraries]
+hutool-all = { module = "cn.hutool:hutool-all", version.ref = "hutool-version" }
+hutool-extra = { module = "cn.hutool:hutool-extra", version.ref = "hutool-version" }
+
+# jakarta
+jakarta-servlet = { module = "jakarta.servlet:jakarta.servlet-api", version.ref = "jakarta-version" }
+jakarta-validation = { module = "jakarta.validation:jakarta.validation-api", version = "3.0.2" }
+# springboot
+springboot-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-version" }
+springboot-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot-version" }
+springboot-configuration-processors = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot-version" }
+springboot-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+springboot-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+springboot-undertow = { module = "org.springframework.boot:spring-boot-starter-undertow", version.ref = "spring-boot-version" }
+springboot-aop = { module = "org.springframework.boot:spring-boot-starter-aop", version.ref = "spring-boot-version" }
+springboot-json = { module = "org.springframework.boot:spring-boot-starter-json", version.ref = "spring-boot-version" }
+springboot-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis", version.ref = "spring-boot-version" }
+springboot-websocket = { module = "org.springframework.boot:spring-boot-starter-websocket", version.ref = "spring-boot-version" }
+springboot-doc = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version = "2.6.0" }
+# ip2region
+ip2region = { module = "org.lionsoul:ip2region", version.ref = "ip2region-version" }
+
+# apache
+apache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.14.0" }
+
+alibaba-thread-local = { module = "com.alibaba:transmittable-thread-local", version = "2.14.4" }
+alibaba-excel = { module = "com.alibaba:easyexcel", version = "4.0.1" }
+
+# satoken
+satoken-spring-boot3 = { module = "cn.dev33:sa-token-spring-boot3-starter", version.ref = "satoken-version" }
+satoken-core = { module = "cn.dev33:sa-token-core", version.ref = "satoken-version" }
+satoken-jwt = { module = "cn.dev33:sa-token-jwt", version.ref = "satoken-version" }
+
+# redission
+redisson-spring = { module = "org.redisson:redisson-spring-boot-starter", version = "3.34.1" }
+# jackson
+jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.17.2" }
+
+#mybatis plus
+mybatis-plus-boot = { module = "com.baomidou:mybatis-plus-spring-boot3-starter", version.ref = "mybatis-plus-version" }
+mybatis-plus-annotation = { module = "com.baomidou:mybatis-plus-annotation", version.ref = "mybatis-plus-version" }
+mybatis-plus-generator = { module = "com.baomidou:mybatis-plus-generator", version.ref = "mybatis-plus-version" }
+
+dynamic-datasource = { module = "com.baomidou:dynamic-datasource-spring-boot3-starter", version = "4.3.1" }
+mysql-driver = { module = "com.mysql:mysql-connector-j", version = "8.2.0" }
+
+# MapStructPlus
+mapstruct-plus = { module = "io.github.linpeilie:mapstruct-plus-spring-boot-starter", version.ref = "mapstruct-plus-version" }
+mapstruct-plus-processor = { module = "io.github.linpeilie:mapstruct-plus-processor", version.ref = "mapstruct-plus-version" }
+
+hibernate-validator = { module = "org.hibernate:hibernate-validator", version = "8.0.1.Final" }
+# 亚马逊sdk
+aws-java-sdk = { module = "com.amazonaws:aws-java-sdk-s3", version = "1.12.600" }
+
+kotlin-plugin = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version"}
+kotlin-spring-plugin = {module = "org.jetbrains.kotlin.plugin.spring:org.jetbrains.kotlin.plugin.spring.gradle.plugin", version.ref = "kotlin-version"}
+springboot-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-version"}
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin-version" }
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-version" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-version" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management-version" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot-version" }
+
+
+

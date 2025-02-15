@@ -1,0 +1,108 @@
+networks:
+  net:
+    driver: bridge
+
+services:
+  ry-mysql:
+    image: ry-mysql
+    container_name: ry-mysql
+    tty: true
+    build:
+      context: ./docker/mysql
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+      # 初始化数据库(后续的初始化sql会在这个库执行)
+      MYSQL_DATABASE: ${SQL_DATABASE:-ry_kt}
+      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD:-zzp@949389}
+      MYSQL_USER: ${SQL_USER:-zipper}
+      MYSQL_PASSWORD: ${SQL_PASSWORD:-zzp@949389}
+    ports:
+      - "3308:3306"
+    volumes:
+      # 数据挂载
+      - ./docker/mysql/data:/var/lib/mysql:rw
+      # 配置挂载
+      - ./docker/mysql/conf/:/etc/mysql/conf.d/
+    command:
+      # 将mysql8.0默认密码策略 修改为 原先 策略 (mysql8.0对其默认策略做了更改 会导致密码无法匹配)
+      --mysql_native_password=ON
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    networks:
+      - net
+  # redis
+  ry-redis:
+    image: ry-redis
+    container_name: ry-redis
+    restart: unless-stopped
+    build:
+      context: ./docker/redis
+    ports:
+      - "6378:6379"
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+    volumes:
+      # 配置文件
+      - ./docker/redis/conf/redis.conf:/home/redis/config/redis.conf:rw
+      # 数据文件
+      - ./docker/redis/data:/home/redis/data:rw
+    command: "redis-server /home/redis/config/redis.conf"
+    networks:
+      - net
+
+  ry-server:
+    image: ry-server
+    container_name: ry-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    build:
+      dockerfile: ./Dockerfile
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+      ARGS:
+        --spring.data.redis.host=ry-redis
+        --spring.data.redis.password=ruoyi123
+        --user.home=/app
+        --spring.datasource.dynamic.datasource.master.url=jdbc:mysql://ry-mysql:3306/ry_kt?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+        --spring.datasource.dynamic.datasource.master.username=zipper
+        --spring.datasource.dynamic.datasource.master.password=zzp@949389
+    volumes:
+      - ./logs:/app/logs:rw
+    depends_on:
+      - ry-mysql
+      - ry-redis
+    privileged: true
+    networks:
+      - net
+
+  ry-nginx:
+    image: ry-nginx
+    container_name: ry-nginx
+    build:
+      context: ./ui
+      args:
+        NODE_ADMIN_ENV:
+          ENV=production
+          VITE_APP_BASE_URL=http://ry-server:8080
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+    ports:
+      - "8000:80"
+    volumes:
+      # 配置文件映射
+      - ./docker/nginx/conf:/etc/nginx/conf.d:rw
+      # 页面目录
+      - ./docker/nginx/html:/home/nginx/admin
+      # 日志目录
+      - ./docker/nginx/log:/var/log/nginx
+    depends_on:
+      - ry-server
+    networks:
+      - net

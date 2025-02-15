@@ -1,0 +1,27 @@
+# 项目相关配置
+ruoyi:
+  # 名称
+  name: @appName@
+  # 版本
+  version: @version@
+
+# 日志配置
+logging:
+  level:
+    org.zipper: @logging.level@
+    org.springframework: @logging.level@
+    com.baomidou.mybatisplus: @logging.level@
+  config: classpath:logback-plus.xml
+
+# Spring配置
+spring:
+  application:
+    name: ${ruoyi.name}
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  profiles:
+    active: @profileActive@
+    include: mybatis, redis, security, web, websocket, encrypt, system
+

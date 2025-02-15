@@ -1,0 +1,4 @@
+org.zipper.framework.web.config.FilterConfig
+org.zipper.framework.web.config.I18nConfig
+org.zipper.framework.web.config.ResourcesConfig
+org.zipper.framework.web.config.UndertowConfig

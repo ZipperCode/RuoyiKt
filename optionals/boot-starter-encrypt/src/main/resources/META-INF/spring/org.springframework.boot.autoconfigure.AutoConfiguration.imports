@@ -1,0 +1,3 @@
+org.zipper.optional.encrypt.config.ApiDecryptAutoConfiguration
+org.zipper.optional.encrypt.config.EncryptorAutoConfiguration
+
