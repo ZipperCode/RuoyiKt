@@ -265,17 +265,17 @@ const handleAdd = async (row?: DeptVO) => {
 const handleUpdate = async (row: DeptVO) => {
   reset();
   //查询当前部门所有用户
-  getDeptAllUser(row.deptId);
+  getDeptAllUser(row.deptId).then();
   const res = await getDept(row.deptId);
-  form.value = res.data
+  form.value = {...res.data, parentId: res.data?.parentId ?? 0}
   const response = await listDeptExcludeChild(row.deptId);
   const data = proxy?.handleTree<DeptOptionsType>(response.data, "deptId")
   if (data) {
     deptOptions.value = data;
     if (data.length === 0) {
       const noResultsOptions: DeptOptionsType = {
-        deptId: res.data.parentId,
-        deptName: res.data.parentName,
+        deptId: res.data?.parentId ?? 0,
+        deptName: res.data?.parentName ?? "",
         children: []
       };
       deptOptions.value.push(noResultsOptions);

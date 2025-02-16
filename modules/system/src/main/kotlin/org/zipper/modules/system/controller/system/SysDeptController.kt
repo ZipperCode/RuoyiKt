@@ -58,6 +58,7 @@ class SysDeptController(private val deptService: ISysDeptService) {
      */
     @SaCheckPermission("system:dept:query")
     @GetMapping(value = ["/{deptId}"])
+    @ResultBody
     fun getInfo(@PathVariable deptId: Long?): SysDeptVo? {
         deptService.checkDeptDataScope(deptId)
         return deptService.selectDeptById(deptId)

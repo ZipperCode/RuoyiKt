@@ -2,10 +2,12 @@ package org.zipper.modules.system.domain.vo
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated
 import com.alibaba.excel.annotation.ExcelProperty
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.github.linpeilie.annotations.AutoMapper
+import org.zipper.common.core.annotation.AllOpen
 import org.zipper.framework.excel.annotation.ExcelDictFormat
-import org.zipper.modules.system.excel.ExcelDictConvert
 import org.zipper.modules.system.domain.entity.SysDeptEntity
+import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.util.*
 
@@ -15,6 +17,7 @@ import java.util.*
  * @author Michelle.Chung
  */
 @ExcelIgnoreUnannotated
+@AllOpen
 @AutoMapper(target = SysDeptEntity::class)
 class SysDeptVo : Serializable {
     /**
