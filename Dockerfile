@@ -1,5 +1,6 @@
 FROM gradle:8.12.1-jdk17-alpine AS build
 ENV GRADLE_OPTS="-Xmx1g -Xms512m -XX:MaxMetaspaceSize=512m"
+ENV PROFILE="prod"
 WORKDIR /app
 # 先复制所有文件
 COPY . /app
