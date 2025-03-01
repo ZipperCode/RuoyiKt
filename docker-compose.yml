@@ -84,6 +84,9 @@ services:
   ry-nginx:
     image: ry-nginx
     container_name: ry-nginx
+    mem_limit: 1g
+    mem_swappiness: 60
+    memswap_limit: -1
     build:
       context: ./ui
       args:
