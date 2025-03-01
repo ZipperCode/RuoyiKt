@@ -20,7 +20,7 @@ const open = async (ids: number[]) => {
   idsRef.value = ids
 }
 defineExpose({open}) // 提供 open 方法，用于打开弹窗
-declare interface Form {
+interface Form {
   status: number | undefined
 }
 

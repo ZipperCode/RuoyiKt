@@ -95,9 +95,9 @@ onMounted(() => {
                            :value="item.value"/>
               </el-select>
             </el-form-item>
-            <el-form-item label="上传人" prop="uploader">
+            <el-form-item label="上传人" prop="createUser">
               <el-input
-                v-model="queryParams.uploader"
+                v-model="queryParams.createUser"
                 placeholder="请输入上传人关键字"
                 clearable
                 @keyup.enter="handleQuery"
