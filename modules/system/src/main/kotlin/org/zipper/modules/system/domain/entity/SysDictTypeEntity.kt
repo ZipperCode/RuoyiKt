@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.modules.system.domain.mixin.SysDictTypeMixin
+import org.zipper.common.core.domain.mixin.sys.SysDictTypeMixin
 
 /**
  * 字典类型表 sys_dict_type

@@ -10,6 +10,7 @@ import org.zipper.common.core.ext.MapStructExt.convert
 import org.zipper.common.core.ext.MapStructExt.convertList
 import org.zipper.common.core.ext.log
 import org.zipper.common.core.framework.ip2area.Ip2AreaUtils
+import org.zipper.common.core.utils.TimeUtils
 import org.zipper.framework.log.event.LoginLogEvent
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
@@ -103,7 +104,7 @@ class SysLoginLogServiceImpl(
      */
     override fun insertLoginLog(bo: SysLoginLogBo) {
         val loginLog = bo.convert<SysLoginLogEntity>(SysLoginLogEntity())
-        loginLog.loginTime = LocalDateTime.now()
+        loginLog.loginTime = TimeUtils.getBeijingTime()
         baseMapper.insert(loginLog)
     }
 

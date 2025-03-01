@@ -4,7 +4,7 @@ import io.github.linpeilie.annotations.AutoMapper
 import io.github.linpeilie.annotations.AutoMappers
 import org.zipper.framework.log.event.OperLogEvent
 import org.zipper.modules.system.domain.entity.SysOperateLogEntity
-import org.zipper.modules.system.domain.mixin.SysOperateLogMixin
+import org.zipper.common.core.domain.mixin.sys.SysOperateLogMixin
 import java.util.*
 
 /**

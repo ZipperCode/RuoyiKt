@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile
 class FileUploadParam {
     @Schema(description = "文件附件", requiredMode = Schema.RequiredMode.REQUIRED)
     @field:NotNull(message = "文件附件不能为空")
-    lateinit var file: MultipartFile
+    var file: MultipartFile? = null
 
     /**
      * 相对路径

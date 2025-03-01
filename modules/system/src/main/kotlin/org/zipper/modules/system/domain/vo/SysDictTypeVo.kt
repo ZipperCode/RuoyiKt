@@ -4,7 +4,7 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated
 import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.modules.system.domain.entity.SysDictTypeEntity
-import org.zipper.modules.system.domain.mixin.SysDictTypeMixin
+import org.zipper.common.core.domain.mixin.sys.SysDictTypeMixin
 import java.io.Serializable
 import java.util.*
 

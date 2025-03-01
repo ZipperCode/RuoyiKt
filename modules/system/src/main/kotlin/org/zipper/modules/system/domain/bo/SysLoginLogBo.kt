@@ -2,7 +2,7 @@ package org.zipper.modules.system.domain.bo
 
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.modules.system.domain.entity.SysLoginLogEntity
-import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
+import org.zipper.common.core.domain.mixin.sys.SysLoginLogMixin
 import java.time.LocalDateTime
 import java.util.*
 

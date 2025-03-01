@@ -11,4 +11,4 @@ package org.zipper.framework.mybatis.annotation
     AnnotationRetention.RUNTIME
 )
 @MustBeDocumented
-annotation class DataPermission(vararg val value: org.zipper.framework.mybatis.annotation.DataColumn)
+annotation class DataPermission(vararg val value: DataColumn)

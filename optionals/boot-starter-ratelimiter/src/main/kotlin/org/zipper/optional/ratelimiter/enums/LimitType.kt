@@ -3,7 +3,6 @@ package org.zipper.optional.ratelimiter.enums
 /**
  * 限流类型
  *
- * @author ruoyi
  */
 enum class LimitType {
     /**

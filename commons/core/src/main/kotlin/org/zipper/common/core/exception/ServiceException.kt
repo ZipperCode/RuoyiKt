@@ -5,7 +5,6 @@ import java.io.Serial
 /**
  * 业务异常
  *
- * @author ruoyi
  */
 class ServiceException : RuntimeException {
     /**

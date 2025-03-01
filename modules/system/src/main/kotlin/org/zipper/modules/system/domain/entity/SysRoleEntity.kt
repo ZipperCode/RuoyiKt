@@ -1,11 +1,12 @@
 package org.zipper.modules.system.domain.entity
 
+import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableLogic
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
-import org.zipper.modules.system.domain.mixin.SysRoleMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.sys.SysRoleMixin
 
 /**
  * 角色表 sys_role
@@ -18,7 +19,7 @@ open class SysRoleEntity : BaseMixinEntity(), SysRoleMixin, LogicDeleteMixin {
     /**
      * 角色ID
      */
-    @field:TableId(value = "role_id")
+    @field:TableId(value = "role_id", type = IdType.AUTO)
     override var roleId: Long? = 0
 
     /**

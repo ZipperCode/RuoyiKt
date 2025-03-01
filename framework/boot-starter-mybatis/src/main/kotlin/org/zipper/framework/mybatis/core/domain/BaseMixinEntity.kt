@@ -2,6 +2,8 @@ package org.zipper.framework.mybatis.core.domain
 
 import com.baomidou.mybatisplus.annotation.FieldFill
 import com.baomidou.mybatisplus.annotation.TableField
+import org.zipper.common.core.domain.mixin.base.CreatorMixin
+import org.zipper.common.core.domain.mixin.base.UpdaterMixin
 import java.io.Serializable
 import java.time.LocalDateTime
 

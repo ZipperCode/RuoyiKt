@@ -8,14 +8,15 @@ import org.zipper.common.core.constant.UserConstants
 import org.zipper.framework.core.xss.Xss
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysUserEntity
-import org.zipper.modules.system.domain.mixin.SysUserMixin
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 用户信息业务对象 dto
  *
  */
 @AutoMapper(target = SysUserEntity::class, reverseConvertGenerate = false)
-class SysUserParam : BaseMixinVo(), SysUserMixin {
+class SysUserParam : BaseMixinParam(), SysUserMixin {
     /**
      * 用户ID
      */
@@ -66,7 +67,7 @@ class SysUserParam : BaseMixinVo(), SysUserMixin {
      * 手机号码
      */
     override var phonenumber: String? = null
-
+    override var avatar: Long? = null
     /**
      * 用户性别（0男 1女 2未知）
      */

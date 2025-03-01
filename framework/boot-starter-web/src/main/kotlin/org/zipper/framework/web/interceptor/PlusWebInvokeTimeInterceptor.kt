@@ -41,14 +41,14 @@ class PlusWebInvokeTimeInterceptor : HandlerInterceptor {
                     val reader = request.reader
                     jsonParam = IoUtil.read(reader)
                 }
-                log.info("[PLUS]开始请求 => URL[{}],参数类型[json],参数:[{}]", url, jsonParam)
+                log.info("[PLUS]开始请求 ==> URL[{}],参数类型[json],参数:[{}]", url, jsonParam)
             } else {
                 val parameterMap = request.parameterMap
                 if (MapUtil.isNotEmpty(parameterMap)) {
                     val parameters = JsonUtils.toJsonString(parameterMap)
-                    log.info("[PLUS]开始请求 => URL[{}],参数类型[param],参数:[{}]", url, parameters)
+                    log.info("[PLUS]开始请求 ==> URL[{}],参数类型[param],参数:[{}]", url, parameters)
                 } else {
-                    log.info("[PLUS]开始请求 => URL[{}],无参数", url)
+                    log.info("[PLUS]开始请求 ==> URL[{}],无参数", url)
                 }
             }
             val stopWatch = StopWatch()
@@ -81,7 +81,7 @@ class PlusWebInvokeTimeInterceptor : HandlerInterceptor {
             if (stopWatch != null) {
                 stopWatch.stop()
                 log.info(
-                    "[PLUS]结束请求 => URL[{}],耗时:[{}]毫秒",
+                    "[PLUS]结束请求 ==> URL[{}],耗时:[{}]毫秒",
                     request.method + " " + request.requestURI,
                     stopWatch.duration
                 )

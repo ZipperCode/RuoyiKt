@@ -123,4 +123,6 @@ interface SysUserMapper : BaseMapper<SysUserEntity> {
     override fun updateById(
         @Param(Constants.ENTITY) user: SysUserEntity
     ): Int
+
+    fun selectUserByRoleCode(roleCode: String): List<SysUserVo>
 }

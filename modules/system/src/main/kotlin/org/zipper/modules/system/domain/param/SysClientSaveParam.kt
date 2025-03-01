@@ -7,10 +7,11 @@ import org.zipper.common.core.validate.AddGroup
 import org.zipper.common.core.validate.EditGroup
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysClientEntity
-import org.zipper.modules.system.domain.mixin.SysClientMixin
+import org.zipper.common.core.domain.mixin.sys.SysClientMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 @AutoMapper(target = SysClientEntity::class, reverseConvertGenerate = false)
-class SysClientSaveParam : BaseMixinVo(), SysClientMixin {
+class SysClientSaveParam : BaseMixinParam(), SysClientMixin {
 
     /**
      * id

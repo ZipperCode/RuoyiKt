@@ -3,7 +3,7 @@ package org.zipper.modules.system.domain.vo
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysNoticeEntity
-import org.zipper.modules.system.domain.mixin.SysNoticeMixin
+import org.zipper.common.core.domain.mixin.sys.SysNoticeMixin
 import org.zipper.optional.translation.annotation.Translation
 import org.zipper.optional.translation.constant.TransConstant
 import java.io.Serializable

@@ -36,6 +36,7 @@ const isDashboard = (route: RouteLocationMatched) => {
 }
 const handleLink = (item: RouteLocationMatched) => {
   const { redirect, path } = item
+  console.log(redirect, path)
   redirect ? router.push(redirect as string) : router.push(path)
 }
 

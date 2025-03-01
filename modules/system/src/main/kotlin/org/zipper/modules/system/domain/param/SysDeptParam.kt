@@ -7,14 +7,15 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDeptEntity
-import org.zipper.modules.system.domain.mixin.SysDeptMixin
+import org.zipper.common.core.domain.mixin.sys.SysDeptMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 部门业务 dto
  *
  */
 @AutoMapper(target = SysDeptEntity::class, reverseConvertGenerate = false)
-class SysDeptParam : BaseMixinVo(), SysDeptMixin {
+class SysDeptParam : BaseMixinParam(), SysDeptMixin {
     /**
      * 部门id
      */

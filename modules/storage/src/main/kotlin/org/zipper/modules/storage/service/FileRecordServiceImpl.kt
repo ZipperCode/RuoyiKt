@@ -8,13 +8,12 @@ import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.mybatis.core.betweenIfPresent
 import org.zipper.framework.mybatis.core.likeIfPresent
 import org.zipper.framework.mybatis.core.page.TableDataInfo
-import org.zipper.framework.redis.utils.RedisUtils
-import org.zipper.modules.storage.constant.StorageConst
 import org.zipper.modules.storage.domain.bo.FileCreateBo
 import org.zipper.modules.storage.domain.entity.SysFileRecordEntity
 import org.zipper.modules.storage.domain.param.FileRecordPageParam
 import org.zipper.modules.storage.domain.vo.FileRecordVo
 import org.zipper.modules.storage.mapper.FileRecordMapper
+import org.zipper.modules.storage.utils.StorageHelper.formatUrl
 
 @Service
 class FileRecordServiceImpl(
@@ -28,7 +27,7 @@ class FileRecordServiceImpl(
     }
 
     override fun queryByIds(recordIds: Array<Long>): List<FileRecordVo> {
-        val list =  fileRecordMapper.selectList(
+        val list = fileRecordMapper.selectList(
             MybatisKt.ktQuery<SysFileRecordEntity>()
                 .`in`(SysFileRecordEntity::id, *recordIds)
         )
@@ -61,15 +60,7 @@ class FileRecordServiceImpl(
 
     private fun List<SysFileRecordEntity>.mapConcatDomain(): List<FileRecordVo> {
         forEach {
-            val domainKey = StorageConst.CACHE_KEY_STORAGE_DOMAIN_FMT.format(it.configId)
-            var domain = RedisUtils.getCacheObject<String>(domainKey)
-            if (domain?.endsWith("/") == true) {
-                domain = domain.substring(0, domain.length - 1)
-            }
-            if (it.url?.startsWith("/") == true) {
-                it.url = it.url?.substring(1)
-            }
-            it.url = "%s/%s".format(domain, it.url)
+            it.url = it.formatUrl()
         }
         return this.convertList()
     }

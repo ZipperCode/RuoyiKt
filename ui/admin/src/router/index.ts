@@ -52,11 +52,11 @@ export const constantRoutes: RouteOption[] = [
     component: () => import('@/views/register.vue'),
     hidden: true
   },
-  {
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/error/404.vue'),
-    hidden: true
-  },
+  // {
+  //   path: '/:pathMatch(.*)*',
+  //   component: () => import('@/views/error/404.vue'),
+  //   hidden: true
+  // },
   {
     path: '/401',
     component: () => import('@/views/error/401.vue'),

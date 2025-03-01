@@ -26,7 +26,7 @@ export const deleteFile = (ids: Array<number | string>) => {
 }
 
 // 上传文件
-export const updateFile = (data: { file: File }) => {
+export const uploadFile = (data: { file: File }): AxiosPromise<FileRecordVo> => {
   const formData = new FormData()
   formData.append('file', data.file)
   return upload({url: '/store/file/upload', data: formData})

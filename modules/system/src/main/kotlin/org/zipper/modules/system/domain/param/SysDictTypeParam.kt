@@ -6,14 +6,15 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDictTypeEntity
-import org.zipper.modules.system.domain.mixin.SysDictTypeMixin
+import org.zipper.common.core.domain.mixin.sys.SysDictTypeMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 字典类型业务对象 dto
  *
  */
 @AutoMapper(target = SysDictTypeEntity::class, reverseConvertGenerate = false)
-class SysDictTypeParam : BaseMixinVo(), SysDictTypeMixin {
+class SysDictTypeParam : BaseMixinParam(), SysDictTypeMixin {
     /**
      * 字典主键
      */

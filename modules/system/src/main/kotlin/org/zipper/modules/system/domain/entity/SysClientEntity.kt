@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableLogic
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
-import org.zipper.modules.system.domain.mixin.SysClientMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.sys.SysClientMixin
 
 /**
  * 授权管理对象 sys_client

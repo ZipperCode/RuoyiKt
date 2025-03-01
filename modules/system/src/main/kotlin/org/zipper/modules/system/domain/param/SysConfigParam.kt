@@ -5,14 +5,15 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysConfigEntity
-import org.zipper.modules.system.domain.mixin.SysConfigMixin
+import org.zipper.common.core.domain.mixin.sys.SysConfigMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 参数配置 dto
  *
  */
 @AutoMapper(target = SysConfigEntity::class, reverseConvertGenerate = false)
-class SysConfigParam : BaseMixinVo(), SysConfigMixin {
+class SysConfigParam : BaseMixinParam(), SysConfigMixin {
     /**
      * 参数主键
      */

@@ -12,20 +12,22 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.zipper.common.core.constant.CacheNames
 import org.zipper.common.core.constant.UserConstants
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import org.zipper.common.core.exception.ServiceException
 import org.zipper.common.core.ext.MapStructExt.convert
 import org.zipper.common.core.ext.MapStructExt.convertList
+import org.zipper.common.core.modules.ISysUserApi
 import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.mybatis.core.insertBatch
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.mybatis.helper.DataBaseHelper
 import org.zipper.framework.security.utils.LoginHelper
-import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.entity.SysDeptEntity
 import org.zipper.modules.system.domain.entity.SysUserEntity
 import org.zipper.modules.system.domain.entity.SysUserPostEntity
 import org.zipper.modules.system.domain.entity.SysUserRoleEntity
+import org.zipper.modules.system.domain.param.SysUserParam
 import org.zipper.modules.system.domain.vo.SysUserVo
 import org.zipper.modules.system.mapper.*
 
@@ -42,7 +44,7 @@ class SysUserServiceImpl(
     private val postMapper: SysPostMapper,
     private val userRoleMapper: SysUserRoleMapper,
     private val userPostMapper: SysUserPostMapper
-) : ISysUserService, UserService {
+) : ISysUserService, UserService, ISysUserApi {
 
 
     override fun selectPageUserList(user: SysUserParam, pageQuery: PageQuery): TableDataInfo<SysUserVo> {
@@ -347,6 +349,7 @@ class SysUserServiceImpl(
                 .set(SysUserEntity::phonenumber, user.phonenumber)
                 .set(SysUserEntity::email, user.email)
                 .set(SysUserEntity::sex, user.sex)
+                .set(user.avatar != null, SysUserEntity::avatar, user.avatar)
                 .eq(SysUserEntity::userId, user.userId)
         )
     }
@@ -547,4 +550,30 @@ class SysUserServiceImpl(
         return true
     }
 
+    override fun getUserById(userId: Long?): SysUserMixin? {
+        return selectUserById(userId)
+    }
+
+    override fun getUserListNames(userIds: List<Long>): List<SysUserMixin> {
+        if (userIds.isEmpty()) {
+            return emptyList()
+        }
+        return baseMapper.selectList(
+            MybatisKt.ktQuery<SysUserEntity>()
+                .select(SysUserEntity::userId, SysUserEntity::userName)
+                .`in`(SysUserEntity::userId, userIds)
+        )
+    }
+
+    override fun getUserContainsName(name: String?): List<SysUserMixin> {
+        return baseMapper.selectList(
+            MybatisKt.ktQuery<SysUserEntity>()
+                .select(SysUserEntity::userId, SysUserEntity::userName)
+                .like(SysUserEntity::userName, name)
+        )
+    }
+
+    override fun selectUserByRoleCode(code: String): List<SysUserMixin> {
+        return baseMapper.selectUserByRoleCode(code)
+    }
 }

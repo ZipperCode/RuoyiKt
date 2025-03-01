@@ -3,7 +3,6 @@ package org.zipper.framework.log.enums
 /**
  * 业务操作类型
  *
- * @author ruoyi
  */
 enum class BusinessType {
     /**

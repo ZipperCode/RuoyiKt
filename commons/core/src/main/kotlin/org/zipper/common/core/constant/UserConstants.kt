@@ -3,7 +3,6 @@ package org.zipper.common.core.constant
 /**
  * 用户常量信息
  *
- * @author ruoyi
  */
 object UserConstants {
     /**

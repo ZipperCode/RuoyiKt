@@ -11,6 +11,7 @@ import org.zipper.common.core.framework.store.UploadFileResult
 import org.zipper.common.core.utils.FileUtils
 import org.zipper.modules.storage.client.s3.S3FileClientConfig
 import org.zipper.modules.storage.domain.bo.FileCreateBo
+import org.zipper.modules.storage.utils.StorageHelper.formatUrl
 import java.io.BufferedInputStream
 import kotlin.math.min
 

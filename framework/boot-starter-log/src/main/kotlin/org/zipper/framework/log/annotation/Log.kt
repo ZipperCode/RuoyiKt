@@ -6,7 +6,6 @@ import org.zipper.framework.log.enums.OperatorType
 /**
  * 自定义操作日志记录注解
  *
- * @author ruoyi
  */
 @Target(
     AnnotationTarget.VALUE_PARAMETER,

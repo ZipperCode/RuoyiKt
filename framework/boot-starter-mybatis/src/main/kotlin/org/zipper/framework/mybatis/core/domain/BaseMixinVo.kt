@@ -1,5 +1,7 @@
 package org.zipper.framework.mybatis.core.domain
 
+import org.zipper.common.core.domain.mixin.base.CreatorMixin
+import org.zipper.common.core.domain.mixin.base.UpdaterMixin
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -23,6 +25,4 @@ abstract class BaseMixinVo : CreatorMixin, UpdaterMixin, Serializable {
      * 更新时间
      */
     override var updateTime: LocalDateTime? = null
-
-    var params: Map<String, Any> = HashMap()
 }

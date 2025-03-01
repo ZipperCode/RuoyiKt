@@ -5,14 +5,15 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDictDataEntity
-import org.zipper.modules.system.domain.mixin.SysDictDataMixin
+import org.zipper.common.core.domain.mixin.sys.SysDictDataMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 字典数据业务对象 dto
  *
  */
 @AutoMapper(target = SysDictDataEntity::class, reverseConvertGenerate = false)
-class SysDictDataParam : BaseMixinVo(), SysDictDataMixin {
+class SysDictDataParam : BaseMixinParam(), SysDictDataMixin {
     /**
      * 字典编码
      */

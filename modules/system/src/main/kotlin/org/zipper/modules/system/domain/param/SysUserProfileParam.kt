@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size
 import org.zipper.common.sensitive.annotation.Sensitive
 import org.zipper.common.sensitive.core.SensitiveStrategy
 import org.zipper.framework.core.xss.Xss
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 
 /**
@@ -12,7 +13,7 @@ import org.zipper.framework.mybatis.core.domain.BaseMixinVo
  *
  * @author Michelle.Chung
  */
-class SysUserProfileParam : BaseMixinVo() {
+class SysUserProfileParam : BaseMixinParam() {
     /**
      * 用户ID
      */

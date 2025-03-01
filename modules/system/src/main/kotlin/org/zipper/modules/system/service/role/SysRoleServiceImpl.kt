@@ -184,8 +184,7 @@ class SysRoleServiceImpl(
         }
         val keys = arrayOf(UserConstants.SUPER_ADMIN_ROLE_KEY)
         // 新增不允许使用 管理员标识符
-        if (ObjectUtil.isNull(role.roleId)
-        ) {
+        if (ObjectUtil.isNull(role.roleId) && StringUtils.containsAny(role.roleKey, *keys)) {
             throw ServiceException("不允许使用系统内置管理员角色标识符!")
         }
         // 修改不允许修改 管理员标识符

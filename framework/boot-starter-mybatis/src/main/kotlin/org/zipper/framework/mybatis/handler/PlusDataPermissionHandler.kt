@@ -19,6 +19,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.expression.spel.support.StandardEvaluationContext
 import org.zipper.common.core.domain.model.LoginUser
 import org.zipper.common.core.exception.ServiceException
+import org.zipper.framework.mybatis.annotation.DataColumn
 import org.zipper.framework.mybatis.annotation.DataPermission
 import org.zipper.framework.mybatis.enums.DataScopeType
 import org.zipper.framework.mybatis.helper.DataPermissionHelper
@@ -84,7 +85,7 @@ class PlusDataPermissionHandler {
     /**
      * 构造数据过滤sql
      */
-    private fun buildDataFilter(dataColumns: Array<out org.zipper.framework.mybatis.annotation.DataColumn>?, isSelect: Boolean): String {
+    private fun buildDataFilter(dataColumns: Array<out DataColumn>?, isSelect: Boolean): String {
         dataColumns ?: return ""
         // 更新或删除需满足所有条件
         val joinStr = if (isSelect) " OR " else " AND "
@@ -136,7 +137,7 @@ class PlusDataPermissionHandler {
         return ""
     }
 
-    fun findAnnotation(mappedStatementId: String?): Array<out org.zipper.framework.mybatis.annotation.DataColumn>? {
+    fun findAnnotation(mappedStatementId: String?): Array<out DataColumn>? {
         if (mappedStatementId.isNullOrEmpty()) {
             return emptyArray()
         }
@@ -152,15 +153,15 @@ class PlusDataPermissionHandler {
         }
         val methods = Arrays.stream(ClassUtil.getDeclaredMethods(clazz))
             .filter { method: Method -> method.name == methodName }.toList()
-        var dataPermission: org.zipper.framework.mybatis.annotation.DataPermission?
+        var dataPermission: DataPermission?
         // 获取方法注解
         for (method in methods) {
             dataPermission = dataPermissionCacheMap[mappedStatementId]
             if (ObjectUtil.isNotNull(dataPermission)) {
                 return dataPermission!!.value
             }
-            if (AnnotationUtil.hasAnnotation(method, org.zipper.framework.mybatis.annotation.DataPermission::class.java)) {
-                dataPermission = AnnotationUtil.getAnnotation(method, org.zipper.framework.mybatis.annotation.DataPermission::class.java)
+            if (AnnotationUtil.hasAnnotation(method, DataPermission::class.java)) {
+                dataPermission = AnnotationUtil.getAnnotation(method, DataPermission::class.java)
                 dataPermissionCacheMap[mappedStatementId] = dataPermission
                 return dataPermission.value
             }
@@ -170,8 +171,8 @@ class PlusDataPermissionHandler {
             return dataPermission!!.value
         }
         // 获取类注解
-        if (AnnotationUtil.hasAnnotation(clazz, org.zipper.framework.mybatis.annotation.DataPermission::class.java)) {
-            dataPermission = AnnotationUtil.getAnnotation(clazz, org.zipper.framework.mybatis.annotation.DataPermission::class.java)
+        if (AnnotationUtil.hasAnnotation(clazz, DataPermission::class.java)) {
+            dataPermission = AnnotationUtil.getAnnotation(clazz, DataPermission::class.java)
             dataPermissionCacheMap[clazz.name] = dataPermission
             return dataPermission.value
         }

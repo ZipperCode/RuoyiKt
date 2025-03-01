@@ -6,7 +6,6 @@ import org.zipper.common.core.ext.isHttpUrl
 /**
  * 路由显示信息
  *
- * @author ruoyi
  */
 class MetaVo {
     /**

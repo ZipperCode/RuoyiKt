@@ -3,7 +3,6 @@ package org.zipper.framework.log.enums
 /**
  * 操作人类别
  *
- * @author ruoyi
  */
 enum class OperatorType {
     /**

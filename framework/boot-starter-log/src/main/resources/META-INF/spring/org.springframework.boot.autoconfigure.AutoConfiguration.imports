@@ -1,1 +1,2 @@
 org.zipper.framework.log.aspect.LogAspect
+#org.zipper.framework.log.aspect.ControllerLogAspect

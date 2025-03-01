@@ -7,7 +7,7 @@ import org.zipper.common.core.constant.UserConstants
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysRoleEntity
-import org.zipper.modules.system.domain.mixin.SysRoleMixin
+import org.zipper.common.core.domain.mixin.sys.SysRoleMixin
 import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.time.LocalDateTime

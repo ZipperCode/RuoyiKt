@@ -2,8 +2,8 @@ package org.zipper.modules.storage.domain.entity
 
 import com.baomidou.mybatisplus.annotation.*
 import org.zipper.common.core.annotation.NoArgs
-import org.zipper.framework.mybatis.core.domain.CreatorMixin
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.base.CreatorMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
 import java.time.LocalDateTime
 
 @NoArgs

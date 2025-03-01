@@ -7,8 +7,9 @@ import org.zipper.common.core.domain.model.LoginUser
 import org.zipper.common.core.exception.ServiceException
 import org.zipper.common.core.ext.log
 import org.zipper.common.core.ext.withType
-import org.zipper.framework.mybatis.core.domain.CreatorMixin
-import org.zipper.framework.mybatis.core.domain.UpdaterMixin
+import org.zipper.common.core.domain.mixin.base.CreatorMixin
+import org.zipper.common.core.domain.mixin.base.UpdaterMixin
+import org.zipper.common.core.utils.TimeUtils
 import org.zipper.framework.security.utils.LoginHelper
 import java.time.LocalDateTime
 
@@ -22,13 +23,13 @@ class InjectionMetaObjectHandler : MetaObjectHandler {
     override fun insertFill(metaObject: MetaObject) {
         try {
             metaObject.originalObject.withType<CreatorMixin> {
-                val current = createTime ?: LocalDateTime.now()
+                val current = createTime ?: TimeUtils.getBeijingTime()
                 createTime = current
                 val loginUser = getLoginUser() ?: return
                 createBy = createBy ?: loginUser.userId
             }
             metaObject.originalObject.withType<UpdaterMixin> {
-                updateTime = updateTime ?: LocalDateTime.now()
+                updateTime = updateTime ?: TimeUtils.getBeijingTime()
                 updateBy = updateBy ?: getLoginUser()?.userId
             }
 
@@ -40,7 +41,7 @@ class InjectionMetaObjectHandler : MetaObjectHandler {
     override fun updateFill(metaObject: MetaObject) {
         try {
             metaObject.originalObject.withType<UpdaterMixin> {
-                updateTime = updateTime ?: LocalDateTime.now()
+                updateTime = updateTime ?: TimeUtils.getBeijingTime()
                 updateBy = updateBy ?: getLoginUser()?.userId
             }
 

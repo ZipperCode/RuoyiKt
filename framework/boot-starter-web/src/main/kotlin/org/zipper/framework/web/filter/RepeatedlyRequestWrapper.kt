@@ -15,7 +15,6 @@ import java.io.InputStreamReader
 /**
  * 构建可重复读取inputStream的request
  *
- * @author ruoyi
  */
 class RepeatedlyRequestWrapper(request: HttpServletRequest, response: ServletResponse) : HttpServletRequestWrapper(request) {
     private val body: ByteArray

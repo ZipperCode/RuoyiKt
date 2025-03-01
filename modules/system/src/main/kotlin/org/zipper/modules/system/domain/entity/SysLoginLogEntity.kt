@@ -2,7 +2,7 @@ package org.zipper.modules.system.domain.entity
 
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
-import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
+import org.zipper.common.core.domain.mixin.sys.SysLoginLogMixin
 import java.io.Serializable
 import java.time.LocalDateTime
 

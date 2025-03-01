@@ -3,7 +3,7 @@ package org.zipper.modules.system.domain.entity
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.modules.system.domain.mixin.SysPostMixin
+import org.zipper.common.core.domain.mixin.sys.SysPostMixin
 
 /**
  * 岗位表 sys_post

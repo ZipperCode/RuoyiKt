@@ -30,6 +30,7 @@ import java.util.*
  *
  * @author Emil.Zhang
  */
+@Deprecated("已废弃,使用excel模块下的")
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class ExcelDownHandler(
     /**

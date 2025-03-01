@@ -6,7 +6,7 @@ import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.common.sensitive.annotation.Sensitive
 import org.zipper.common.sensitive.core.SensitiveStrategy
 import org.zipper.modules.system.domain.entity.SysUserEntity
-import org.zipper.modules.system.domain.mixin.SysUserMixin
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import org.zipper.optional.translation.annotation.Translation
 import org.zipper.optional.translation.constant.TransConstant
 import java.io.Serializable
@@ -65,7 +65,7 @@ class SysUserVo : SysUserMixin, Serializable {
      * 头像地址
      */
     @Translation(type = TransConstant.OSS_ID_TO_URL)
-    var avatar: Long? = null
+    override var avatar: Long? = null
 
     /**
      * 密码

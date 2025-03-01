@@ -5,7 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.modules.system.domain.entity.SysPostEntity
-import org.zipper.modules.system.domain.mixin.SysPostMixin
+import org.zipper.common.core.domain.mixin.sys.SysPostMixin
 import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.util.*

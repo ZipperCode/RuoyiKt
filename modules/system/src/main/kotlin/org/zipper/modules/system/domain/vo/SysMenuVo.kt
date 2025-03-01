@@ -6,7 +6,7 @@ import org.zipper.common.core.constant.Constants
 import org.zipper.common.core.constant.UserConstants
 import org.zipper.common.core.ext.isHttpUrl
 import org.zipper.modules.system.domain.entity.SysMenuEntity
-import org.zipper.modules.system.domain.mixin.SysMenuMixin
+import org.zipper.common.core.domain.mixin.sys.SysMenuMixin
 import java.io.Serializable
 import java.util.*
 

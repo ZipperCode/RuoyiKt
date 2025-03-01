@@ -8,7 +8,6 @@ import org.zipper.framework.security.utils.LoginHelper
 /**
  * 用户权限处理
  *
- * @author ruoyi
  */
 @Service
 class SysPermissionServiceImpl(

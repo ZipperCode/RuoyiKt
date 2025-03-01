@@ -43,4 +43,5 @@ include("optionals:boot-starter-job")
 
 include("modules:system")
 include("modules:storage")
+include("modules:account")
 include("server")

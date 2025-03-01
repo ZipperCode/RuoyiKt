@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zipper.modules.account.mapper.AppQrRecordMapper">
+    <resultMap id="RecordResult" type="org.zipper.modules.account.domain.vo.AppQrRecordVo">
+        <id property="id" column="id"/>
+        <result property="classify" column="classify"/>
+        <result property="used" column="used"/>
+        <result property="accountId" column="account_id"/>
+        <result property="bindUserId" column="bind_user_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+
+        <result property="qrContent" column="qr_content"/>
+        <result property="createUser" column="create_user"/>
+    </resultMap>
+
+    <select id="selectPageList" resultMap="RecordResult">
+        select r.id,
+               r.classify,
+               r.used,
+               r.account_id,
+               r.bind_user_id,
+               r.create_by,
+               r.create_time,
+               a.qr_content,
+               u.user_name as create_user
+        from app_qr_record r
+                 left join ry_oversea_account.app_qr a on r.account_id = a.id
+                 left join ry_oversea_account.sys_user u on u.user_id = r.create_by
+            ${ew.getCustomSqlSegment}
+    </select>
+
+    <select id="selectUserCount" resultMap="RecordResult">
+        /* 查询每个用户的记录数量 */
+        select r.bind_user_id, count(r.account_id) as count
+        from app_qr_record r
+        group by r.bind_user_id
+            ${ew.getCustomSqlSegment}
+    </select>
+</mapper>

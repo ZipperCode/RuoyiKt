@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import org.apache.commons.lang3.StringUtils
 import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.zipper.common.core.constant.CacheConstants
@@ -18,6 +19,7 @@ import org.zipper.common.core.ext.MapStructExt.convertOrNull
 import org.zipper.common.core.ext.MapStructExt.convertTypeList
 import org.zipper.common.core.ext.forceCastOrNull
 import org.zipper.common.core.ext.selfAopProxy
+import org.zipper.common.core.modules.ISysDictApi
 import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
@@ -40,7 +42,7 @@ import org.zipper.modules.system.mapper.selectDictDataByType
 class SysDictTypeServiceImpl(
     private val baseMapper: SysDictTypeMapper,
     private val dictDataMapper: SysDictDataMapper
-) : ISysDictTypeService, DictService {
+) : ISysDictTypeService, DictService, ISysDictApi {
 
 
     override fun selectPageDictTypeList(dictType: SysDictTypeParam, pageQuery: PageQuery): TableDataInfo<SysDictTypeVo> {
@@ -87,7 +89,7 @@ class SysDictTypeServiceImpl(
      * @param dictType 字典类型
      * @return 字典数据集合信息
      */
-//    @Cacheable(cacheNames = [CacheNames.SYS_DICT], key = "#dictType")
+    @Cacheable(cacheNames = [CacheNames.SYS_DICT], key = "#dictType")
     override fun selectDictDataByType(dictType: String?): List<SysDictDataVo>? {
         val dictDatas: List<SysDictDataVo> = dictDataMapper.selectDictDataByType(dictType)
         if (CollUtil.isNotEmpty(dictDatas)) {

@@ -5,7 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.modules.system.domain.entity.SysDictDataEntity
-import org.zipper.modules.system.domain.mixin.SysDictDataMixin
+import org.zipper.common.core.domain.mixin.sys.SysDictDataMixin
 import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.util.*
@@ -17,7 +17,7 @@ import java.util.*
  */
 @ExcelIgnoreUnannotated
 @AutoMapper(target = SysDictDataEntity::class)
-class SysDictDataVo : Serializable, SysDictDataMixin {
+open class SysDictDataVo : Serializable, SysDictDataMixin {
     /**
      * 字典编码
      */

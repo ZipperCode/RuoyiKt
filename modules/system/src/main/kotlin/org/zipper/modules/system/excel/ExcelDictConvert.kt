@@ -21,6 +21,7 @@ import java.lang.reflect.Field
  *
  * @author Lion Li
  */
+@Deprecated("已废弃,使用excel模块下的")
 class ExcelDictConvert : Converter<Any> {
     override fun supportJavaTypeKey(): Class<Any> = Any::class.java
 

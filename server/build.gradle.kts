@@ -18,6 +18,7 @@ dependencies {
     // compileOnly(projects.framework.bootStarterRedis)
     implementation(projects.modules.system)
     implementation(projects.modules.storage)
+    implementation(projects.modules.account)
     implementation(libs.mybatis.plus.boot)
     kapt(libs.springboot.configuration.processors)
 }

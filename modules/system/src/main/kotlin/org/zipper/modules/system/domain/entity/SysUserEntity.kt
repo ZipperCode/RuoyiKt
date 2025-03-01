@@ -3,8 +3,8 @@ package org.zipper.modules.system.domain.entity
 import com.baomidou.mybatisplus.annotation.*
 import org.zipper.common.core.constant.UserConstants
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
-import org.zipper.modules.system.domain.mixin.SysUserMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import java.util.*
 
 /**
@@ -58,7 +58,7 @@ class SysUserEntity : BaseMixinEntity(), SysUserMixin, LogicDeleteMixin {
     /**
      * 用户头像
      */
-    var avatar: Long? = null
+   override var avatar: Long? = null
 
     /**
      * 密码

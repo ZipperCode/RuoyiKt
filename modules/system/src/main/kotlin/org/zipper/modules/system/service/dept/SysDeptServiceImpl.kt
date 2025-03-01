@@ -17,7 +17,7 @@ import org.zipper.common.core.ext.MapStructExt.convertOrNull
 import org.zipper.common.core.ext.selfAopProxy
 import org.zipper.common.core.utils.TreeBuildUtils
 import org.zipper.framework.mybatis.core.MybatisKt
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
 import org.zipper.framework.mybatis.core.updateBatchIds
 import org.zipper.framework.mybatis.helper.DataBaseHelper
 import org.zipper.framework.redis.utils.CacheUtils

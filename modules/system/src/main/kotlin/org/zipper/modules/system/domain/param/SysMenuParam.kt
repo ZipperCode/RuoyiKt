@@ -7,14 +7,15 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysMenuEntity
-import org.zipper.modules.system.domain.mixin.SysMenuMixin
+import org.zipper.common.core.domain.mixin.sys.SysMenuMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 菜单权限业务对象 dto
  *
  */
 @AutoMapper(target = SysMenuEntity::class, reverseConvertGenerate = false)
-class SysMenuParam : BaseMixinVo(), SysMenuMixin {
+class SysMenuParam : BaseMixinParam(), SysMenuMixin {
     /**
      * 菜单ID
      */

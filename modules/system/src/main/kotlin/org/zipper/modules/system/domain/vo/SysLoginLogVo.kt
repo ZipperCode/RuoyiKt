@@ -5,11 +5,10 @@ import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.modules.system.domain.entity.SysLoginLogEntity
-import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
+import org.zipper.common.core.domain.mixin.sys.SysLoginLogMixin
 import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.time.LocalDateTime
-import java.util.*
 
 /**
  * 系统访问记录视图对象 sys_logininfor

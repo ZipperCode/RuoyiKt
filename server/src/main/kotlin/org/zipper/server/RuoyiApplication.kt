@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication(scanBasePackages = ["org.zipper"])
 @MapperScan("org.zipper.modules.**.mapper")
-class RuoyiApplication
+open class RuoyiApplication
 
 
 fun main(args: Array<String>) {

@@ -3,7 +3,7 @@ package org.zipper.modules.system.domain.entity
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.modules.system.domain.mixin.SysConfigMixin
+import org.zipper.common.core.domain.mixin.sys.SysConfigMixin
 
 /**
  * 参数配置表 sys_config

@@ -6,14 +6,15 @@ import jakarta.validation.constraints.Size
 import org.zipper.framework.core.xss.Xss
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysNoticeEntity
-import org.zipper.modules.system.domain.mixin.SysNoticeMixin
+import org.zipper.common.core.domain.mixin.sys.SysNoticeMixin
+import org.zipper.framework.mybatis.core.domain.BaseMixinParam
 
 /**
  * 通知公告业务对象 dto
  *
  */
 @AutoMapper(target = SysNoticeEntity::class, reverseConvertGenerate = false)
-class SysNoticeParam : BaseMixinVo(), SysNoticeMixin {
+class SysNoticeParam : BaseMixinParam(), SysNoticeMixin {
     /**
      * 公告ID
      */

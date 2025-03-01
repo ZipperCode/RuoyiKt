@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysPostEntity
-import org.zipper.modules.system.domain.mixin.SysPostMixin
+import org.zipper.common.core.domain.mixin.sys.SysPostMixin
 
 /**
  * 岗位信息业务对象 sys_post

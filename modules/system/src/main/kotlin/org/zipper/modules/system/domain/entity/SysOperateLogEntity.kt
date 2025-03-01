@@ -1,8 +1,9 @@
 package org.zipper.modules.system.domain.entity
 
+import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
-import org.zipper.modules.system.domain.mixin.SysOperateLogMixin
+import org.zipper.common.core.domain.mixin.sys.SysOperateLogMixin
 import java.io.Serializable
 import java.util.*
 
@@ -17,7 +18,7 @@ open class SysOperateLogEntity : SysOperateLogMixin, Serializable {
     /**
      * 日志主键
      */
-    @field:TableId(value = "oper_id")
+    @field:TableId(value = "oper_id", type = IdType.ASSIGN_ID)
     override var operId: Long? = null
 
     /**

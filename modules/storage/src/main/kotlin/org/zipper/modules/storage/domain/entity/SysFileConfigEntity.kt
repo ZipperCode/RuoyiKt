@@ -3,7 +3,7 @@ package org.zipper.modules.storage.domain.entity
 import com.baomidou.mybatisplus.annotation.*
 import com.baomidou.mybatisplus.extension.handlers.AbstractJsonTypeHandler
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
+import org.zipper.common.core.domain.mixin.base.LogicDeleteMixin
 import org.zipper.framework.starter.json.utils.JsonUtils
 import org.zipper.framework.starter.json.utils.JsonUtils.createReference
 import org.zipper.modules.storage.client.FileClientConfig

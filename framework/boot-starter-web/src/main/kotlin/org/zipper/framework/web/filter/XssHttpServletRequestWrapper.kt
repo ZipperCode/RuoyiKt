@@ -16,7 +16,6 @@ import java.nio.charset.StandardCharsets
 /**
  * XSS过滤处理
  *
- * @author ruoyi
  */
 class XssHttpServletRequestWrapper(request: HttpServletRequest?) : HttpServletRequestWrapper(request) {
     override fun getParameterValues(name: String): Array<String> {
