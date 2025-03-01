@@ -14,9 +14,9 @@ services:
       TZ: Asia/Shanghai
       # 初始化数据库(后续的初始化sql会在这个库执行)
       MYSQL_DATABASE: ${SQL_DATABASE:-ry_kt}
-      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD:-zzp@949389}
+      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD:-U2FsdGVkX1/wUdWN3o5+S0MC8CRgX81e/XO1GLblps4=}
       MYSQL_USER: ${SQL_USER:-zipper}
-      MYSQL_PASSWORD: ${SQL_PASSWORD:-zzp@949389}
+      MYSQL_PASSWORD: ${SQL_PASSWORD:-U2FsdGVkX1/wUdWN3o5+S0MC8CRgX81e/XO1GLblps4=}
     ports:
       - "3308:3306"
     volumes:
@@ -67,12 +67,12 @@ services:
       TZ: Asia/Shanghai
       ARGS:
         --spring.data.redis.host=ry-redis
-        --spring.data.redis.password=ruoyi123
+        --spring.data.redis.password=U2FsdGVkX1/wUdWN3o5+S0MC8CRgX81e/XO1GLblps4=
         --user.home=/app
         --spring.datasource.dynamic.datasource.master.url=jdbc:mysql://ry-mysql:3306/ry_kt?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
         --spring.datasource.dynamic.datasource.master.username=zipper
-        --spring.datasource.dynamic.datasource.master.password=zzp@949389
-        --profile=prod
+        --spring.datasource.dynamic.datasource.master.password=U2FsdGVkX1/wUdWN3o5+S0MC8CRgX81e/XO1GLblps4=
+      PROFILE: prod
     volumes:
       - ./logs:/app/logs:rw
     depends_on:

@@ -4,7 +4,7 @@ plugins {
     id("module")
 }
 
-val active = System.getenv("profile") ?: "dev"
+val active = System.getenv("PROFILE") ?: "dev"
 
 val replaceProperties = mutableMapOf<String, Any>(
     "profileActive" to active,
