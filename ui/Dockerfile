@@ -16,6 +16,7 @@ RUN mkdir -p /tmp/admin
 COPY ./admin /tmp/admin
 WORKDIR /tmp/admin
 COPY --from=deps /tmp/admin/node_modules ./node_modules
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 ARG NODE_ADMIN_ENV=""
 RUN env ${NODE_ADMIN_ENV} npm run build:prod
 
