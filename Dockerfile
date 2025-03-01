@@ -1,10 +1,11 @@
 FROM eclipse-temurin:17-jdk AS build
+ENV GRADLE_OPTS="-Xmx1g -Xms512m -XX:MaxMetaspaceSize=512m"
 WORKDIR /app
 # 先复制所有文件
 COPY . /app
 # 添加执行权限
 RUN chmod +x gradlew
-RUN ./gradlew :server:clean :server:bootJar -x test
+RUN ./gradlew :server:clean :server:bootJar --no-daemon --no-parallel -x test
 
 FROM eclipse-temurin:17-jdk
 MAINTAINER zipper
