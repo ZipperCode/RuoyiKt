@@ -7,7 +7,7 @@ COPY . /app
 # 添加执行权限
 RUN chmod +x gradlew && ./gradlew :server:clean :server:bootJar --no-daemon --no-parallel -x test
 
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 MAINTAINER zipper
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
