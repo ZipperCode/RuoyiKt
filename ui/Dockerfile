@@ -1,16 +1,25 @@
+## 阶段一，依赖创建
+FROM node:20-alpine AS deps
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+RUN mkdir -p /tmp/admin
+WORKDIR /tmp/admin
+COPY ./admin/package*.json ./
+RUN npm install --registry=https://registry.npmmirror.com
+
+## 阶段2，构建项目
 FROM node:20-alpine AS build
-LABEL authors="Zipper"
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 RUN mkdir -p /tmp/admin
 # 构建admin
 COPY ./admin /tmp/admin
 WORKDIR /tmp/admin
+COPY --from=deps /tmp/admin/node_modules ./node_modules
 ARG NODE_ADMIN_ENV=""
-RUN npm install --registry=https://registry.npmmirror.com && env ${NODE_ADMIN_ENV} npm run build:prod
-# 检查生成的文件路径，假设正确的路径为 /home/admin/dist
+RUN env ${NODE_ADMIN_ENV} npm run build:prod
 
-
+# 阶段3，构建nginx
 FROM nginx:latest
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
