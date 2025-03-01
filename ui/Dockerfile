@@ -6,9 +6,8 @@ RUN mkdir -p /tmp/admin
 # 构建admin
 COPY ./admin /tmp/admin
 WORKDIR /tmp/admin
-RUN npm install --registry=https://registry.npmmirror.com
 ARG NODE_ADMIN_ENV=""
-RUN env ${NODE_ADMIN_ENV} npm run build:prod
+RUN npm install --registry=https://registry.npmmirror.com && env ${NODE_ADMIN_ENV} npm run build:prod
 # 检查生成的文件路径，假设正确的路径为 /home/admin/dist
 
 

@@ -1,13 +1,12 @@
-FROM eclipse-temurin:17-jdk AS build
+FROM gradle:8.12.1-jdk17-alpine AS build
 ENV GRADLE_OPTS="-Xmx1g -Xms512m -XX:MaxMetaspaceSize=512m"
 WORKDIR /app
 # 先复制所有文件
 COPY . /app
 # 添加执行权限
-RUN chmod +x gradlew
-RUN ./gradlew :server:clean :server:bootJar --no-daemon --no-parallel -x test
+RUN chmod +x gradlew && ./gradlew :server:clean :server:bootJar --no-daemon --no-parallel -x test
 
-FROM eclipse-temurin:17-jdk
+FROM openjdk:17-jdk-slim
 MAINTAINER zipper
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
