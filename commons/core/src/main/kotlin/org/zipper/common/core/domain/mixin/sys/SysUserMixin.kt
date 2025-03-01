@@ -55,6 +55,11 @@ interface SysUserMixin {
     var status: String?
 
     /**
+     * 是否可分配 (0正常 1禁用)
+     */
+    var dispatch: String?
+
+    /**
      * 备注
      */
     var remark: String?

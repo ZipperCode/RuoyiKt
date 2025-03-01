@@ -278,7 +278,7 @@ class AppAccountServiceImpl(
             throw ServiceException("业务员无法进行数据分配")
         }
         // 查找所有未使用的记录
-        val salesmanUserList = sysUserApi.selectUserByRoleCode(RoleCode.Salesman.create(classify))
+        val salesmanUserList = sysUserApi.selectUserByRoleCode(RoleCode.Salesman.create(classify)).filter { it.dispatch == "0" }
         if (salesmanUserList.isEmpty()) {
             throw ServiceException("没有可用的业务员账号")
         }

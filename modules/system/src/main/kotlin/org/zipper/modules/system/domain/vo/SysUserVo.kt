@@ -3,10 +3,10 @@ package org.zipper.modules.system.domain.vo
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.github.linpeilie.annotations.AutoMapper
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import org.zipper.common.sensitive.annotation.Sensitive
 import org.zipper.common.sensitive.core.SensitiveStrategy
 import org.zipper.modules.system.domain.entity.SysUserEntity
-import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import org.zipper.optional.translation.annotation.Translation
 import org.zipper.optional.translation.constant.TransConstant
 import java.io.Serializable
@@ -78,6 +78,7 @@ class SysUserVo : SysUserMixin, Serializable {
      * 帐号状态（0正常 1停用）
      */
     override var status: String? = null
+    override var dispatch: String? = null
 
     /**
      * 最后登录IP

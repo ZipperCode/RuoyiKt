@@ -230,6 +230,15 @@ class SysUserController(
         userService.updateUserStatus(user.userId, user.status).validateRow()
     }
 
+    @SaCheckPermission("system:user:edit")
+    @Log(title = "用户管理-修改分配状态", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeDispatchStatus")
+    @ResultBody
+    fun changeDispatchStatus(@RequestBody user: SysUserParam) {
+        userService.checkUserAllowed(user.userId)
+        userService.updateUserDispatchStatus(user.userId, user.dispatch).validateRow()
+    }
+
     /**
      * 根据用户编号获取授权角色
      *

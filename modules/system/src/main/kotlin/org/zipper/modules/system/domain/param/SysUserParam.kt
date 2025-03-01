@@ -83,6 +83,8 @@ class SysUserParam : BaseMixinParam(), SysUserMixin {
      */
     override var status: String? = null
 
+    override var dispatch: String? = null
+
     /**
      * 备注
      */

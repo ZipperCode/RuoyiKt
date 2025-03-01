@@ -263,6 +263,12 @@ class SysUserServiceImpl(
     @Transactional(rollbackFor = [Exception::class])
     override fun insertUser(user: SysUserParam): Int {
         val sysUserEntity = user.convert<SysUserEntity>()
+        if (sysUserEntity.dispatch == null) {
+            sysUserEntity.dispatch = UserConstants.USER_NORMAL
+        }
+        if (sysUserEntity.status == null) {
+            sysUserEntity.status = UserConstants.USER_NORMAL
+        }
         // 新增用户信息
         val rows = baseMapper.insert(sysUserEntity)
         user.userId = sysUserEntity.userId
@@ -280,11 +286,12 @@ class SysUserServiceImpl(
      * @return 结果
      */
     override fun registerUser(user: SysUserParam, tenantId: String?): Boolean {
-        user.createBy = user.userId
-        user.updateBy = user.userId
-        val sysUserEntity = user.convert<SysUserEntity>()
-        // sysUserEntity.tenantId = tenantId
-        return baseMapper.insert(sysUserEntity) > 0
+//        user.createBy = user.userId
+//        user.updateBy = user.userId
+//        val sysUserEntity = user.convert<SysUserEntity>()
+//        // sysUserEntity.tenantId = tenantId
+//        return baseMapper.insert(sysUserEntity) > 0
+        throw ServiceException("注册用户失败")
     }
 
     /**
@@ -331,6 +338,14 @@ class SysUserServiceImpl(
             null,
             MybatisKt.ktUpdate<SysUserEntity>()
                 .set(SysUserEntity::status, status)
+                .eq(SysUserEntity::userId, userId)
+        )
+    }
+
+    override fun updateUserDispatchStatus(userId: Long?, status: String?): Int {
+        return baseMapper.update(
+            MybatisKt.ktUpdate<SysUserEntity>()
+                .set(SysUserEntity::dispatch, status)
                 .eq(SysUserEntity::userId, userId)
         )
     }

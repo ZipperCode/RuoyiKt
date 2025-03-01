@@ -155,6 +155,7 @@ interface ISysUserService {
      * @return 结果
      */
     fun updateUserStatus(userId: Long?, status: String?): Int
+    fun updateUserDispatchStatus(userId: Long?, status: String?): Int
 
     /**
      * 修改用户基本信息

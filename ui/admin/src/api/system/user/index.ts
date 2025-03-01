@@ -98,6 +98,18 @@ export const changeUserStatus = (userId: number | string, status: string) => {
   });
 };
 
+export const changeUserDispatchStatus = (userId: number | string, status: string) => {
+  const data = {
+    userId,
+    dispatch: status
+  };
+  return request({
+    url: '/system/user/changeDispatchStatus',
+    method: 'put',
+    data: data
+  });
+};
+
 /**
  * 查询用户个人信息
  */
@@ -211,5 +223,6 @@ export default {
   getAuthRole,
   updateAuthRole,
   deptTreeSelect,
-  listUserByDeptId
+  listUserByDeptId,
+  changeUserDispatchStatus
 };

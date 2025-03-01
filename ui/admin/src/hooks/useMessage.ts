@@ -19,8 +19,8 @@ export const useMessage = () => {
       ElMessage.warning(content)
     },
     // 弹出提示
-    alert(content: string, title: string = "提示信息") {
-      return ElMessageBox.alert(content, title)
+    alert(content: string, title: string = "提示信息", params?: object) {
+      return ElMessageBox.alert(content, title, params)
     },
     // 错误提示
     alertError(content: string, title: string = "提示信息") {
@@ -83,8 +83,8 @@ export const useMessage = () => {
       )
     },
     // 提交内容
-    prompt(content: string, tip: string) {
-      return ElMessageBox.prompt(content, tip, {
+    prompt(content: string, tip: string, custom?: object) {
+      return ElMessageBox.prompt(content, tip, custom ?? {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: 'warning'

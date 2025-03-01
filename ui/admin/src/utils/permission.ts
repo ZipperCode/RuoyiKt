@@ -1,4 +1,5 @@
 import useUserStore from '@/store/modules/user';
+import {RoleVO} from "@/api/system/role/types";
 
 /**
  * 字符权限校验
@@ -49,3 +50,9 @@ export const checkRole = (value: any): boolean => {
     return false;
   }
 };
+
+export const checkSalesman = (roles: RoleVO[]): boolean => {
+  return roles.some((role) => {
+    return role.roleKey.indexOf('salesman') > 0
+  })
+}

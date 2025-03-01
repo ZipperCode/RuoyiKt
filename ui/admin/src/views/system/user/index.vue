@@ -104,7 +104,7 @@
           <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="50" align="center"/>
             <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible"/>
-            <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible"
+            <el-table-column label="用户名" align="center" key="userName" prop="userName" v-if="columns[1].visible"
                              :show-overflow-tooltip="true"/>
             <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible"
                              :show-overflow-tooltip="true"/>
@@ -134,12 +134,13 @@
                 ></el-switch>
               </template>
             </el-table-column>
-            <el-table-column :label="columns[6].label" align="center" key="status" v-if="columns[6].visible">
+            <el-table-column label="可分配" align="center" key="dispatch" v-if="columns[6].visible">
               <template #default="scope">
-                <el-switch v-model="scope.row.status"
+                <el-switch v-model="scope.row.dispatch"
                            inline-prompt
-                           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" active-value="0"
-                           inactive-value="1" @change="handleStatusChange(scope.row)"
+                           v-if="checkSalesman(scope.row.roles)"
+                           style="--el-switch-off-color: #13ce66; --el-switch-on-color: #ff4949" active-value="1"
+                           inactive-value="0" @change="handleDispatchStatusChange(scope.row)"
                            active-text="禁用"
                            inactive-text="可分配"
                 ></el-switch>
@@ -344,11 +345,13 @@ import {RoleVO} from "@/api/system/role/types";
 import {PostVO} from "@/api/system/post/types";
 import {to} from "await-to-js";
 import {globalHeaders} from "@/utils/request";
+import {useMessage} from "@/hooks/useMessage";
+import {checkRole, checkSalesman} from "@/utils/permission";
 
 const router = useRouter();
 const {proxy} = getCurrentInstance() as ComponentInternalInstance
 const {sys_normal_disable, sys_user_sex} = toRefs<any>(proxy?.useDict('sys_normal_disable', 'sys_user_sex'));
-
+const message = useMessage();
 const userList = ref<UserVO[]>();
 const loading = ref(true);
 const showSearch = ref(true)
@@ -520,6 +523,19 @@ const handleStatusChange = async (row: UserVO) => {
     row.status = row.status === "0" ? "1" : "0";
   }
 }
+
+const handleDispatchStatusChange = async (row: UserVO) => {
+  let text = row.dispatch === "0" ? "禁用" : "启用"
+  try {
+    await message.confirm('确认要"' + text + '""' + row.userName + '"用户禁止分配吗?');
+    await api.changeUserDispatchStatus(row.userId, row.dispatch);
+
+    proxy?.$modal.msgSuccess(text + "成功");
+  } catch (err) {
+    row.dispatch = row.dispatch === "0" ? "1" : "0";
+  }
+}
+
 /** 跳转角色分配 */
 const handleAuthRole = (row: UserVO) => {
   const userId = row.userId;
@@ -528,7 +544,7 @@ const handleAuthRole = (row: UserVO) => {
 
 /** 重置密码按钮操作 */
 const handleResetPwd = async (row: UserVO) => {
-  const [err, res] = await to(ElMessageBox.prompt('请输入"' + row.userName + '"的新密码', "提示", {
+  const [err, res] = await to(message.prompt('请输入"' + row.userName + '"的新密码', "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     closeOnClickModal: false,
@@ -573,7 +589,7 @@ const handleFileSuccess = (response: any, file: UploadFile) => {
   upload.open = false;
   upload.isUploading = false;
   uploadRef.value?.handleRemove(file);
-  ElMessageBox.alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", {dangerouslyUseHTMLString: true});
+  message.alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", {dangerouslyUseHTMLString: true});
   getList();
 }
 
