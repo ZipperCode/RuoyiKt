@@ -69,7 +69,6 @@ class SysUserServiceImpl(
             .eq(ObjectUtil.isNotNull(user.userId), "u.user_id", user.userId)
             .like(StringUtils.isNotBlank(user.userName), "u.user_name", user.userName)
             .eq(StringUtils.isNotBlank(user.status), "u.status", user.status)
-            .like(StringUtils.isNotBlank(user.phonenumber), "u.phonenumber", user.phonenumber)
             .between(
                 params["beginTime"] != null && params["endTime"] != null,
                 "u.create_time", params["beginTime"], params["endTime"]

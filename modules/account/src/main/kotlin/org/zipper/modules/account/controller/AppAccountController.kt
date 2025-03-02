@@ -1,6 +1,7 @@
 package org.zipper.modules.account.controller
 
 import cn.dev33.satoken.annotation.SaCheckPermission
+import cn.dev33.satoken.annotation.SaMode
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
@@ -18,6 +19,7 @@ import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.modules.account.constant.DataClassify
 import org.zipper.modules.account.constant.DataStatus
+import org.zipper.modules.account.constant.Permissions
 import org.zipper.modules.account.domain.param.AppAccountParam
 import org.zipper.modules.account.domain.param.AppAccountRecordParam
 import org.zipper.modules.account.domain.param.UpdateStatusParam
@@ -36,7 +38,19 @@ import java.util.concurrent.atomic.AtomicBoolean
 class AppAccountController(
     private val appAccountService: AppAccountService
 ) {
-    @SaCheckPermission("app:account:add")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineAdd,
+            Permissions.PairsAdd,
+            Permissions.Ws1Add,
+            Permissions.Ws2Add,
+            Permissions.Ws3Add,
+            Permissions.Ws4Add,
+            Permissions.Ws5Add,
+            Permissions.Ws6Add,
+            Permissions.Ws7Add
+        ], mode = SaMode.OR
+    )
     @Log(title = "上传账号", businessType = BusinessType.INSERT)
     @RepeatSubmit
     @PostMapping
@@ -45,7 +59,19 @@ class AppAccountController(
         appAccountService.add(param).validate()
     }
 
-    @SaCheckPermission("app:account:edit")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineEdit,
+            Permissions.PairsEdit,
+            Permissions.Ws1Edit,
+            Permissions.Ws2Edit,
+            Permissions.Ws3Edit,
+            Permissions.Ws4Edit,
+            Permissions.Ws5Edit,
+            Permissions.Ws6Edit,
+            Permissions.Ws7Edit
+        ], mode = SaMode.OR
+    )
     @Log(title = "修改账号", businessType = BusinessType.UPDATE)
     @RepeatSubmit
     @PutMapping
@@ -54,7 +80,19 @@ class AppAccountController(
         appAccountService.edit(param).validate()
     }
 
-    @SaCheckPermission("app:account:delete")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineDelete,
+            Permissions.PairsDelete,
+            Permissions.Ws1Delete,
+            Permissions.Ws2Delete,
+            Permissions.Ws3Delete,
+            Permissions.Ws4Delete,
+            Permissions.Ws5Delete,
+            Permissions.Ws6Delete,
+            Permissions.Ws7Delete
+        ], mode = SaMode.OR
+    )
     @Log(title = "删除账号", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ResultBody
@@ -62,7 +100,19 @@ class AppAccountController(
         appAccountService.delete(ids)
     }
 
-    @SaCheckPermission("app:account:edit")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineEdit,
+            Permissions.PairsEdit,
+            Permissions.Ws1Edit,
+            Permissions.Ws2Edit,
+            Permissions.Ws3Edit,
+            Permissions.Ws4Edit,
+            Permissions.Ws5Edit,
+            Permissions.Ws6Edit,
+            Permissions.Ws7Edit
+        ], mode = SaMode.OR
+    )
     @Log(title = "更新状态", businessType = BusinessType.UPDATE)
     @PutMapping("/updateStatus")
     @ResultBody
@@ -74,7 +124,19 @@ class AppAccountController(
         return appAccountService.updateStatus(param.ids, param.status)
     }
 
-    @SaCheckPermission("app:account:unbind")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineUnbind,
+            Permissions.PairsUnbind,
+            Permissions.Ws1Unbind,
+            Permissions.Ws2Unbind,
+            Permissions.Ws3Unbind,
+            Permissions.Ws4Unbind,
+            Permissions.Ws5Unbind,
+            Permissions.Ws6Unbind,
+            Permissions.Ws7Unbind
+        ], mode = SaMode.OR
+    )
     @Log(title = "解绑数据", businessType = BusinessType.UPDATE)
     @DeleteMapping("/unbind/{id}")
     @ResultBody
@@ -82,7 +144,19 @@ class AppAccountController(
         return appAccountService.unBind(id)
     }
 
-    @SaCheckPermission("app:account:upload")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineUpload,
+            Permissions.PairsUpload,
+            Permissions.Ws1Upload,
+            Permissions.Ws2Upload,
+            Permissions.Ws3Upload,
+            Permissions.Ws4Upload,
+            Permissions.Ws5Upload,
+            Permissions.Ws6Upload,
+            Permissions.Ws7Upload
+        ], mode = SaMode.OR
+    )
     @Log(title = "批量上传账号", businessType = BusinessType.INSERT)
     @RepeatSubmit
     @PostMapping("/upload")
@@ -95,34 +169,94 @@ class AppAccountController(
         return appAccountService.batchUpload(param)
     }
 
-    @SaCheckPermission("app:account:list")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineList,
+            Permissions.PairsList,
+            Permissions.Ws1List,
+            Permissions.Ws2List,
+            Permissions.Ws3List,
+            Permissions.Ws4List,
+            Permissions.Ws5List,
+            Permissions.Ws6List,
+            Permissions.Ws7List
+        ], mode = SaMode.OR
+    )
     @GetMapping("/{id}")
     @ResultBody
     fun getInfo(@PathVariable id: @NotNull(message = "key不能为空") Long): AppAccountVo? {
         return appAccountService.getInfo(id)
     }
 
-    @SaCheckPermission("app:account:list")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineList,
+            Permissions.PairsList,
+            Permissions.Ws1List,
+            Permissions.Ws2List,
+            Permissions.Ws3List,
+            Permissions.Ws4List,
+            Permissions.Ws5List,
+            Permissions.Ws6List,
+            Permissions.Ws7List
+        ], mode = SaMode.OR
+    )
     @GetMapping("/list")
     fun list(@Valid param: AppAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo> {
         return appAccountService.pageList(param, pageQuery)
     }
 
-    @SaCheckPermission("app:account:list")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineList,
+            Permissions.PairsList,
+            Permissions.Ws1List,
+            Permissions.Ws2List,
+            Permissions.Ws3List,
+            Permissions.Ws4List,
+            Permissions.Ws5List,
+            Permissions.Ws6List,
+            Permissions.Ws7List
+        ], mode = SaMode.OR
+    )
     @GetMapping("/unusedList")
     fun unusedList(@Valid param: AppAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo> {
         param.status = DataStatus.Normal.status
         return appAccountService.pageList(param, pageQuery)
     }
 
-    @SaCheckPermission("app:account:record:list")
+    @SaCheckPermission(
+        value = [
+            Permissions.LineRecord,
+            Permissions.PairsRecord,
+            Permissions.Ws1Record,
+            Permissions.Ws2Record,
+            Permissions.Ws3Record,
+            Permissions.Ws4Record,
+            Permissions.Ws5Record,
+            Permissions.Ws6Record,
+            Permissions.Ws7Record
+        ], mode = SaMode.OR
+    )
     @GetMapping("/recordList")
     fun recordList(@Valid param: AppAccountRecordParam, pageQuery: PageQuery): TableDataInfo<AppAccountRecordVo> {
         return appAccountService.recordPageList(param, pageQuery)
     }
 
+    @SaCheckPermission(
+        value = [
+            Permissions.LineExport,
+            Permissions.PairsExport,
+            Permissions.Ws1Export,
+            Permissions.Ws2Export,
+            Permissions.Ws3Export,
+            Permissions.Ws4Export,
+            Permissions.Ws5Export,
+            Permissions.Ws6Export,
+            Permissions.Ws7Export
+        ], mode = SaMode.OR
+    )
     @Log(title = "账号管理-导出", businessType = BusinessType.EXPORT)
-    @SaCheckPermission("app:account:export")
     @PostMapping("/export")
     fun export(@Valid param: AppAccountParam, response: HttpServletResponse) {
         val list = appAccountService.exportList(param)
@@ -133,8 +267,20 @@ class AppAccountController(
     private val lockDispatch = AtomicBoolean()
 
     @RepeatSubmit
+    @SaCheckPermission(
+        value = [
+            Permissions.LineDispatch,
+            Permissions.PairsDispatch,
+            Permissions.Ws1Dispatch,
+            Permissions.Ws2Dispatch,
+            Permissions.Ws3Dispatch,
+            Permissions.Ws4Dispatch,
+            Permissions.Ws5Dispatch,
+            Permissions.Ws6Dispatch,
+            Permissions.Ws7Dispatch
+        ], mode = SaMode.OR
+    )
     @Log(title = "更新状态", businessType = BusinessType.UPDATE)
-    @SaCheckPermission("app:account:dispatch")
     @PostMapping("/dispatch")
     @ResultBody
     fun dispatch(@RequestBody param: AppAccountParam): AppDispatchVo {

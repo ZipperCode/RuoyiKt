@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {AppAccountForm, AppAccountQuery, AppAccountVo} from "@/api/account/ids/types";
 import {delIds, dispatch, exportData, pageList, unbind} from "@/api/account/ids";
-import {Permission} from "@/views/account/ids/types";
 import AppAccountFormDialog from "@/views/account/ids/common/FormDialog.vue";
 import AppAccountBatchUploadDialog from "@/views/account/ids/common/BatchUploadDialog.vue";
 import {useMessage} from "@/hooks/useMessage";
@@ -9,6 +8,22 @@ import AppAccountDispatchFormDialog from "@/views/account/ids/common/DispatchDia
 import {checkPermi} from "@/utils/permission";
 import AppAccountBatchStatusDialog from "@/views/account/ids/common/BatchStatusDialog.vue";
 import AppAccountScreenshotDialog from "@/views/account/ids/common/ScreenshotDialog.vue";
+import { propTypes as PropTypes } from "@/utils/propTypes";
+
+defineOptions({name: "CommonIdsIndex"})
+
+interface Props {
+  classify: number,
+  addPermission: string,
+  editPermission: string,
+  deletePermission: string,
+  uploadPermission: string,
+  dispatchPermission: string,
+  unbindPermission: string,
+  exportPermission: string,
+}
+
+const props = defineProps<Props>()
 
 const {proxy} = getCurrentInstance() as ComponentInternalInstance;
 const {
@@ -27,14 +42,7 @@ const fullscreenLoading = ref(false)
 
 const message = useMessage();
 
-const route = useRoute()
-const classify = computed(() => {
-  try {
-    return parseInt(route.path.slice(route.path.lastIndexOf('/') + 1))
-  } catch (e) {
-    return -1
-  }
-})
+const classify = computed(() => props.classify as unknown as number)
 
 /**
  * 列表查询部分
@@ -187,6 +195,7 @@ const handleScreenshot = async (row: VO) => {
 }
 
 onMounted(() => {
+  console.log("onMount")
   getList();
 })
 </script>
@@ -262,33 +271,34 @@ onMounted(() => {
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd()" v-hasPermi="[Permission.Add]">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd()" v-hasPermi="[props.addPermission]">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Upload" @click="handleUpload()" v-hasPermi="[Permission.Upload]">
+            <el-button type="primary" plain icon="Upload" @click="handleUpload()" v-hasPermi="[props.uploadPermission]">
               批量上传
             </el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="[Permission.Delete]">
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="[props.deletePermission]">
               多选删除
             </el-button>
           </el-col>
 
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Edit" :disabled="multiple" @click="openUpdateStatus()" v-hasPermi="[Permission.Edit]">
+            <el-button type="primary" plain icon="Edit" :disabled="multiple" @click="openUpdateStatus()"
+                       v-hasPermi="[props.editPermission]">
               批量修改状态
             </el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" plain icon="Share" @click="handleDispatch()"
-                       v-hasPermi="[Permission.Dispatch]">
+                       v-hasPermi="[props.dispatchPermission]">
               数据分配
             </el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" plain icon="Share" @click="handleExport()"
-                       v-hasPermi="[Permission.Export]">
+                       v-hasPermi="[props.exportPermission]">
               导出数据
             </el-button>
           </el-col>
@@ -310,7 +320,7 @@ onMounted(() => {
         <template #default="scope">
           <div>
             <el-tooltip :content="scope.row.record?.bindUser" placement="top" v-if="scope.row.record !== null">
-              <el-button size="small" type="danger" v-if="checkPermi([Permission.Unbind])" @click="handleUnbind(scope.row.id)">解绑
+              <el-button size="small" type="danger" v-if="checkPermi([props.unbindPermission])" @click="handleUnbind(scope.row.id)">解绑
               </el-button>
               <el-tag v-else type="success">已绑定</el-tag>
             </el-tooltip>
@@ -351,12 +361,12 @@ onMounted(() => {
           </el-tooltip>
           <el-tooltip content="修改" placement="top">
             <el-button
-              link type="primary" icon="Edit" @click="handleEdit(scope.row)" v-hasPermi="[Permission.Edit]">
+              link type="primary" icon="Edit" @click="handleEdit(scope.row)" v-hasPermi="[props.editPermission]">
             </el-button>
           </el-tooltip>
 
           <el-tooltip content="删除" placement="top">
-            <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="[Permission.Delete]"></el-button>
+            <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="[props.deletePermission]"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>

@@ -53,6 +53,6 @@ export const checkRole = (value: any): boolean => {
 
 export const checkSalesman = (roles: RoleVO[]): boolean => {
   return roles.some((role) => {
-    return role.roleKey.indexOf('salesman') > 0
+    return role.roleKey && role.roleKey.indexOf('salesman') > 0
   })
 }

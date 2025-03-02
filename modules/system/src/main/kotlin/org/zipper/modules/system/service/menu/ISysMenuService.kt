@@ -74,7 +74,7 @@ interface ISysMenuService {
      * @param menus 菜单列表
      * @return 路由列表
      */
-    fun buildMenus(menus: List<SysMenuVo>): List<RouterVo>
+    fun buildMenus(menus: List<SysMenuVo>, parentPath: String? = null): List<RouterVo>
 
     /**
      * 构建前端所需要下拉树结构

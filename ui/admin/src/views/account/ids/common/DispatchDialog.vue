@@ -3,9 +3,6 @@ import {AppAccountForm} from "@/api/account/ids/types";
 import {useMessage} from "@/hooks/useMessage";
 
 const {proxy} = getCurrentInstance() as ComponentInternalInstance
-const {app_account_classify, app_account_country, app_account_status} = toRefs<any>(
-  proxy?.useDict("app_account_classify", 'app_account_country', 'app_account_status')
-)
 const message = useMessage();
 const baseUrl = import.meta.env.VITE_APP_BASE_API;
 defineOptions({name: "AppAccountDispatchFormDialog"});
@@ -66,9 +63,9 @@ onMounted(() => {
   <Dialog v-model="dialogVisible" :title="dialogTitle" width="70%">
     <el-card shadow="hover">
       <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button type="primary" @click="submitForm">提交</el-button>
-      </el-col>
+        <el-col :span="1.5">
+          <el-button type="primary" @click="submitForm">提交</el-button>
+        </el-col>
       </el-row>
     </el-card>
     <el-table>

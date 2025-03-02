@@ -169,12 +169,12 @@ class SysMenuServiceImpl(
      * @param menus 菜单列表
      * @return 路由列表
      */
-    override fun buildMenus(menus: List<SysMenuVo>): List<RouterVo> {
+    override fun buildMenus(menus: List<SysMenuVo>, parentPath: String?): List<RouterVo> {
         val routers: MutableList<RouterVo> = LinkedList()
         for (menu in menus) {
             val router = RouterVo()
             router.hidden = "1" == menu.visible
-            router.name = menu.getRouteName()
+            router.name = menu.getRouteName(parentPath)
             router.path = menu.getRouterPath()
             router.component = menu.getComponentInfo()
             router.query = menu.queryParam
@@ -183,7 +183,7 @@ class SysMenuServiceImpl(
             if (CollUtil.isNotEmpty(cMenus) && UserConstants.TYPE_DIR == menu.menuType) {
                 router.alwaysShow = true
                 router.redirect = "noRedirect"
-                router.children = buildMenus(cMenus)
+                router.children = buildMenus(cMenus, menu.getRouterPath())
             } else if (menu.isMenuFrame()) {
                 router.meta = null
                 val childrenList: MutableList<RouterVo> = ArrayList()

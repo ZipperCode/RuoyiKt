@@ -10,8 +10,8 @@ import * as FileApi from '@/api/system/file'
 import {FileRecordVo} from "@/api/system/file/types";
 
 const {proxy} = getCurrentInstance() as ComponentInternalInstance
-const {app_account_classify, app_account_country, app_account_status} = toRefs<any>(
-  proxy?.useDict("app_account_classify", 'app_account_country', 'app_account_status')
+const {app_account_country, app_account_status} = toRefs<any>(
+  proxy?.useDict('app_account_country', 'app_account_status')
 )
 const message = useMessage();
 const baseUrl = import.meta.env.VITE_APP_BASE_API;
@@ -253,7 +253,7 @@ const handleUploadRequest = async (file: File) => {
         <el-input v-model="formData.linkRemark" placeholder="请输入链接备注" clearable/>
       </el-form-item>
       <el-form-item label="备注" prop="remark" style="width: 100%">
-        <el-input v-model="formData.remark" placeholder="请输入备注" clearable />
+        <el-input v-model="formData.remark" placeholder="请输入备注" clearable/>
       </el-form-item>
       <el-form-item label="截图" prop="remark" style="width: 100%">
         <!--        <el-input v-model="formData.remark" placeholder="请输入备注" clearable/>-->
@@ -293,7 +293,7 @@ const handleUploadRequest = async (file: File) => {
     </el-form>
     <template #footer>
       <el-button type="primary" @click="submitForm" :disabled="formLoading">确 定</el-button>
-<!--      <el-button @click="resetForm">重 置</el-button>-->
+      <!--      <el-button @click="resetForm">重 置</el-button>-->
     </template>
 
     <el-dialog v-model="previewDialogVisible">

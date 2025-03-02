@@ -2,7 +2,7 @@
   <div class="p-2">
     <el-row :gutter="20">
       <!-- 部门树 -->
-      <el-col :lg="4" :xs="24" style="">
+      <el-col :lg="4" :xs="24" style="" v-if="false">
         <el-card shadow="hover">
           <el-input v-model="deptName" placeholder="请输入部门名称" prefix-icon="Search" clearable/>
           <el-tree
@@ -19,7 +19,7 @@
           />
         </el-card>
       </el-col>
-      <el-col :lg="20" :xs="24">
+      <el-col :lg="24" :xs="24">
         <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
           <div class="mb-[10px]" v-show="showSearch">
             <el-card shadow="hover">
@@ -146,7 +146,12 @@
                 ></el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[7].visible" width="160">
+            <el-table-column label="备注" align="center" prop="remark" v-if="columns[7].visible" width="160">
+              <template #default="scope">
+                <span>{{ scope.row.remark }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[8].visible" width="160">
               <template #default="scope">
                 <span>{{ scope.row.createTime }}</span>
               </template>
@@ -389,7 +394,8 @@ const columns = ref<FieldOption[]>([
   {key: 4, label: `角色`, visible: true, children: []},
   {key: 5, label: `账号状态`, visible: true, children: []},
   {key: 6, label: `可分配`, visible: true, children: []},
-  {key: 7, label: `创建时间`, visible: true, children: []}
+  {key: 7, label: `备注`, visible: true, children: []},
+  {key: 8, label: `创建时间`, visible: true, children: []},
 ])
 
 
@@ -466,8 +472,8 @@ watchEffect(
 
 /** 查询部门下拉树结构 */
 const getTreeSelect = async () => {
-  const res = await api.deptTreeSelect();
-  deptOptions.value = res.data;
+  // const res = await api.deptTreeSelect();
+  // deptOptions.value = res.data;
 };
 
 /** 查询用户列表 */

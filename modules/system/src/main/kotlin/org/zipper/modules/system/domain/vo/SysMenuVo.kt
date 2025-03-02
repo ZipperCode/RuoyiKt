@@ -111,8 +111,18 @@ class SysMenuVo : SysMenuMixin, Serializable {
     /**
      * 获取路由名称
      */
-    fun getRouteName(): String {
-        var routerName: String = StringUtils.capitalize(path)
+    fun getRouteName(parentName: String? = null): String {
+        var contactPath = ""
+        if (parentName != null) {
+            contactPath = parentName
+            if (contactPath.first() == '/') {
+                contactPath = contactPath.substring(1)
+            }
+            if (contactPath.last() != '/') {
+                contactPath += "/"
+            }
+        }
+        var routerName: String = StringUtils.capitalize(contactPath + path)
         // 非外链并且是一级目录（类型为目录）
         if (isMenuFrame()) {
             routerName = StringUtils.EMPTY
