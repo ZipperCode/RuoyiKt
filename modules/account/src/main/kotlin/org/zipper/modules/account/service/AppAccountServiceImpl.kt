@@ -205,8 +205,8 @@ class AppAccountServiceImpl(
         val params = param.params
         // 通过上传人，查询对应的记录id
         val uploaderIds = sysUserApi.findUploadUserIfCondition(params)
-        val isSalesman = loginUser.rolePermission.any { it == RoleCode.Salesman.create(classify) }
-        val isUploader = loginUser.rolePermission.any { it == RoleCode.Uploader.create(classify) }
+        val isSalesman = loginUser.rolePermission.any { it.endsWith(RoleCode.Salesman.create(classify)) }
+        val isUploader = loginUser.rolePermission.any { it.endsWith(RoleCode.Uploader.create(classify)) }
         log.info(
             "数据查询，是否业务员：{}，是否上传人：{} userId = {} username = {}",
             isSalesman, isUploader, loginUser.userId, loginUser.username
@@ -321,8 +321,8 @@ class AppAccountServiceImpl(
             MybatisKt.ktQuery<AppAccountRecordEntity>()
                 .between(AppAccountRecordEntity::createTime, start, end)
         ).associate { (it.bindUserId ?: 0L) to it.count }.toMutableMap()
-        val maxOfUserCount = dayRecordMap.maxOf { it.value }
-        val minOfUserCount = dayRecordMap.minOf { it.value }
+        val maxOfUserCount = if (dayRecordMap.isNotEmpty()) dayRecordMap.maxOf { it.value } else 0
+        val minOfUserCount = if (dayRecordMap.isNotEmpty()) dayRecordMap.minOf { it.value } else 0
         log.info("分配数据，查询到当天已经分配的记录数量：{} 记录数量最大为：{}, 最小为：{}", dayRecordMap, maxOfUserCount, minOfUserCount)
         val newDispatchRecordList = mutableListOf<AppAccountRecordEntity>()
         val dispatchFunc: (entity: AppAccountEntity, userId: Long) -> Unit = { entity, userId ->
@@ -330,6 +330,7 @@ class AppAccountServiceImpl(
                 AppAccountRecordEntity().apply {
                     this.accountId = entity.id
                     this.bindUserId = userId
+                    this.classify = classify
                     this.used = DataStatus.Normal.status
                 }
             )
@@ -345,8 +346,8 @@ class AppAccountServiceImpl(
             dispatchUserAverage(newDataList, salesmanUserList, div, mod, dispatchFunc)
         }
         log.info("分配数据，分配完成，分配记录：{}", newDispatchRecordList)
-        if (newDataList.isEmpty()) {
-            throw ServiceException("分配数据失败, 没有")
+        if (newDispatchRecordList.isEmpty()) {
+            throw ServiceException("分配数据失败, 匹配不到分配数据")
         }
         recordMapper.insertBatch(newDispatchRecordList)
         return AppDispatchVo(

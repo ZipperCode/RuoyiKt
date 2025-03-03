@@ -5,8 +5,8 @@ enum class RoleCode(
 ) {
 
     Admin("account_admin"),
-    Uploader("account_uploader"),
-    Salesman("account_salesman"),;
+    Uploader("uploader"),
+    Salesman("salesman"),;
 
     fun create(classify: Int): String {
         return "${code}_$classify"
