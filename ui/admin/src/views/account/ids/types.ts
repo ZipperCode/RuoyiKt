@@ -99,6 +99,8 @@ export enum Permission {
   Record = "app:account:record:list",
   Dispatch = "app:account:dispatch",
   Export = "app:account:export",
+
+  WsSearch = "app:account:ws:search",
 }
 
 export enum DataClassify {

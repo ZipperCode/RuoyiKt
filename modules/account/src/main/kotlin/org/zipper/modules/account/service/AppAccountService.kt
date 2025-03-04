@@ -4,6 +4,7 @@ import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.modules.account.domain.param.AppAccountParam
 import org.zipper.modules.account.domain.param.AppAccountRecordParam
+import org.zipper.modules.account.domain.param.SearchAccountParam
 import org.zipper.modules.account.domain.param.UploadAccountParam
 import org.zipper.modules.account.domain.vo.*
 
@@ -49,6 +50,11 @@ interface AppAccountService {
      * 页面列表
      */
     fun pageList(param: AppAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo>
+
+    /**
+     * 查询在哪个分类
+     */
+    fun searchTypeList(param: SearchAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo>
 
     /**
      * 记录列表

@@ -25,6 +25,18 @@ enum class DataClassify(
 
     companion object {
 
+        fun waTypes(): List<Int> {
+            return listOf(
+                WhatsApp1.classify,
+                WhatsApp2.classify,
+                WhatsApp3.classify,
+                WhatsApp4.classify,
+                WhatsApp5.classify,
+                WhatsApp6.classify,
+                WhatsApp7.classify
+            )
+        }
+
         fun valid(classify: Int?) {
             if (entries.any { it.classify == classify }) {
                 return

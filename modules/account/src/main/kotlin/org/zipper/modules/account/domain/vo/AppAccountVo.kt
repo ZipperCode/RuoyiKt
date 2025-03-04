@@ -3,8 +3,8 @@ package org.zipper.modules.account.domain.vo
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.common.core.domain.mixin.account.AppAccountMixin
+import org.zipper.common.core.domain.mixin.sys.SysUserMixin
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
-import org.zipper.modules.account.constant.AccountType
 import org.zipper.modules.account.constant.DataClassify
 import org.zipper.modules.account.constant.DataStatus
 import org.zipper.modules.account.domain.entity.AppAccountEntity
@@ -31,4 +31,30 @@ open class AppAccountVo : BaseMixinVo(), AppAccountMixin {
      */
     var createUser: String? = null
     var record: AppAccountRecordVo? = null
+
+    fun collectUserIds(selectUserIds: MutableList<Long>) {
+        this.let {
+            if (it.createBy != null) {
+                selectUserIds.add(it.createBy!!)
+            }
+            it.record?.run {
+                if (createBy != null) {
+                    selectUserIds.add(createBy!!)
+                }
+                if (bindUserId != null) {
+                    selectUserIds.add(bindUserId!!)
+                }
+            }
+        }
+    }
+
+    fun fillUser(userMap: Map<Long?, SysUserMixin>) {
+        this.let {
+            it.createUser = userMap[it.createBy]?.userName
+            it.record?.run {
+                createUser = userMap[createBy]?.userName
+                bindUser = userMap[bindUserId]?.userName
+            }
+        }
+    }
 }

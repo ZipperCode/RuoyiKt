@@ -20,10 +20,7 @@ import org.zipper.framework.security.aspect.ResultBody
 import org.zipper.modules.account.constant.DataClassify
 import org.zipper.modules.account.constant.DataStatus
 import org.zipper.modules.account.constant.Permissions
-import org.zipper.modules.account.domain.param.AppAccountParam
-import org.zipper.modules.account.domain.param.AppAccountRecordParam
-import org.zipper.modules.account.domain.param.UpdateStatusParam
-import org.zipper.modules.account.domain.param.UploadAccountParam
+import org.zipper.modules.account.domain.param.*
 import org.zipper.modules.account.domain.vo.AccountUploadResultVo
 import org.zipper.modules.account.domain.vo.AppAccountRecordVo
 import org.zipper.modules.account.domain.vo.AppAccountVo
@@ -206,6 +203,13 @@ class AppAccountController(
         return appAccountService.pageList(param, pageQuery)
     }
 
+
+    @SaCheckPermission(Permissions.WsSearch)
+    @GetMapping("/search")
+    fun searchTypeList(@Valid param: SearchAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo> {
+        return appAccountService.searchTypeList(param, pageQuery)
+    }
+
     @SaCheckPermission(
         value = [
             Permissions.LineList,
@@ -297,4 +301,5 @@ class AppAccountController(
             }
         }
     }
+
 }

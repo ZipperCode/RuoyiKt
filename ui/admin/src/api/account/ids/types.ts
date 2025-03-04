@@ -201,3 +201,10 @@ export interface AppAccountRecordVo extends BaseEntity {
    */
   createUser: string
 }
+
+
+export interface SearchQuery extends PageQuery {
+  id?: number
+  account?: string
+  uploader?: string
+}

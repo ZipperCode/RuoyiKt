@@ -93,4 +93,5 @@ object Permissions {
     const val Ws7Dispatch = "app:account:ws7:dispatch"
     const val Ws7Export = "app:account:ws7:export"
 
+    const val WsSearch = "app:account:ws:search"
 }

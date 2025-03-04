@@ -26,6 +26,7 @@ import org.zipper.modules.account.domain.entity.AppAccountEntity
 import org.zipper.modules.account.domain.entity.AppAccountRecordEntity
 import org.zipper.modules.account.domain.param.AppAccountParam
 import org.zipper.modules.account.domain.param.AppAccountRecordParam
+import org.zipper.modules.account.domain.param.SearchAccountParam
 import org.zipper.modules.account.domain.param.UploadAccountParam
 import org.zipper.modules.account.domain.vo.*
 import org.zipper.modules.account.mapper.AppAccountMapper
@@ -175,25 +176,11 @@ class AppAccountServiceImpl(
         pageResult.setRecords(dataList)
         val selectUserIds = mutableListOf<Long>()
         dataList.forEach {
-            if (it.createBy != null) {
-                selectUserIds.add(it.createBy!!)
-            }
-            it.record?.run {
-                if (createBy != null) {
-                    selectUserIds.add(createBy!!)
-                }
-                if (bindUserId != null) {
-                    selectUserIds.add(bindUserId!!)
-                }
-            }
+            it.collectUserIds(selectUserIds)
         }
         val userMap = sysUserApi.getUserListNames(selectUserIds).associateBy { it.userId }
         dataList.forEach {
-            it.createUser = userMap[it.createBy]?.userName
-            it.record?.run {
-                createUser = userMap[createBy]?.userName
-                bindUser = userMap[bindUserId]?.userName
-            }
+            it.fillUser(userMap)
         }
 
         return TableDataInfo.build(pageResult)
@@ -230,6 +217,35 @@ class AppAccountServiceImpl(
                 params["beginTime"] != null && params["endTime"] != null,
                 "a.create_time", params["beginTime"], params["endTime"]
             )
+    }
+
+    override fun searchTypeList(param: SearchAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo> {
+        // 通过上传人，查询对应的记录id
+        val params = if (param.uploader != null) mapOf("uploader" to param.uploader!!) else emptyMap()
+        val uploaderIds = sysUserApi.findUploadUserIfCondition(params)
+        val searchClassify = DataClassify.waTypes()
+        val query = Wrappers.query<AppAccountEntity>()
+            .`in`("a.classify", searchClassify)
+            .like(!param.account.isNullOrEmpty(), "a.account", param.account)
+            .`in`(uploaderIds.isNotEmpty(), "a.create_by", uploaderIds)
+            .between(
+                params["beginTime"] != null && params["endTime"] != null,
+                "a.create_time", params["beginTime"], params["endTime"]
+            )
+        val queryPage = pageQuery.build<AppAccountEntity>()
+        val dataList = appAccountMapper.selectAppAccountList(queryPage, query)
+        val pageResult = Page<AppAccountVo>(queryPage.current, queryPage.size, queryPage.total)
+
+        val selectUserIds = mutableListOf<Long>()
+        dataList.forEach {
+            it.collectUserIds(selectUserIds)
+        }
+        val userMap = sysUserApi.getUserListNames(selectUserIds).associateBy { it.userId }
+        dataList.forEach {
+            it.fillUser(userMap)
+        }
+        pageResult.setRecords(dataList)
+        return TableDataInfo.build(pageResult)
     }
 
     override fun recordPageList(param: AppAccountRecordParam, pageQuery: PageQuery): TableDataInfo<AppAccountRecordVo> {

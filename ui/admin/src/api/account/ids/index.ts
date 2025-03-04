@@ -6,7 +6,8 @@ import {
   AppAccountRecordQuery,
   AppAccountRecordVo,
   AppAccountUploadVo,
-  AppAccountVo
+  AppAccountVo,
+  SearchQuery
 } from "@/api/account/ids/types";
 
 export const add = (data: AppAccountForm): AxiosPromise<AppAccountVo> => {
@@ -47,6 +48,13 @@ export const pageList = (query?: AppAccountQuery): AxiosPromise<AppAccountVo[]> 
   })
 }
 
+export const searchList = (query: SearchQuery): AxiosPromise<AppAccountVo[]> => {
+  return request({
+    url: "/app/account/search",
+    method: "get",
+    params: query
+  })
+}
 
 export const uploadTxt = (file: File, classify: number): AxiosPromise<AppAccountUploadVo> => {
   const formData = new FormData()
@@ -94,6 +102,6 @@ export const updateStatus = (ids: number[], status: number): AxiosPromise<number
   })
 }
 
-export const exportData = (query?: AppAccountQuery)=> {
+export const exportData = (query?: AppAccountQuery) => {
   return download("app/account/export", query, `账号数据_${new Date().getTime()}.xlsx`)
 }
