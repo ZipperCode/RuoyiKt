@@ -250,8 +250,12 @@ class AppAccountServiceImpl(
 
     override fun recordPageList(param: AppAccountRecordParam, pageQuery: PageQuery): TableDataInfo<AppAccountRecordVo> {
         DataClassify.valid(param.classify)
+        val loginUser = LoginHelper.requireLoginUser()
+        val isSalesman = loginUser.rolePermission.any { it.endsWith(RoleCode.Salesman.create(param.classify!!)) }
         val query = Wrappers.query<AppAccountRecordEntity>()
             .eq("r.classify", param.classify)
+            // 业务员只能查询分配自己的
+            .eq(isSalesman, "r.bind_user_id", loginUser.userId)
             .eq(param.used != null, "r.used", param.used)
             .like(!param.account.isNullOrEmpty(), "a.account", param.account)
             .like(!param.createUser.isNullOrEmpty(), "u.user_name", param.createUser)
