@@ -5,7 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty
 import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.modules.system.domain.entity.SysLoginLogEntity
-import org.zipper.modules.system.domain.mixin.SysLoginLogMixin
+import org.zipper.common.core.domain.mixin.SysLoginLogMixin
 import org.zipper.modules.system.excel.ExcelDictConvert
 import java.io.Serializable
 import java.time.LocalDateTime

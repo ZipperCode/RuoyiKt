@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysMenuEntity
-import org.zipper.modules.system.domain.mixin.SysMenuMixin
+import org.zipper.common.core.domain.mixin.SysMenuMixin
 
 /**
  * 菜单权限业务对象 dto

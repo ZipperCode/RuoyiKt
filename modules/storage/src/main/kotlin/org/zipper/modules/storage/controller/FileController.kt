@@ -40,10 +40,11 @@ class FileController(
     @PostMapping(value = ["/upload"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @ResultBody
     fun upload(@Valid fileUploadParam: FileUploadParam): FileRecordVo {
-        if (fileUploadParam.file.isEmpty) {
+        val file = fileUploadParam.file
+        if (file === null || file.isEmpty) {
             throw ServiceException("上传文件不能为空")
         }
-        val createBo = fileService.createFile(fileUploadParam.file)
+        val createBo = fileService.createFile(file)
         return fileRecordService.create(createBo)
     }
 
@@ -90,7 +91,7 @@ class FileController(
         }
     }
 
-//    @CrossOrigin(value = ["*"], allowCredentials = "true", allowedHeaders = ["*"])
+    //    @CrossOrigin(value = ["*"], allowCredentials = "true", allowedHeaders = ["*"])
     @SaIgnore
     @Operation(summary = "请求文件", description = "获取上传文件内容")
     @GetMapping("/{configId}/**")

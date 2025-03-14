@@ -1,13 +1,8 @@
-package org.zipper.modules.system.domain.mixin
+package org.zipper.common.core.domain.mixin
 
-import com.baomidou.mybatisplus.annotation.TableField
-import com.baomidou.mybatisplus.annotation.TableLogic
-import org.zipper.framework.mybatis.core.domain.CreatorMixin
-import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
-import org.zipper.framework.mybatis.core.domain.UpdaterMixin
 import java.io.Serializable
 
-interface SysDeptMixin : CreatorMixin, UpdaterMixin, Serializable {
+interface SysDeptMixin : Serializable {
     /**
      * 部门ID
      */

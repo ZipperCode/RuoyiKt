@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @NoArgs
 @TableName("sys_file_content", autoResultMap = true)
-class SysFileContentEntity : CreatorMixin, LogicDeleteMixin {
+class SysFileContentEntity : CreatorMixin {
 
     /**
      * 编号
@@ -44,7 +44,4 @@ class SysFileContentEntity : CreatorMixin, LogicDeleteMixin {
      */
     @field:TableField(fill = FieldFill.INSERT)
     override var createTime: LocalDateTime? = null
-
-    @field:TableLogic
-    override var deleted: String? = LogicDeleteMixin.NORMAL
 }

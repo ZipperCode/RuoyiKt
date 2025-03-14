@@ -1,10 +1,8 @@
-package org.zipper.modules.system.domain.mixin
+package org.zipper.common.core.domain.mixin
 
-import org.zipper.framework.mybatis.core.domain.CreatorMixin
-import org.zipper.framework.mybatis.core.domain.UpdaterMixin
 import java.io.Serializable
 
-interface SysConfigMixin : CreatorMixin, UpdaterMixin, Serializable {
+interface SysConfigMixin : Serializable {
     /**
      * 参数主键
      */

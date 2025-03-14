@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic
 import com.baomidou.mybatisplus.annotation.TableName
 import org.zipper.framework.mybatis.core.domain.BaseMixinEntity
 import org.zipper.framework.mybatis.core.domain.LogicDeleteMixin
-import org.zipper.modules.system.domain.mixin.SysDeptMixin
+import org.zipper.common.core.domain.mixin.SysDeptMixin
 
 /**
  * 部门表 sys_dept

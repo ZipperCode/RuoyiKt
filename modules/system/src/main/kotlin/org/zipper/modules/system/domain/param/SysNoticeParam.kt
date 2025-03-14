@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size
 import org.zipper.framework.core.xss.Xss
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysNoticeEntity
-import org.zipper.modules.system.domain.mixin.SysNoticeMixin
+import org.zipper.common.core.domain.mixin.SysNoticeMixin
 
 /**
  * 通知公告业务对象 dto

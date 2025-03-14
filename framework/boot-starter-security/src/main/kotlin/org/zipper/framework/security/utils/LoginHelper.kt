@@ -10,6 +10,7 @@ import cn.hutool.core.util.ObjectUtil
 import org.zipper.common.core.constant.UserConstants
 import org.zipper.common.core.domain.model.LoginUser
 import org.zipper.common.core.enums.UserType
+import org.zipper.common.core.exception.ServiceException
 import java.util.function.Supplier
 
 /**
@@ -66,6 +67,10 @@ object LoginHelper {
             }
             session.get(LOGIN_USER_KEY)
         } as LoginUser?
+    }
+
+    fun requireLoginUser():LoginUser {
+        return getLoginUser() ?: throw ServiceException("用户未登录，请重新登录")
     }
 
     /**

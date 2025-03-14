@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import org.zipper.framework.mybatis.core.domain.BaseMixinVo
 import org.zipper.modules.system.domain.entity.SysDeptEntity
-import org.zipper.modules.system.domain.mixin.SysDeptMixin
+import org.zipper.common.core.domain.mixin.SysDeptMixin
 
 /**
  * 部门业务 dto

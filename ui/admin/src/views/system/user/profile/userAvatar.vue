@@ -139,7 +139,8 @@ const uploadImg = async () => {
     formData.append("avatarfile", data, options.fileName);
     const res = await uploadAvatar(formData);
     open.value = false;
-    options.img = res.data.imgUrl;
+    const baseUrl = import.meta.env.VITE_APP_BASE_API;
+    options.img = baseUrl + res.data.imgUrl;
     userStore.setAvatar(options.img as string)
     proxy?.$modal.msgSuccess("修改成功");
     visible.value = false;

@@ -115,8 +115,11 @@ class PlusDataPermissionInterceptor : JsqlParserSupport(), InnerInterceptor {
      * @param mappedStatementId 执行方法id
      */
     protected fun setWhere(plainSelect: PlainSelect, mappedStatementId: String?) {
-        val sqlSegment = dataPermissionHandler.getSqlSegment(plainSelect.where, mappedStatementId!!, true)
-        plainSelect.where = sqlSegment
+        val where = plainSelect.where
+        if (where != null && mappedStatementId != null) {
+            val sqlSegment = dataPermissionHandler.getSqlSegment(plainSelect.where, mappedStatementId, true)
+            plainSelect.where = sqlSegment
+        }
     }
 }
 

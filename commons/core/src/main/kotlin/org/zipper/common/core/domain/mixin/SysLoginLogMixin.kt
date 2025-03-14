@@ -1,4 +1,4 @@
-package org.zipper.modules.system.domain.mixin
+package org.zipper.common.core.domain.mixin
 
 import java.time.LocalDateTime
 import java.util.*
