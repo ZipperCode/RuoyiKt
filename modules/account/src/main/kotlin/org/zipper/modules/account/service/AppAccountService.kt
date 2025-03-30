@@ -1,5 +1,6 @@
 package org.zipper.modules.account.service
 
+import jakarta.servlet.http.HttpServletResponse
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.modules.account.domain.param.AppAccountParam
@@ -46,6 +47,8 @@ interface AppAccountService {
 
 
     fun exportList(param: AppAccountParam): List<AccountExportVo>
+
+    fun export(param: AppAccountParam, response: HttpServletResponse)
     /**
      * 页面列表
      */

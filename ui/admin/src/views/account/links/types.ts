@@ -4,4 +4,5 @@ export enum Permission {
   Edit = "app:links:edit",
   Check = "app:links:check",
   Delete = "app:links:delete",
+  Export = "app:links:export",
 }

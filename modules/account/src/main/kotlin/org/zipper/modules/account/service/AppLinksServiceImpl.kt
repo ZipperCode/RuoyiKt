@@ -1,5 +1,7 @@
 package org.zipper.modules.account.service
 
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Service
 import org.zipper.common.core.exception.ServiceException
 import org.zipper.common.core.ext.MapStructExt.convert
@@ -15,6 +17,7 @@ import org.zipper.modules.account.domain.entity.AppLinksEntity
 import org.zipper.modules.account.domain.param.AppLinksParam
 import org.zipper.modules.account.domain.vo.AppLinksVo
 import org.zipper.modules.account.mapper.AppLinksMapper
+import org.zipper.modules.account.utils.ExcelHelper.writeToExcel
 
 @Service
 class AppLinksServiceImpl(
@@ -56,24 +59,7 @@ class AppLinksServiceImpl(
     }
 
     override fun pageList(param: AppLinksParam, pageQuery: PageQuery): TableDataInfo<AppLinksVo> {
-        val params = param.params
-        val existsUploader = params["uploader"] != null
-        var containUsers = emptyList<Long>()
-        if (existsUploader) {
-            containUsers = userApi.getUserContainsName(params["uploader"] as String?).mapNotNull { it.userId }
-        }
-
-        val query = MybatisKt.ktQuery<AppLinksEntity>()
-            .eq(param.classify != null, AppLinksEntity::classify, param.classify)
-            .like(!param.link.isNullOrEmpty(), AppLinksEntity::link, param.link)
-            .like(!param.remark.isNullOrEmpty(), AppLinksEntity::remark, param.remark)
-            .between(
-                params["beginTime"] != null && params["endTime"] != null,
-                AppLinksEntity::createTime, params["beginTime"], params["endTime"]
-            )
-            .eq(param.createBy != null, AppLinksEntity::createBy, param.createBy)
-            .`in`(containUsers.isNotEmpty(), AppLinksEntity::createBy, containUsers)
-
+        val query = buildQuery(param)
         val page = appLinksMapper.selectVoPage<AppLinksEntity, AppLinksVo>(pageQuery.build(), query)
         val userIds = page.records.mapNotNull { it.createBy }
         if (userIds.isNotEmpty()) {
@@ -84,6 +70,32 @@ class AppLinksServiceImpl(
         }
 
         return TableDataInfo.build(page)
+    }
+
+    override fun export(param: AppLinksParam, response: HttpServletResponse) {
+        val query = buildQuery(param)
+        response.writeToExcel<AppLinksVo>("数据") {
+            appLinksMapper.selectVoPage<AppLinksEntity, AppLinksVo>(it.build(), query).records
+        }
+    }
+
+    fun buildQuery(param: AppLinksParam): KtQueryWrapper<AppLinksEntity> {
+        val params = param.params
+        val existsUploader = params["uploader"] != null
+        var containUsers = emptyList<Long>()
+        if (existsUploader) {
+            containUsers = userApi.getUserContainsName(params["uploader"] as String?).mapNotNull { it.userId }
+        }
+        return MybatisKt.ktQuery<AppLinksEntity>()
+            .eq(param.classify != null, AppLinksEntity::classify, param.classify)
+            .like(!param.link.isNullOrEmpty(), AppLinksEntity::link, param.link)
+            .like(!param.remark.isNullOrEmpty(), AppLinksEntity::remark, param.remark)
+            .between(
+                params["beginTime"] != null && params["endTime"] != null,
+                AppLinksEntity::createTime, params["beginTime"], params["endTime"]
+            )
+            .eq(param.createBy != null, AppLinksEntity::createBy, param.createBy)
+            .`in`(containUsers.isNotEmpty(), AppLinksEntity::createBy, containUsers)
     }
 
     private fun validateUploader() {

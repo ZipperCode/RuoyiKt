@@ -1,6 +1,7 @@
 import {AppLinksForm, AppLinksQuery, AppLinksVo} from "@/api/account/links/types";
 import {AxiosPromise} from "axios";
-import request from "@/utils/request";
+import request, {download} from "@/utils/request";
+import {AppAccountQuery} from "@/api/account/ids/types";
 
 /**
  * 分页列表
@@ -55,4 +56,8 @@ export const delIds = (ids: Array<number>) => {
     url: "/app/links/" + ids,
     method: "delete",
   })
+}
+
+export const exportData = (query?: AppLinksQuery) => {
+  return download("app/link/export", query, `链接数据_${new Date().getTime()}.xlsx`)
 }

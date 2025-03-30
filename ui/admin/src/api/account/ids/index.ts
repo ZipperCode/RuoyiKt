@@ -9,6 +9,7 @@ import {
   AppAccountVo,
   SearchQuery
 } from "@/api/account/ids/types";
+import {FileRecordVo} from "@/api/system/file/types";
 
 export const add = (data: AppAccountForm): AxiosPromise<AppAccountVo> => {
   return request({
@@ -104,4 +105,11 @@ export const updateStatus = (ids: number[], status: number): AxiosPromise<number
 
 export const exportData = (query?: AppAccountQuery) => {
   return download("app/account/export", query, `账号数据_${new Date().getTime()}.xlsx`)
+}
+
+// 上传文件
+export const uploadFile = (data: { file: File }): AxiosPromise<FileRecordVo> => {
+  const formData = new FormData()
+  formData.append('file', data.file)
+  return upload({url: '/account/common/upload', data: formData})
 }

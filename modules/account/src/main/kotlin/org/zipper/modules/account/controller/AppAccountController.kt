@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaMode
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
+import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.zipper.common.core.exception.ServiceException
@@ -263,8 +264,7 @@ class AppAccountController(
     @Log(title = "账号管理-导出", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     fun export(@Valid param: AppAccountParam, response: HttpServletResponse) {
-        val list = appAccountService.exportList(param)
-        response.responseToExcel(list, "账号数据")
+        appAccountService.export(param, response)
     }
 
 

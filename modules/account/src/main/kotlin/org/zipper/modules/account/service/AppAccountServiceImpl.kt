@@ -3,6 +3,7 @@ package org.zipper.modules.account.service
 import com.baomidou.mybatisplus.core.conditions.Wrapper
 import com.baomidou.mybatisplus.core.toolkit.Wrappers
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.zipper.common.core.domain.mixin.sys.SysUserMixin
@@ -18,6 +19,7 @@ import org.zipper.framework.mybatis.core.MybatisKt
 import org.zipper.framework.mybatis.core.insertBatch
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
+import org.zipper.framework.mybatis.core.selectVoPage
 import org.zipper.framework.security.utils.LoginHelper
 import org.zipper.modules.account.constant.DataClassify
 import org.zipper.modules.account.constant.DataStatus
@@ -31,6 +33,7 @@ import org.zipper.modules.account.domain.param.UploadAccountParam
 import org.zipper.modules.account.domain.vo.*
 import org.zipper.modules.account.mapper.AppAccountMapper
 import org.zipper.modules.account.mapper.AppAccountRecordMapper
+import org.zipper.modules.account.utils.ExcelHelper.writeToExcel
 import org.zipper.modules.account.utils.QueryHelper.findUploadUserIfCondition
 import org.zipper.modules.account.utils.isSalesman
 
@@ -164,6 +167,13 @@ class AppAccountServiceImpl(
     override fun exportList(param: AppAccountParam): List<AccountExportVo> {
         val query = buildQuery(param)
         return appAccountMapper.selectAccountList(query).convertList()
+    }
+
+    override fun export(param: AppAccountParam, response: HttpServletResponse) {
+        val query = buildQuery(param)
+        response.writeToExcel<AppAccountVo>("数据") {
+            appAccountMapper.selectVoPage<AppAccountEntity, AppAccountVo>(it.build(), query).records
+        }
     }
 
     override fun pageList(param: AppAccountParam, pageQuery: PageQuery): TableDataInfo<AppAccountVo> {

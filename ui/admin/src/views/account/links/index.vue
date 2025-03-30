@@ -64,6 +64,12 @@
               多选删除
             </el-button>
           </el-col>
+          <el-col :span="1.5">
+            <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" plain icon="Share" @click="handleExport()"
+                       v-hasPermi="[Permission.Export]">
+              导出数据
+            </el-button>
+          </el-col>
           <el-col :span="2"></el-col>
           <el-row v-hasPermi="[Permission.Check]">
             <el-form ref="uploadFormRef" :inline="true" v-loading="uploadFormLoading" :model="uploadFormData"
@@ -121,7 +127,7 @@
 </template>
 <script setup lang="ts">
 import {AppLinksForm, AppLinksQuery, AppLinksVo} from "@/api/account/links/types";
-import {add, delIds, pageList} from "@/api/account/links";
+import {add, delIds, pageList, exportData} from "@/api/account/links";
 import {Permission} from "@/views/account/links/types";
 import AppLinksFormDialog from "@/views/account/links/FormDialog.vue";
 import {FormRules} from "element-plus";
@@ -139,6 +145,7 @@ const classify = computed(() => {
     return -1
   }
 })
+const fullscreenLoading = ref(false)
 /**
  * 检查上传
  */
@@ -261,7 +268,15 @@ const handleCopy = async (row: AppLinksVo) => {
     proxy?.$modal.msgError("复制失败");
   });
 }
-
+const handleExport = async () => {
+  fullscreenLoading.value = true
+  try {
+    queryParams.classify = classify.value
+    await exportData(queryParams)
+  } finally {
+    fullscreenLoading.value = false;
+  }
+}
 onMounted(() => {
   getList();
 })

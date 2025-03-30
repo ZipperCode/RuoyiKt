@@ -1,6 +1,7 @@
 package org.zipper.modules.account.controller
 
 import cn.dev33.satoken.annotation.SaCheckPermission
+import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
 import org.springframework.validation.annotation.Validated
@@ -12,6 +13,7 @@ import org.zipper.framework.log.enums.BusinessType
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.framework.security.aspect.ResultBody
+import org.zipper.modules.account.domain.param.AppAccountParam
 import org.zipper.modules.account.domain.param.AppLinksParam
 import org.zipper.modules.account.domain.vo.AppLinksVo
 import org.zipper.modules.account.service.AppLinksService
@@ -71,5 +73,13 @@ class AppLinksController(
     fun list(@Valid param: AppLinksParam, pageQuery: PageQuery): TableDataInfo<AppLinksVo> {
         return appLinksService.pageList(param, pageQuery)
     }
+
+    @SaCheckPermission("app:links:export")
+    @Log(title = "链接-导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    fun export(@Valid param: AppLinksParam, response: HttpServletResponse) {
+        appLinksService.export(param, response)
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package org.zipper.modules.account.service
 
+import jakarta.servlet.http.HttpServletResponse
 import org.zipper.framework.mybatis.core.page.PageQuery
 import org.zipper.framework.mybatis.core.page.TableDataInfo
 import org.zipper.modules.account.domain.param.AppLinksParam
@@ -16,4 +17,6 @@ interface AppLinksService {
     fun getInfo(id: Long): AppLinksVo?
 
     fun pageList(param: AppLinksParam, pageQuery: PageQuery): TableDataInfo<AppLinksVo>
+
+    fun export(param: AppLinksParam, response: HttpServletResponse)
 }

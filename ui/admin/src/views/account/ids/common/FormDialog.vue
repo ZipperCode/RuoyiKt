@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {UploadProps, UploadUserFile} from 'element-plus'
 import {FormRules} from "element-plus";
-import {add, getInfo, update} from "@/api/account/ids";
+import {add, getInfo, update, uploadFile} from "@/api/account/ids";
 import {AppAccountForm} from "@/api/account/ids/types";
 import {Delete, ZoomIn} from '@element-plus/icons-vue'
 import {UploadRequestOptions} from "element-plus/es/components/upload/src/upload";
@@ -209,7 +209,7 @@ const httpRequest = async (options: UploadRequestOptions) => {
 const handleUploadRequest = async (file: File) => {
   formLoading.value = true;
   try {
-    const response = await FileApi.uploadFile({file: file,})
+    const response = await uploadFile({file: file,})
     if (response.code == 200) {
       message.success('上传成功')
       return response.data
@@ -225,7 +225,7 @@ const handleUploadRequest = async (file: File) => {
 <template>
   <Dialog v-model="dialogVisible" :title="dialogTitle" @paste="handlePaste" @close="onDialogClose">
     <el-form ref="formRef" :inline="true" v-loading="formLoading" :model="formData" :rules="formRules" label-width="70px">
-      <el-form-item label="链接" prop="account" style="width: 100%">
+      <el-form-item label="账号" prop="account" style="width: 100%">
         <el-input v-model="formData.account" placeholder="请输入账号" :disabled="formType==='update' && formData.id !== undefined"
                   clearable/>
       </el-form-item>
