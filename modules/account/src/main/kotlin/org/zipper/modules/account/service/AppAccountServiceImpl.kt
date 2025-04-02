@@ -2,6 +2,7 @@ package org.zipper.modules.account.service
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper
 import com.baomidou.mybatisplus.core.toolkit.Wrappers
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Service
@@ -26,6 +27,7 @@ import org.zipper.modules.account.constant.DataStatus
 import org.zipper.modules.account.constant.RoleCode
 import org.zipper.modules.account.domain.entity.AppAccountEntity
 import org.zipper.modules.account.domain.entity.AppAccountRecordEntity
+import org.zipper.modules.account.domain.export.AppAccountExport
 import org.zipper.modules.account.domain.param.AppAccountParam
 import org.zipper.modules.account.domain.param.AppAccountRecordParam
 import org.zipper.modules.account.domain.param.SearchAccountParam
@@ -170,9 +172,10 @@ class AppAccountServiceImpl(
     }
 
     override fun export(param: AppAccountParam, response: HttpServletResponse) {
-        val query = buildQuery(param)
-        response.writeToExcel<AppAccountVo>("数据") {
-            appAccountMapper.selectVoPage<AppAccountEntity, AppAccountVo>(it.build(), query).records
+        val query = MybatisKt.ktQuery<AppAccountEntity>()
+            .eq(AppAccountEntity::classify, param.classify)
+        response.writeToExcel<AccountExportVo>("数据") {
+            appAccountMapper.selectVoPage<AppAccountEntity, AccountExportVo>(it.build(), query).records
         }
     }
 

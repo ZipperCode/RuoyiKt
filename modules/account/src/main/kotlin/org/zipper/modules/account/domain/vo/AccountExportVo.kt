@@ -6,8 +6,10 @@ import io.github.linpeilie.annotations.AutoMapper
 import org.zipper.common.core.domain.mixin.account.AppAccountMixin
 import org.zipper.framework.excel.annotation.ExcelDictFormat
 import org.zipper.framework.excel.convert.ExcelDictConvert
+import org.zipper.modules.account.domain.entity.AppAccountEntity
+import org.zipper.modules.account.utils.DataStatusConverter
 
-@AutoMapper(target = AppAccountVo::class, convertGenerate = false)
+@AutoMapper(target = AppAccountEntity::class, convertGenerate = true)
 open class AccountExportVo : AppAccountMixin {
 
     @field:ExcelProperty(value = ["编号"])
@@ -33,7 +35,7 @@ open class AccountExportVo : AppAccountMixin {
     @field:ExcelDictFormat(dictType = "app_account_classify")
     override var classify: Int? = null
 
-    @field:ExcelProperty(value = ["数据状态"], converter = ExcelDictConvert::class)
+    @field:ExcelProperty(value = ["数据状态"], converter = DataStatusConverter::class)
     @field:ExcelDictFormat(dictType = "app_account_status")
     override var status: Int? = null
 
