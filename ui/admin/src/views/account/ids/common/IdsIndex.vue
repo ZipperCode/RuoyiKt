@@ -191,6 +191,10 @@ const handleExport = async () => {
 const screenshotDialogRef = ref()
 
 const handleScreenshot = async (row: VO) => {
+  if (!row.screenshot) {
+    message.error("暂无截图")
+    return
+  }
   screenshotDialogRef.value.open(row)
 }
 
