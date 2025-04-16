@@ -75,6 +75,7 @@ services:
       PROFILE: prod
     volumes:
       - ./logs:/app/logs:rw
+      - ./upload:/app/upload:rw
     depends_on:
       - ry-mysql
       - ry-redis
@@ -98,7 +99,7 @@ services:
       # 时区上海
       TZ: Asia/Shanghai
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       # 配置文件映射
       - ./docker/nginx/conf:/etc/nginx/conf.d:rw
