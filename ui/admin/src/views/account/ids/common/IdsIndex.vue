@@ -27,9 +27,9 @@ const props = defineProps<Props>()
 
 const {proxy} = getCurrentInstance() as ComponentInternalInstance;
 const {
-  app_account_classify, app_account_status, app_account_country
+  app_account_status, app_account_country
 } = toRefs<any>(proxy?.useDict(
-  "app_account_classify", "app_account_status", 'app_account_country'
+  "app_account_status", 'app_account_country'
 ))
 type Query = AppAccountQuery
 type Form = AppAccountForm
@@ -313,13 +313,8 @@ onMounted(() => {
 
     <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="数据id" align="center" prop="id" width="80px" fixed="left"/>
+      <el-table-column label="数据id" align="center" prop="id" width="180px"/>
       <el-table-column label="账号" align="center" prop="account" min-width="150px" fixed="left"/>
-      <el-table-column label="分类" align="center" prop="classify">
-        <template #default="scope">
-          <dict-tag :options="app_account_classify" :value="scope.row.classify"/>
-        </template>
-      </el-table-column>
       <el-table-column label="绑定状态" align="center" prop="record">
         <template #default="scope">
           <div>
@@ -342,7 +337,7 @@ onMounted(() => {
           <el-button size="small" type="primary" @click="handleScreenshot(scope.row)">截图</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="上传人" align="center" prop="createUser"/>
+      <el-table-column label="上传人" align="center" prop="createUser" min-width="100px"/>
       <el-table-column label="国家" align="center" prop="country" width="100px">
         <template #default="scope">
           <dict-tag :options="app_account_country" :value="scope.row.country"/>
@@ -376,7 +371,7 @@ onMounted(() => {
       </el-table-column>
     </el-table>
     <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="getList" style="margin-bottom: 50px"/>
 
     <AppAccountFormDialog ref="formRef" @success="getList"/>
     <AppAccountBatchUploadDialog ref="uploadFormRef" @success="getList"/>
